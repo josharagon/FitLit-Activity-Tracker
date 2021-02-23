@@ -1,15 +1,7 @@
 class Activity {
   constructor(activityData) {
     this.activityData = activityData
-    // this.activityDataTest = this.getActivityData;
   }
-  // getActivityData() {
-  //   // use a fetch request to acess sctivity data 
-  //   fetch("https://localhost:3001/activity")
-  //   .then(response => response.json())
-  //   .then(data => console.log(data))
-  //   // .catch(err => /* do something else */);
-  // }
   getMilesFromStepsByDate(id, date, userRepo) {
     let userStepsByDate = this.activityData.find(data => id === data.userID && date === data.date);
     return parseFloat(((userStepsByDate.numSteps * userRepo.strideLength) / 5280).toFixed(1));

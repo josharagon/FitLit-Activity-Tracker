@@ -14,6 +14,7 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
+import fetchData from './APICalls';
 
 var sidebarName = document.getElementById('sidebarName');
 var stepGoalCard = document.getElementById('stepGoalCard');
@@ -46,9 +47,11 @@ var userStairsThisWeek = document.getElementById('userStairsThisWeek');
 var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
 var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
-var streakListMinutes = document.getElementById('streakListMinutes')
+var streakListMinutes = document.getElementById('streakListMinutes');
+
 
 function startApp() {
+  fetchData()
   let userList = [];
   makeUsers(userList);
   let userRepo = new UserRepo(userList);
@@ -183,3 +186,4 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
 }
 
 startApp();
+

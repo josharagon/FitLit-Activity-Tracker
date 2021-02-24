@@ -50,7 +50,6 @@ var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes');
 
-
 function startApp() {
   fetchData()
   let userList = [];
@@ -85,8 +84,7 @@ function pickUser() {
 
 function getUserById(id, listRepo) {
   return listRepo.getDataFromID(id);
-};
-
+}
 
 function addInfoToSidebar(user, userStorage) {
   sidebarName.innerText = user.name;
@@ -97,7 +95,7 @@ function addInfoToSidebar(user, userStorage) {
   userEmail.innerText = user.email;
   userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;
   friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userStorage))
-};
+}
 
 function makeFriendHTML(user, userStorage) {
   return user.getFriendsNames(userStorage).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');

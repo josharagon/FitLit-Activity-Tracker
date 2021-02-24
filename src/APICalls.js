@@ -40,7 +40,4 @@ const fetchData = () => {
     })
 }
 
-
-// promise all resolve
-
 export default fetchData;

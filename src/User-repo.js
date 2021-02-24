@@ -28,12 +28,15 @@ class UserRepo {
     return this.makeSortedUserArray(id, dataSet).slice(0, 7);
   };
   getWeekFromDate(date, id, dataSet) {
-    let dateIndex = this.makeSortedUserArray(id, dataSet).indexOf(this.makeSortedUserArray(id, dataSet).find((sortedItem) => (sortedItem.date === date)));
+    let dateIndex = this.makeSortedUserArray(id, dataSet)
+      .indexOf(this.makeSortedUserArray(id, dataSet)
+      .find((sortedItem) => (sortedItem.date === date)));
     return this.makeSortedUserArray(id, dataSet).slice(dateIndex, dateIndex + 7);
   };
   chooseWeekDataForAllUsers(dataSet, date) {
     return dataSet.filter(function(dataItem) {
-      return (new Date(date)).setDate((new Date(date)).getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
+      return (new Date(date)).setDate((new Date(date))
+        .getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
     })
   };
   chooseDayDataForAllUsers(dataSet, date) {

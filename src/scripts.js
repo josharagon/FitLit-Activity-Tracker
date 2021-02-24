@@ -1,6 +1,6 @@
 import './css/base.scss';
 import './css/style.scss';
-
+import './css/reset.scss';
 import './images/person walking on path.jpg';
 import './images/The Rock.jpg';
 
@@ -15,7 +15,6 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
 import fetchData from './APICalls';
-// import fetchActivityData from './APICalls'
 
 var sidebarName = document.getElementById('sidebarName');
 var stepGoalCard = document.getElementById('stepGoalCard');
@@ -39,6 +38,7 @@ var friendChallengeListHistory = document.getElementById('friendChallengeListHis
 var bigWinner = document.getElementById('bigWinner');
 var userStepsToday = document.getElementById('userStepsToday');
 var avgStepsToday = document.getElementById('avgStepsToday');
+var avgStepGoalCard = document.getElementById('avStepGoalCard')
 var userStairsToday = document.getElementById('userStairsToday');
 var avgStairsToday = document.getElementById('avgStairsToday');
 var userMinutesToday = document.getElementById('userMinutesToday');
@@ -48,9 +48,11 @@ var userStairsThisWeek = document.getElementById('userStairsThisWeek');
 var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
 var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
-var streakListMinutes = document.getElementById('streakListMinutes')
+var streakListMinutes = document.getElementById('streakListMinutes');
+
 
 function startApp() {
+  fetchData()
   let userList = [];
   makeUsers(userList);
   let userRepo = new UserRepo(userList);
@@ -129,7 +131,7 @@ function addInfoToSidebar(user, userStorage) {
   sidebarName.innerText = user.name;
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
   stepGoalCard.innerText = `Your daily step goal is ${user.dailyStepGoal}.`
-  avStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
+  avgStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
   userAddress.innerText = user.address;
   userEmail.innerText = user.email;
   userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;

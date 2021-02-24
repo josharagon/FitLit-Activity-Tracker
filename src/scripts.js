@@ -66,11 +66,13 @@ function startApp() {
 
   fetchData()
   .then(allData => {
-    console.log(allData)
-    let currentUser = new User(allData.userData.userData[Math.floor(Math.random() * allData.userData.userData.length)]);
-    displayHydrationData(allData.hydrationData, currentUser, allData.userData);
-    // displaySleepData();
-    displayActivityData(allData.activityData, currentUser, allData.userData)
+    let userRepository = new UserRepo(allData.userData)
+    let currentUser = new User(userRepository.users[Math.floor(Math.random() * userRepository.users.length)])
+    console.log(currentUser)
+    // let currentUser = new User(allData.userData.userData[Math.floor(Math.random() * allData.userData.userData.length)]);
+    // displayHydrationData(allData.hydrationData, currentUser, allData.userData);
+    // // displaySleepData();
+    // displayActivityData(allData.activityData, currentUser, allData.userData)
   })
 
   function displayHydrationData(hydrationData, user) {

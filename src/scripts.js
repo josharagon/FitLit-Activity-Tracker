@@ -14,8 +14,8 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
-// import fetchData from './APICalls';
-import fetchActivityData from './APICalls'
+import fetchData from './APICalls';
+// import fetchActivityData from './APICalls'
 
 var sidebarName = document.getElementById('sidebarName');
 var stepGoalCard = document.getElementById('stepGoalCard');
@@ -62,10 +62,15 @@ function startApp() {
   let today = makeToday(userRepo, userNowId, hydrationData);
   let activityRepo = new Activity(activityData, today, userNow, userRepo);
 
-  fetchActivityData()
-  .then(activityData => {
-    displayActivityData(activityData)
+  fetchData()
+  .then(allData => {
+    displayActivityData(allData.activityData)
   })
+
+  // fetchActivityData()
+  // .then(activityData => {
+  //   displayActivityData(activityData)
+  // })
 
   function displayActivityData(activityData) {
     let activityRepo = new Activity(activityData.activityData, today, userNow, userRepo);

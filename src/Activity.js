@@ -1,10 +1,11 @@
+
 class Activity {
-  constructor(activityData, date, user, userRepo) {
-    this.activityData = activityData;
-    this.userStepsByDate = {};
-    this.date = date;
-    this.user = user;
-    this.userRepo = userRepo;
+  constructor(activityData) {
+    this.userID = activityData.userID
+    this.date = activityData.date
+    this.numSteps = activityData.numSteps
+    this.minutesActive = activityData.minutesActive
+    this.flightsOfStairs = activityData.flightsOfStairs
   }
 
   returnUserStepsByDate() {

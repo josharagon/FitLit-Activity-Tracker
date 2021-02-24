@@ -1,3 +1,5 @@
+import Activity from "./Activity";
+
 class User {
   constructor(userDetails) {
     this.id = userDetails.id;
@@ -7,8 +9,13 @@ class User {
     this.strideLength = userDetails.strideLength;
     this.dailyStepGoal = userDetails.dailyStepGoal;
     this.friends = userDetails.friends;
-
+    this.activities = []
   }
+
+  compileActivities(activityDatabase) {
+    this.activities = activityDatabase.filter(activity => activity.userID === this.id).map(activity => new Activity(activity))
+  }
+
   getFirstName() {
     console.log(this.name)
     return this.name.split(' ', 1).join();

@@ -1,4 +1,6 @@
 import Activity from "./Activity";
+import Hydration from "./Hydration";
+import Sleep from "./Sleep";
 
 class User {
   constructor(userDetails) {
@@ -10,10 +12,19 @@ class User {
     this.dailyStepGoal = userDetails.dailyStepGoal;
     this.friends = userDetails.friends;
     this.activities = []
+    this.sleep = []
   }
 
-  compileActivities(activityDatabase) {
+  compileActivityRecord(activityDatabase) {
     this.activities = activityDatabase.filter(activity => activity.userID === this.id).map(activity => new Activity(activity))
+  }
+
+  compileSleepRecord(sleepDatabase) {
+    this.sleep = sleepDatabase.filter(sleep => sleep.userID === this.id).map(sleep => new Sleep(sleep))
+  }
+
+  compileHydrationRecord(hydrationDatabase) {
+    this.hydration = hydrationDatabase.filter(hydration => hydration.userID === this.id).map(hydration => new Hydration(hydration))
   }
 
   getFirstName() {

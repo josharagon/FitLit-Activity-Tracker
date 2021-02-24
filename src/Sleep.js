@@ -2,7 +2,10 @@ import sleepData from './data/sleep';
 
 class Sleep {
   constructor(sleepData) {
-    this.sleepData = sleepData;
+    this.userID = sleepData.userID;
+    this.date = sleepData.date;
+    this.hoursSlept = sleepData.hoursSlept;
+    this.sleepQuality = sleepData.sleepQuality;
   }
   calculateAverageSleep(id) {
     let perDaySleep = this.sleepData.filter((data) => id === data.userID);

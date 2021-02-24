@@ -1,7 +1,8 @@
 class Hydration {
-  constructor(hydrationData, userNow) {
-    this.hydrationData = hydrationData;
-    this.user = userNow;
+  constructor(hydrationData) {
+    this.userID = hydrationData.userID;
+    this.date = hydrationData.date;
+    this.numOUnces = hydrationData.numOunces;
   }
   calculateAverageOunces() {
     let perDayUserHydration = this.hydrationData.hydrationData.filter((data) => this.user.id === data.userID);
@@ -21,6 +22,5 @@ class Hydration {
     return userRepo.getWeekFromDate(date, id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
   }
 }
-
 
 export default Hydration;

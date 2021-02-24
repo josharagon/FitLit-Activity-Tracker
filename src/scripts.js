@@ -53,29 +53,23 @@ var streakListMinutes = document.getElementById('streakListMinutes');
 
 function startApp() {
   fetchData()
-  // let userList = [];
-  // makeUsers(userList);
-  // let userRepo = new UserRepo(userList);
-  // let hydrationRepo = new Hydration(hydrationData);
-  // let sleepRepo = new Sleep(sleepData);
-  // // let activityRepo = new Activity(activityData);
-  // var userNowId = pickUser();
-  // let userNow = getUserById(userNowId, userRepo);
-  // let today = makeToday(userRepo, userNowId, hydrationData);
-  // let activityRepo = new Activity(activityData, today, userNow, userRepo);
-
-  fetchData()
   .then(allData => {
     let userRepository = new UserRepo(allData.userData)
     let currentUser = new User(userRepository.users[Math.floor(Math.random() * userRepository.users.length)])
-    currentUser.compileActivities(allData.activityData)
+    compileUserFitnessRecord(currentUser, allData)
     console.log(currentUser)
-    // let currentUser = new User(allData.userData.userData[Math.floor(Math.random() * allData.userData.userData.length)]);
-    // displayHydrationData(allData.hydrationData, currentUser, allData.userData);
-    // // displaySleepData();
-    // displayActivityData(allData.activityData, currentUser, allData.userData)
   })
+}
 
+function compileUserFitnessRecord(currentUser, allData) {
+  currentUser.compileActivityRecord(allData.activityData);
+  currentUser.compileSleepRecord(allData.sleepData);
+  currentUser.compileHydrationRecord(allData.hydrationData);
+}
+
+window.addEventListener('load', startApp)
+
+/*
   
   function displayHydrationData(hydrationData, user) {
     let hydrationObject = new Hydration(hydrationData, user);
@@ -232,3 +226,4 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
 }
 
 startApp();
+*/

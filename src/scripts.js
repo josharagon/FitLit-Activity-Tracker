@@ -1,6 +1,6 @@
 import './css/base.scss';
 import './css/style.scss';
-
+import './css/reset.scss';
 import './images/person walking on path.jpg';
 import './images/The Rock.jpg';
 
@@ -38,6 +38,7 @@ var friendChallengeListHistory = document.getElementById('friendChallengeListHis
 var bigWinner = document.getElementById('bigWinner');
 var userStepsToday = document.getElementById('userStepsToday');
 var avgStepsToday = document.getElementById('avgStepsToday');
+var avgStepGoalCard = document.getElementById('avStepGoalCard')
 var userStairsToday = document.getElementById('userStairsToday');
 var avgStairsToday = document.getElementById('avgStairsToday');
 var userMinutesToday = document.getElementById('userMinutesToday');
@@ -91,7 +92,7 @@ function addInfoToSidebar(user, userStorage) {
   sidebarName.innerText = user.name;
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
   stepGoalCard.innerText = `Your daily step goal is ${user.dailyStepGoal}.`
-  avStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
+  avgStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
   userAddress.innerText = user.address;
   userEmail.innerText = user.email;
   userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;
@@ -186,4 +187,3 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
 }
 
 startApp();
-

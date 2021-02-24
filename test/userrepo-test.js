@@ -7,7 +7,7 @@ import User from '../src/User';
 describe('User Repo', function() {
   let user1;
   let user2;
-  let user;
+  let users;
   let userRepo;
 
   beforeEach(function() {
@@ -57,9 +57,9 @@ describe('User Repo', function() {
     const users = [user1];
     const userRepo = new UserRepo(users);
 
-    console.log('here: ', userRepo.users[0]);
+    //console.log('here: ', userRepo.users[0]);
 
-    expect(userRepo.users[0].id).to.equal(1);
+    expect(userRepo.users[0].id).to.deep.equal(1);
   });
 
   it('should return user data when given user ID', function() {
@@ -67,7 +67,7 @@ describe('User Repo', function() {
 
     userRepo.getDataFromID(1);
 
-    expect(userRepo.getDataFromID(1)).to.eql(user1);
+    expect(userRepo.getDataFromID(1)).to.deep.eql(user1);
   });
 
   it('should return the average of all users step goals', function() {
@@ -75,7 +75,7 @@ describe('User Repo', function() {
 
     userRepo.calculateAverageStepGoal();
 
-    expect(userRepo.calculateAverageStepGoal()).to.eql(9500);
+    expect(userRepo.calculateAverageStepGoal()).to.deep.eql(9500);
   });
 
   describe('array changes', function() {
@@ -477,7 +477,7 @@ describe('User Repo', function() {
     });
     it('should sort data by date and extract its week', function() {
 
-      expect(userRepo.getFirstWeek(4, hydrationData)[3].date).to.eql("2019/09/17");
+      expect(userRepo.getFirstWeek(4, hydrationData)[3].date).to.deep.eql("2019/09/17");
     });
     it('should get a sorted week of data for a single user from a date', function() {
       expect(userRepo.getWeekFromDate('2019/09/17', 4, hydrationData)[3].date).to.eql("2019/04/15");
@@ -513,6 +513,5 @@ describe('User Repo', function() {
         '5': 4
       })
     });
-
   });
 });

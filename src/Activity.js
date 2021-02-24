@@ -1,36 +1,43 @@
 class Activity {
-  constructor(activityData, date, user) {
+  constructor(activityData, date, user, userRepo) {
     this.activityData = activityData;
     this.userStepsByDate = {};
     this.date = date;
     this.user = user;
+    this.userRepo = userRepo;
+  }
+
+  returnUserStepsByDate() {
+    return this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
   }
 
   getMilesFromStepsByDate() {
-    let userStepsByDate = this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
+    let userStepsByDate = this.returnUserStepsByDate()
+    // let userStepsByDate = this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
     return parseFloat(((userStepsByDate.numSteps * this.user.strideLength) / 5280).toFixed(1));
   }
 
   getActiveMinutesByDate() {
-    let userActivityByDate = this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
+    let userActivityByDate = this.returnUserStepsByDate();
+    // let userActivityByDate = this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
     return userActivityByDate.minutesActive;
   }
 
-  calculateActiveAverageForWeek(userRepo) {
-    const totalActiveMinutes = userRepo.getWeekFromDate(this.date, this.user.id, this.activityData)
+  calculateActiveAverageForWeek() {
+    const totalActiveMinutes = this.userRepo.getWeekFromDate(this.date, this.user.id, this.activityData)
     return parseFloat((totalActiveMinutes.reduce((acc, elem) => {
       return acc += elem.minutesActive;
     }, 0) / 7).toFixed(1));
   }
 
-  accomplishStepGoal(id, date, userRepo) {
-    let userStepsByDate = this.activityData.find(data => id === data.userID && date === data.date);
-    if (userStepsByDate.numSteps === userRepo.dailyStepGoal) {
+  accomplishStepGoal() {
+    let userStepsByDate = this.returnUserStepsByDate();
+    if (userStepsByDate.numSteps === this.userRepo.dailyStepGoal) {
       return true;
     }
     return false
   }
-  
+
   getDaysGoalExceeded(id, userRepo) {
     return this.activityData.filter(data => id === data.userID && data.numSteps > userRepo.dailyStepGoal).map(data => data.date);
   }

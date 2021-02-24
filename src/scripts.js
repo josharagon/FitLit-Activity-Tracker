@@ -58,10 +58,49 @@ function startApp() {
   let userRepo = new UserRepo(userList);
   let hydrationRepo = new Hydration(hydrationData);
   let sleepRepo = new Sleep(sleepData);
-  let activityRepo = new Activity(activityData);
+  // let activityRepo = new Activity(activityData);
   var userNowId = pickUser();
   let userNow = getUserById(userNowId, userRepo);
   let today = makeToday(userRepo, userNowId, hydrationData);
+  let activityRepo = new Activity(activityData, today, userNow, userRepo);
+
+  fetchData()
+  .then(allData => {
+    let currentUser = new User(allData.userData.userData[Math.floor(Math.random() * allData.userData.userData.length)]);
+    displayHydrationData(allData.hydrationData, currentUser, allData.userData);
+    // displaySleepData();
+    displayActivityData(allData.activityData, currentUser, allData.userData)
+  })
+
+  function displayHydrationData(hydrationData, user) {
+    let hydrationObject = new Hydration(hydrationData, user);
+    let averageHydration = hydrationObject.calculateAverageOunces();
+    hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
+  }
+
+  function displayActivityData(activityData, user, userRepo) {
+    let activityRepo = new Activity(activityData.activityData, today, user, userRepo);
+    display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
+    display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
+    // displayDistanceWalked(activityRepo) - need to create dom element 
+  }
+
+  function display(element, description, method) {
+    element.insertAdjacentHTML("afterBegin", `<p>${description}:</p><p>You</p><p><span class="number">${method}</span></p>`)
+  }
+  
+  function displayAverageSteps(activityRepo) {
+    let averageSteps = activityRepo.returnUserStepsByDate();
+    userStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>You</p><p><span class="number">${averageSteps.numSteps}</span></p>`)
+  }
+
+  function displayActiveMinutes(activityRepo) {
+    let activeMinutes = activityRepo.getActiveMinutesByDate();
+    userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activeMinutes}</span></p>`)
+  }
+
+  // function displayDistanceWalked()
+
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToSidebar(userNow, userRepo);
@@ -120,7 +159,8 @@ function makeRandomDate(userStorage, id, dataSet) {
 
 function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
   hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationInfo.calculateDailyOunces(id, dateString)}</span></p><p>oz water today.</p>`);
-  hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
+  // hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
+  // hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
   hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateFirstWeekOunces(userStorage, id)));
   hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage)));
 }
@@ -148,9 +188,9 @@ function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
 function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
   userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'flightsOfStairs')}</span></p>`)
   avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'flightsOfStairs')}</span></p>`)
-  userStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'numSteps')}</span></p>`)
+  // userStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'numSteps')}</span></p>`)
   avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'numSteps')}</span></p>`)
-  userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'minutesActive')}</span></p>`)
+  // userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'minutesActive')}</span></p>`)
   avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'minutesActive')}</span></p>`)
   userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")));
   userStairsThisWeek.insertAdjacentHTML("afterBegin", makeStairsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs")));

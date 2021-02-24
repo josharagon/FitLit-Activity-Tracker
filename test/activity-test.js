@@ -206,7 +206,8 @@ describe('Activity', function() {
     expect(activity.activityData[8].minutesActive).to.eql(41);
     expect(activity.activityData[10].flightsOfStairs).to.eql(24);
   });
-  it('should return the miles a given user has walked on a given date', function() {
+  it.only('should return the miles a given user has walked on a given date', function() {
+    const activity = new Activity(activityData, )
     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo.users[0])).to.eql(2.9);
   });
   it('should return the number of minutes a given user was active for on a given day', function() {

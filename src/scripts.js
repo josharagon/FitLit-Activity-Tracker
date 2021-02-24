@@ -64,16 +64,20 @@ function startApp() {
 
   fetchData()
   .then(allData => {
-    displayActivityData(allData.activityData)
+    let currentUser = new User(allData.userData.userData[Math.floor(Math.random() * allData.userData.userData.length)]);
+    displayHydrationData(allData.hydrationData, currentUser, allData.userData);
+    // displaySleepData();
+    displayActivityData(allData.activityData, currentUser, allData.userData)
   })
 
-  // fetchActivityData()
-  // .then(activityData => {
-  //   displayActivityData(activityData)
-  // })
+  function displayHydrationData(hydrationData, user) {
+    let hydrationObject = new Hydration(hydrationData, user);
+    let averageHydration = hydrationObject.calculateAverageOunces();
+    hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
+  }
 
-  function displayActivityData(activityData) {
-    let activityRepo = new Activity(activityData.activityData, today, userNow, userRepo);
+  function displayActivityData(activityData, user, userRepo) {
+    let activityRepo = new Activity(activityData.activityData, today, user, userRepo);
     display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
     display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
     // displayDistanceWalked(activityRepo) - need to create dom element 
@@ -153,7 +157,8 @@ function makeRandomDate(userStorage, id, dataSet) {
 
 function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
   hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationInfo.calculateDailyOunces(id, dateString)}</span></p><p>oz water today.</p>`);
-  hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
+  // hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
+  // hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
   hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateFirstWeekOunces(userStorage, id)));
   hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage)));
 }

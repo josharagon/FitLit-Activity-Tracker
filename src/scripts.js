@@ -66,6 +66,7 @@ function startApp() {
 
   fetchData()
   .then(allData => {
+    console.log(allData)
     let currentUser = new User(allData.userData.userData[Math.floor(Math.random() * allData.userData.userData.length)]);
     displayHydrationData(allData.hydrationData, currentUser, allData.userData);
     // displaySleepData();

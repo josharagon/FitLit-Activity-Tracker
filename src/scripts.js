@@ -54,18 +54,29 @@ var streakListMinutes = document.getElementById('streakListMinutes');
 function startApp() {
   fetchData()
   .then(allData => {
-    let userRepository = new UserRepo(allData.userData)
-    let currentUser = new User(userRepository.users[Math.floor(Math.random() * userRepository.users.length)])
-    compileUserFitnessRecord(currentUser, allData)
+    let userRepository = new UserRepo(allData)
+    let currentUser = userRepository.users[Math.floor(Math.random() * userRepository.users.length)]
+    updateDOM(currentUser, userRepository)
     console.log(currentUser)
   })
 }
 
-function compileUserFitnessRecord(currentUser, allData) {
-  currentUser.compileActivityRecord(allData.activityData);
-  currentUser.compileSleepRecord(allData.sleepData);
-  currentUser.compileHydrationRecord(allData.hydrationData);
+function updateDOM(currentUser, userRepository) {
+  updateUserDOM(currentUser, userRepository)
+  // updateHydrationDOM(currentUser, userRepository)
 }
+
+function updateUserDOM(currentUser, userRepository) {
+  sidebarName.innerText = currentUser.name;
+  userAddress.innerText = currentUser.address;
+  userEmail.innerText = currentUser.email;
+  userStridelength.innerText = currentUser.strideLength;
+  friendList.innerText = currentUser.friends.map(id => userRepository.users.find(user => user.id === id))
+}
+
+// function updateHydrationDOM(currentUser, userRepository) {
+//   hydrationToday.innerText = currentUser
+// }
 
 window.addEventListener('load', startApp)
 

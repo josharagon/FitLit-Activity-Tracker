@@ -1,8 +1,8 @@
 import User from "./User";
 
 class UserRepo {
-  constructor(userDatabase) {
-    this.users = userDatabase.map(userInfo => new User(userInfo))
+  constructor(allData) {
+    this.users = allData.userData.map((userInfo) => new User(userInfo, allData))
   };
   getDataFromID(id) {
     return this.users.find((user) => id === user.id);

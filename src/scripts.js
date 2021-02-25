@@ -57,13 +57,17 @@ function startApp() {
     let userRepository = new UserRepo(allData)
     let currentUser = userRepository.users[Math.floor(Math.random() * userRepository.users.length)]
     updateDOM(currentUser, userRepository)
-    console.log(currentUser)
+    console.log(currentUser.calculateAverageSleepHours())
+    console.log(currentUser.calculateAverageHydration())
+    console.log(currentUser.calculateAverageSleepQuality())
   })
 }
 
 function updateDOM(currentUser, userRepository) {
   updateUserDOM(currentUser, userRepository)
-  // updateHydrationDOM(currentUser, userRepository)
+  updateHydrationDOM(currentUser, userRepository)
+  // updateSleepDOM(currentUser, userRepository)
+  // updateActivityDOM(currentUSer, userRepository)
 }
 
 function updateUserDOM(currentUser, userRepository) {
@@ -72,6 +76,11 @@ function updateUserDOM(currentUser, userRepository) {
   userEmail.innerText = currentUser.email;
   userStridelength.innerText = currentUser.strideLength;
   friendList.innerText = currentUser.friends.map(id => userRepository.users.find(user => user.id === id))
+}
+
+function updateHydrationDOM(currentUser, userRepository) {
+  hydrationToday.innerText = currentUser.hydration[currentUser.hydration.length - 1].numOunces;
+  
 }
 
 // function updateHydrationDOM(currentUser, userRepository) {

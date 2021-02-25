@@ -16,12 +16,24 @@ class User {
     this.hydration = allData.hydrationData.filter(hydration => hydration.userID === this.id).map(hydration => new Hydration(hydration))
   }
 
-  getFirstName() {
-    console.log(this.name)
-    return this.name.split(' ', 1).join();
+  calculateAverageHydration() {
+    return Math.floor(this.hydration.reduce((total, hydration) => total += hydration.numOunces, 0) / this.hydration.length);
   }
-  getFriendsNames(userStorage) {
-    return this.friends.map((friendId) => (userStorage.getDataFromID(friendId).name));
+
+  calculateAverageSleepHours() {
+    let total = this.sleep.reduce((total, sleep) => total += sleep.hoursSlept, 0) / this.sleep.length;
+    let hours = Math.floor(total)
+    let minutes = Math.floor((total - hours) * 60)
+    if (minutes < 10) {
+      return `${hours}h 0${minutes}m`
+    } else {
+      return `${hours}h ${minutes}m`
+    }
+  }
+
+  calculateAverageSleepQuality() {
+    let average = (this.sleep.reduce((total, sleep) => total += sleep.sleepQuality, 0) / this.sleep.length).toFixed(2)
+    return average
   }
 }
 

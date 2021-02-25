@@ -16,40 +16,50 @@ import Sleep from './Sleep';
 import UserRepo from './User-repo';
 import fetchData from './APICalls';
 
-var sidebarName = document.getElementById('sidebarName');
-var stepGoalCard = document.getElementById('stepGoalCard');
-var headerText = document.getElementById('headerText');
-var userAddress = document.getElementById('userAddress');
-var userEmail = document.getElementById('userEmail');
-var userStridelength = document.getElementById('userStridelength');
-var friendList = document.getElementById('friendList');
-var hydrationToday = document.getElementById('hydrationToday');
-var hydrationAverage = document.getElementById('hydrationAverage');
-var hydrationThisWeek = document.getElementById('hydrationThisWeek');
-var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
-var historicalWeek = document.querySelectorAll('.historicalWeek');
-var sleepToday = document.getElementById('sleepToday');
-var sleepQualityToday = document.getElementById('sleepQualityToday');
-var avUserSleepQuality = document.getElementById('avUserSleepQuality');
-var sleepThisWeek = document.getElementById('sleepThisWeek');
-var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
-var friendChallengeListToday = document.getElementById('friendChallengeListToday');
-var friendChallengeListHistory = document.getElementById('friendChallengeListHistory');
-var bigWinner = document.getElementById('bigWinner');
-var userStepsToday = document.getElementById('userStepsToday');
-var avgStepsToday = document.getElementById('avgStepsToday');
-var avgStepGoalCard = document.getElementById('avStepGoalCard')
-var userStairsToday = document.getElementById('userStairsToday');
-var avgStairsToday = document.getElementById('avgStairsToday');
-var userMinutesToday = document.getElementById('userMinutesToday');
-var avgMinutesToday = document.getElementById('avgMinutesToday');
-var userStepsThisWeek = document.getElementById('userStepsThisWeek');
-var userStairsThisWeek = document.getElementById('userStairsThisWeek');
-var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
-var bestUserSteps = document.getElementById('bestUserSteps');
-var streakList = document.getElementById('streakList');
-var streakListMinutes = document.getElementById('streakListMinutes');
+import * as JSC from 'jscharting';
 
+// var sidebarName = document.getElementById('sidebarName');
+// var stepGoalCard = document.getElementById('stepGoalCard');
+// var headerText = document.getElementById('headerText');
+// var userAddress = document.getElementById('userAddress');
+// var userEmail = document.getElementById('userEmail');
+// var userStridelength = document.getElementById('userStridelength');
+// var friendList = document.getElementById('friendList');
+// var hydrationToday = document.getElementById('hydrationToday');
+// var hydrationAverage = document.getElementById('hydrationAverage');
+// var hydrationThisWeek = document.getElementById('hydrationThisWeek');
+// var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
+// var historicalWeek = document.querySelectorAll('.historicalWeek');
+// var sleepToday = document.getElementById('sleepToday');
+// var sleepQualityToday = document.getElementById('sleepQualityToday');
+// var avUserSleepQuality = document.getElementById('avUserSleepQuality');
+// var sleepThisWeek = document.getElementById('sleepThisWeek');
+// var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
+// var friendChallengeListToday = document.getElementById('friendChallengeListToday');
+// var friendChallengeListHistory = document.getElementById('friendChallengeListHistory');
+// var bigWinner = document.getElementById('bigWinner');
+// var userStepsToday = document.getElementById('userStepsToday');
+// var avgStepsToday = document.getElementById('avgStepsToday');
+// var avgStepGoalCard = document.getElementById('avStepGoalCard')
+// var userStairsToday = document.getElementById('userStairsToday');
+// var avgStairsToday = document.getElementById('avgStairsToday');
+// var userMinutesToday = document.getElementById('userMinutesToday');
+// var avgMinutesToday = document.getElementById('avgMinutesToday');
+// var userStepsThisWeek = document.getElementById('userStepsThisWeek');
+// var userStairsThisWeek = document.getElementById('userStairsThisWeek');
+// var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
+// var bestUserSteps = document.getElementById('bestUserSteps');
+// var streakList = document.getElementById('streakList');
+// var streakListMinutes = document.getElementById('streakListMinutes');
+
+//HYDRATION ELEMENTS:
+let todayWaterIntake = document.querySelector('.today-water-intake');
+let hydrationAverage = document.querySelector('.hydration-average');
+
+//SLEEP ELEMENTS:
+let lastSleepDuration = document.querySelector('.last-sleep-duration');
+let sleepAverage = document.querySelector('.sleep-average');
+let sleepChart = document.querySelector('.sleep-chart');
 
 function startApp() {
   fetchData()
@@ -68,9 +78,9 @@ function startApp() {
 }
 
 function updateDOM(currentUser, userRepository) {
-  updateUserDOM(currentUser, userRepository)
+  // updateUserDOM(currentUser, userRepository)
   updateHydrationDOM(currentUser, userRepository)
-  // updateSleepDOM(currentUser, userRepository)
+  updateSleepDOM(currentUser, userRepository)
   // updateActivityDOM(currentUSer, userRepository)
 }
 
@@ -83,13 +93,36 @@ function updateUserDOM(currentUser, userRepository) {
 }
 
 function updateHydrationDOM(currentUser, userRepository) {
-  hydrationToday.innerText = currentUser.hydration[currentUser.hydration.length - 1].numOunces;
-  
+  todayWaterIntake.innerText = `${currentUser.hydration[currentUser.hydration.length - 1].numOunces} fl oz`;
+  hydrationAverage.innerText = `${currentUser.calculateAverageHydration()} fl oz`;
+  compileHydrationChart(currentUser)
 }
 
-// function updateHydrationDOM(currentUser, userRepository) {
-//   hydrationToday.innerText = currentUser
-// }
+function compileHydrationChart(currentUser) {
+  let hydrationChart = new JSC.Chart("chartDiv-hydration", {
+    series: [
+      {
+        points: currentUser.returnHydrationHistory()
+      }
+    ]
+  });
+}
+
+function updateSleepDOM(currentUser) {
+  lastSleepDuration.innerText = currentUser.returnLastSleepDuration();
+  sleepAverage.innerText = currentUser.calculateAverageSleepHours();
+  compileSleepChart(currentUser)
+}
+
+function compileSleepChart(currentUser, userRepository) {
+  let sleepChart = new JSC.Chart("chartDiv-sleep", {
+    series: [
+      {
+        points: currentUser.returnSleepHistory()
+      }
+    ]
+  });
+}
 
 window.addEventListener('load', startApp)
 

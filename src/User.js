@@ -20,10 +20,37 @@ class User {
     return Math.floor(this.hydration.reduce((total, hydration) => total += hydration.numOunces, 0) / this.hydration.length);
   }
 
+  returnHydrationHistory() {
+    let result = []
+    for (var i = this.hydration.length - 1; i >= this.hydration.length - 7; i--) {
+      result.push({ x: `${this.hydration[i].date}`, y: this.hydration[i].numOunces})
+    }
+    return result;
+  }
+
+  returnSleepHistory() {
+    let result = []
+    for (var i = this.sleep.length - 1; i >= this.sleep.length - 7; i--) {
+      result.push({ x: `${this.sleep[i].date}`, y: this.sleep[i].hoursSlept})
+    }
+    return result;
+  }
+
+  returnLastSleepDuration() {
+    let total = this.sleep[this.sleep.length - 1].hoursSlept;
+    let hours = Math.floor(total)
+    let minutes = Math.floor((total - hours) * 60)
+    return this.formatSleepTimer(hours, minutes);
+  }
+
   calculateAverageSleepHours() {
     let total = this.sleep.reduce((total, sleep) => total += sleep.hoursSlept, 0) / this.sleep.length;
     let hours = Math.floor(total)
     let minutes = Math.floor((total - hours) * 60)
+    return this.formatSleepTimer(hours, minutes);
+  }
+
+  formatSleepTimer(hours, minutes) {
     if (minutes < 10) {
       return `${hours}h 0${minutes}m`
     } else {

@@ -1,12 +1,60 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fit-Lit</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <aside class="profile-info">
+      <h1>USERNAME</h1>
+      <img src="" class="profile-pic"/>
+      <section class="friends-list"></section>
+    </aside>
+    <main class="fitness-tracker">
+      <input type="date"></input>
+      <section class="card-container">
+        <article class="hydration-card">
+          <h2>TODAY'S HYDRATION</h1>
+          <h1 class="today-water-intake"></h1>
+          <p>AVERAGE</p>
+          <h3 class="hydration-average"></h3>
+          <div id="chartDiv-hydration" style="width: 70%; height: 400px;"></div>
+        </article>
+        <article class="sleep-card">
+          <h2>SLEEP</h1>
+            <h1 class="last-sleep-duration"></h1>
+            <div class="sleep-quality-stars-outer">
+              <div class="sleep-quality-stars-inner"><i class="icon-star-empty"></i></div>
+            </div>
+            <p>AVERAGE</p>
+            <h3 class="sleep-average">7h 32m</h3>
+            <p class="sleep-quality-average">4.5/5</p>
+            <div class="sleep-chart"></div>
+            <div id="chartDiv-sleep" style="width: 70%; height: 400px;"></div>
+        </article>
+        <article class="activity-card">
+          <h2>ACTIVITY</h1>
+            <div class="activity-button-container">
+              <button>steps</button>
+              <button>stairs</button>
+              <button>minutes active</button>
+            </div>
+        </article>
+        </article>
+      </section> 
+    </main>
+  </body>
+</html>
+<!-- <html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Activity Tracker</title>
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet" />
 </head>
-
 <body>
   <h1 id="headerText">Activity Tracker</h1>
   <section class="main">
@@ -30,13 +78,11 @@
               <p class="sidebar-header-userInfo">Friends</p>
               <section class="sidebar-friendContainer-listItems">
                 <ul class="card-vertical-list" id="friendList">
-                  <!-- friend list goes here -->
                 </ul>
               </section>
               <div class="sidebar-header-line"></div>
               <p class="thisWeek">Keep up the good work! You were increasingly active on these dates:</p>
               <ul class="card-vertical-list" id="streakListMinutes">
-                <!-- friend list goes here -->
               </ul>
             </section>
       </section>
@@ -56,14 +102,12 @@
             <p class="thisWeek">Water intake this week:</p>
             <div class="sidebar-header-line"></div>
             <ul class="card-vertical-list" id="hydrationThisWeek">
-              <!-- Hydration week list goes here -->
             </ul>
           </div>
           <div class="card-history-hydration">
             <p class="historicalWeek"></p>
             <div class="sidebar-header-line"></div>
             <ul class="card-vertical-list" id="hydrationEarlierWeek">
-              <!-- Hydration week list goes here -->
             </ul>
           </div>
         </section>
@@ -101,14 +145,12 @@
               <p class="thisWeek">Your steps this week</p>
               <div class="sidebar-header-line"></div>
               <ul class="card-vertical-list" id="userStepsThisWeek">
-                <!-- Activity week list goes here -->
               </ul>
             </div>
             <div class="card-history-activity">
               <p class="thisWeek">Your stair count this week</p>
               <div class="sidebar-header-line"></div>
               <ul class="card-vertical-list" id="userStairsThisWeek">
-                <!-- Activity week list goes here -->
               </ul>
             </div>
           </section>
@@ -117,14 +159,12 @@
               <p class="thisWeek">Your minutes of activity this week</p>
               <div class="sidebar-header-line"></div>
               <ul class="card-vertical-list" id="userMinutesThisWeek">
-                <!-- Activity week list goes here -->
               </ul>
             </div>
             <div class="card-history-activity">
               <p class="thisWeek">Winner's steps this week</p>
               <div class="sidebar-header-line"></div>
               <ul class="card-vertical-list" id="bestUserSteps">
-                <!-- Activity week list goes here -->
               </ul>
             </div>
           </section>
@@ -147,14 +187,12 @@
             <p class="thisWeek">Hours of sleep this week</p>
             <div class="sidebar-header-line"></div>
             <ul class="card-vertical-list" id="sleepThisWeek">
-              <!-- Sleep week list goes here -->
             </ul>
           </div>
           <div class="card-history-sleep">
             <p class="historicalWeek"></p>
             <div class="sidebar-header-line"></div>
             <ul class="card-vertical-list" id="sleepEarlierWeek">
-              <!-- Sleep week list goes here -->
             </ul>
           </div>
         </section>
@@ -175,18 +213,15 @@
               <section class="sidebar-friendContainer-listItems">
                 <p class="thisWeek">Rank this week</p>
                 <ul class="card-vertical-list" id="friendChallengeListToday">
-                  <!-- friend list goes here -->
                 </ul>
                 <div class="sidebar-header-line"></div>
                 <p class="historicalWeek">- Historical Rank</p>
                 <ul class="card-vertical-list" id="friendChallengeListHistory">
-                  <!-- friend list goes here -->
                 </ul>
                 <div class="sidebar-header-line"></div>
               </section>
               <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
               <ul class="card-vertical-list" id="streakList">
-                <!-- friend list goes here -->
               </ul>
             </section>
       </section>
@@ -194,4 +229,4 @@
   </section>
 </body>
 
-</html>
+</html> -->

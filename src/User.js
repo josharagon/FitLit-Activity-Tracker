@@ -32,8 +32,8 @@ class User {
   }
 
   calculateAverageSleepQuality() {
-    let average = (this.sleep.reduce((total, sleep) => total += sleep.sleepQuality, 0) / this.sleep.length).toFixed(2)
-    return average
+    let average = this.sleep.reduce((total, sleep) => total += sleep.sleepQuality, 0) / this.sleep.length
+    return Math.round((average + Number.EPSILON) * 100) / 100
   }
 }
 

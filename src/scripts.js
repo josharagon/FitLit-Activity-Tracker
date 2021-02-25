@@ -57,9 +57,13 @@ function startApp() {
     let userRepository = new UserRepo(allData)
     let currentUser = userRepository.users[Math.floor(Math.random() * userRepository.users.length)]
     updateDOM(currentUser, userRepository)
-    console.log(currentUser.calculateAverageSleepHours())
-    console.log(currentUser.calculateAverageHydration())
-    console.log(currentUser.calculateAverageSleepQuality())
+    console.log(currentUser)
+    console.log(`Welcome, ${currentUser.name}!`);
+    console.log("AVERAGE STEP GOAL ACROSS ALL USERS:", userRepository.calculateAverageStepGoal());
+    console.log("CURRENT USER STEP GOAL", currentUser.dailyStepGoal);
+    console.log("USER'S AVERAGE DAILY HYDRATION:", currentUser.calculateAverageHydration());
+    console.log("USER'S AVERAGE SLEEP HOURS:", currentUser.calculateAverageSleepHours());
+    console.log("USER'S AVERAGE SLEEP QUALITY scale 1-5:", currentUser.calculateAverageSleepQuality());
   })
 }
 

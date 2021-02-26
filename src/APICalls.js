@@ -6,7 +6,7 @@ const fetchData = () => {
             return userData
         })
         .catch(err => console.log(err.message))
-    
+
     let hydrationData = fetch("http://localhost:3001/api/v1/hydration")
         .then(response => response.json())
         .then(hydrationData => {
@@ -20,23 +20,23 @@ const fetchData = () => {
             return activityData
         })
         .catch(err => console.log(err.message))
-    
+
     let sleepData = fetch("http://localhost:3001/api/v1/sleep")
         .then(response => response.json())
         .then(sleepData => {
-            sleepData
+            return sleepData
         })
-        .catch(err => console.log(err.message))
-    
-    return Promise.all([userData, hydrationData, activityData, sleepData])
-    .then(data => {
-        let allData = {}
-        allData.userData = data[0].userData;
-        allData.hydrationData = data[1].hydrationData;
-        allData.activityData = data[2].activityData;
-        allData.sleepData = data[3];
-        return allData;
-    })
+        .catch(err => console.log(err.message));
+
+        return Promise.all([userData, hydrationData, activityData, sleepData])
+        .then(data => {
+          let allData = {}
+          allData.userData = data[0].userData;
+          allData.hydrationData = data[1].hydrationData;
+          allData.activityData = data[2].activityData;
+          allData.sleepData = data[3].sleepData;
+          return allData;
+        });
 }
 
 export default fetchData;

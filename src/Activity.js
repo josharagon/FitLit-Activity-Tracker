@@ -2,7 +2,7 @@ import User from "./User"
 class Activity {
   constructor(activityData, date, user, userRepo) {
     this.activityData = activityData;
-    this.userStepsByDate = {};
+    this.userStepsByDate = {} //activityData[0].numSteps;
     this.date = date;
     this.user = user;
     this.userRepo = userRepo;
@@ -116,4 +116,4 @@ class Activity {
 
 
 
-export default Activity;
+export default Activity

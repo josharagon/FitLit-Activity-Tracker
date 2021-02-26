@@ -1,3 +1,4 @@
+import User from "./User"
 class Activity {
   constructor(activityData, date, user, userRepo) {
     this.activityData = activityData;
@@ -38,22 +39,30 @@ class Activity {
     return false
   }
 
+  // this functyion doesn't get displayed as far as I can tell
   getDaysGoalExceeded(id, userRepo) {
     return this.activityData.filter(data => id === data.userID && data.numSteps > userRepo.dailyStepGoal).map(data => data.date);
   }
-  getStairRecord(id) {
-    return this.activityData.filter(data => id === data.userID).reduce((acc, elem) => (elem.flightsOfStairs > acc) ? elem.flightsOfStairs : acc, 0);
+
+  getStairRecord() {
+    return this.activityData.filter(data => this.user.id === data.userID).reduce((acc, elem) => {
+      (elem.flightsOfStairs > acc) ? acc = elem.flightsOfStairs : acc
+      return acc
+    }, 0);
   }
-  getAllUserAverageForDay(date, userRepo, relevantData) {
-    let selectedDayData = userRepo.chooseDayDataForAllUsers(this.activityData, date);
+
+  getAllUserAverageForDay(relevantData) {
+    let selectedDayData = this.userRepo.chooseDayDataForAllUsers(this.activityData, this.date);
     return parseFloat((selectedDayData.reduce((acc, elem) => acc += elem[relevantData], 0) / selectedDayData.length).toFixed(1));
   }
-  userDataForToday(id, date, userRepo, relevantData) {
-    let userData = userRepo.getDataFromUserID(id, this.activityData);
-    return userData.find(data => data.date === date)[relevantData];
+
+  userDataForToday(relevantData) {
+    let userData = this.userRepo.getDataFromUserID(this.user.id, this.activityData);
+    return userData.find(data => data.date === this.date)[relevantData];
   }
-  userDataForWeek(id, date, userRepo, releventData) {
-    return userRepo.getWeekFromDate(date, id, this.activityData).map((data) => `${data.date}: ${data[releventData]}`);
+
+  userDataForWeek(releventData) {
+    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.activityData).map((data) => `${data.date}: ${data[releventData]}`);
   }
 
   // Friends

@@ -76,17 +76,16 @@ function startApp() {
 
 
   function displayHydrationData(hydrationData, user, userRepo) {
-    let hydrationObject = new Hydration(hydrationData, user);
+    let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
     let averageHydration = hydrationObject.calculateAverageOunces();
     hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
-    hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces(hydrationObject.hydrationData[0].date)}</span></p><p>oz water today.</p>`); //userRepo.getToday()
+    hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
-    hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces(userRepo)));
-    console.log(hydrationObject.calculateRandomWeekOunces(randomHistory, userRepo))
+    hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
+    console.log(hydrationObject.calculateRandomWeekOunces())
     //let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
-    //hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces(randomHistory, hydrationObject.user.id, hydrationObject.user)));
+    hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
 
-    console.log(hydrationObject.calculateFirstWeekOunces(userRepo))
   }
   function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
     return drinks.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join(''); // needs dates?

@@ -1,7 +1,9 @@
 class Hydration {
-  constructor(hydrationData, userNow) {
+  constructor(hydrationData, userNow, date, userRepo) {
     this.hydrationData = hydrationData;
     this.user = userNow;
+    this.date = date;
+    this.userRepo = userRepo;
   }
   calculateAverageOunces() {
     let perDayUserHydration = this.hydrationData.filter((data) => this.user.id === data.userID);
@@ -10,18 +12,15 @@ class Hydration {
     }, 0) / perDayUserHydration.length
     return Math.floor(userHydration);
   }
-  calculateDailyOunces(date) {
-    //this.hydrationData[0].date)
-    let findOuncesByDate = this.hydrationData.find((data) => this.user.id === data.userID && date === data.date);
+  calculateDailyOunces() {
+    let findOuncesByDate = this.hydrationData.find((data) => this.user.id === data.userID && this.date === data.date);
     return findOuncesByDate.numOunces;
   }
-  calculateFirstWeekOunces(userRepo) {
-    //console.log(this.user.id)
-    return userRepo.getFirstWeek(this.user.id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
+  calculateFirstWeekOunces() {
+    return this.userRepo.getFirstWeek(this.user.id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
   }
-  calculateRandomWeekOunces(date, userRepo) {
-    console.log(userRepo)
-    return userRepo.getWeekFromDate(date, this.user.id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
+  calculateRandomWeekOunces() {
+    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
   }
 }
 

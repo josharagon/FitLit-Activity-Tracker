@@ -182,9 +182,11 @@ function updateHydrationChart() {
   if(hydrationDay.checked === true){
   hydrationChartNum.innerHTML = `${dailyHydration}<span>oz</span>`
   hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dailyHydration}) / 100)`
+  hydrationChartText.innerText = 'Today'
   } else if (hydrationAvg.checked === true) {
     hydrationChartNum.innerHTML = `${averageHydration}<span>oz</span>`
     hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${averageHydration}) / 100)`
+    hydrationChartText.innerText = 'On Average'
   }
 
 }

@@ -344,12 +344,19 @@ h1 {
 }
 
 .hydration-data label {
+  color: white;
   display: inline-block;
-  background-color: #e5e5e5;
+  background-color: #8b8b8b;
   padding: 5px 15px;
   font-family: sans-serif, Arial;
   font-size: 13px;
   border: 1px solid #00aeff;
   border-radius: 18px;
   z-index: 1;
+}
+
+.hydration-data input[type="radio"]:checked + label {
+  box-shadow: inset 0px 0px 6px 0px black;
+  background-color:#00aeff;
+  border-color: rgb(255, 255, 255);
 }

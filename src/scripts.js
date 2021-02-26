@@ -110,8 +110,8 @@ function startApp() {
     //weekly views:
     const weeklySteps = activityRepo.userDataForWeek("numSteps");
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
-    console.log(activityRepo.userDataForWeek("minutesActive"));
-    console.log(activityRepo.userDataForWeek("flightsOfStairs"));
+    //console.log(activityRepo.userDataForWeek("minutesActive"));
+    //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
 
   }
 
@@ -156,18 +156,18 @@ function getUserById(id, listRepo) {
   return listRepo.getDataFromID(id);
 }
 
-function addInfoToSidebar(user, userStorage) {
+function addInfoToSidebar(user, userRepo) {
   sidebarName.innerText = user.name;
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
   stepGoalCard.innerText = `Your daily step goal is ${user.dailyStepGoal}.`
-  avgStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
+  avgStepGoalCard.innerText = `The average daily step goal is ${userRepo.calculateAverageStepGoal()}`;
   userAddress.innerText = user.address;
   userEmail.innerText = user.email;
   userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;
-  friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userStorage))
+  friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userRepo))
 }
 
-function makeFriendHTML(user, userStorage) {
+function makeFriendHTML(user, userRepo) {
   return user.getFriendsNames(userRepo).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');
 }
 
@@ -222,7 +222,7 @@ function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateStr
   // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")));
   // userStairsThisWeek.insertAdjacentHTML("afterBegin", makeStairsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs")));
   // userMinutesThisWeek.insertAdjacentHTML("afterBegin", makeMinutesHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive")));
-  bestUserSteps.insertAdjacentHTML("afterBegin", makeStepsHTML(user, activityInfo, userStorage, activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps")));
+  /////bestUserSteps.insertAdjacentHTML("afterBegin", makeStepsHTML(user, activityInfo, userStorage, activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps")));
 }
 
 // function makeStepsHTML(id, activityInfo, userStorage, method) {

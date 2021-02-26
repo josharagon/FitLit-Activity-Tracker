@@ -25,17 +25,18 @@ const fetchData = () => {
     let sleepData = fetch("http://localhost:3001/api/v1/sleep")
         .then(response => response.json())
         .then(sleepData => {
-            sleepData
+            return sleepData
         })
         .catch(err => console.log(err.message))
     
     return Promise.all([userData, hydrationData, activityData, sleepData])
     .then(data => {
       let allData = {}
-      allData.userData = data[0];
-      allData.hydrationData = data[1];
+      allData.userData = data[0].userData;
+      allData.hydrationData = data[1].hydrationData;
       allData.activityData = data[2];
-      allData.sleepData = data[3];
+      console.log(allData)
+      allData.sleepData = data[3].sleepData;
       return allData;
     })
 }

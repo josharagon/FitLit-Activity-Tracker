@@ -264,6 +264,8 @@ h1 {
 
 
 .box .percent svg{
+  padding-bottom: 5px;
+  overflow: visible;
   position:relative;
   width: 150px;
   height: 150px;
@@ -284,9 +286,18 @@ h1 {
 .box .percent svg circle:nth-child(1){
   stroke-dashoffset:0;
   stroke:#f3f3f3;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+@keyframes circle-chart-fill {
+  to { stroke-dasharray: 0 100; }
 }
 
 .box .percent svg circle:nth-child(2){
+  animation: circle-chart-fill 4s reverse;
+  transform: rotate(-90deg);
+  transform-origin: center;
   stroke-dashoffset: calc(440 - (440*87) / 100);
   stroke:#03a9f4;
 }
@@ -327,9 +338,9 @@ h1 {
 }
 
 .hydration-data input[type="radio"] {
-  // opacity: 0;
-  // position: fixed;
-  // width: 0;
+  opacity: 0;
+  position: fixed;
+  width: 0;
 }
 
 .hydration-data label {
@@ -338,7 +349,7 @@ h1 {
   padding: 5px 15px;
   font-family: sans-serif, Arial;
   font-size: 13px;
-  border: 1px solid #07a9f4;
+  border: 1px solid #00aeff;
   border-radius: 18px;
   z-index: 1;
 }

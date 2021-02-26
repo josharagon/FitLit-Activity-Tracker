@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Activity Tracker</title>
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap"
+    rel="stylesheet" />
 </head>
 
 <body>
@@ -24,26 +26,37 @@
         <div class="sidebar-header-line"></div>
         <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
         <p class="sidebar-header-userInfo" id="avStepGoalCard">
-          <p>
-            <div class="sidebar-header-line"></div>
-            <section class="sidebar-body-friendContainer">
-              <p class="sidebar-header-userInfo">Friends</p>
-              <section class="sidebar-friendContainer-listItems">
-                <ul class="card-vertical-list" id="friendList">
-                  <!-- friend list goes here -->
-                </ul>
-              </section>
-              <div class="sidebar-header-line"></div>
-              <p class="thisWeek">Keep up the good work! You were increasingly active on these dates:</p>
-              <ul class="card-vertical-list" id="streakListMinutes">
-                <!-- friend list goes here -->
-              </ul>
-            </section>
+        <p>
+        <div class="sidebar-header-line"></div>
+        <section class="sidebar-body-friendContainer">
+          <p class="sidebar-header-userInfo">Friends</p>
+          <section class="sidebar-friendContainer-listItems">
+            <ul class="card-vertical-list" id="friendList">
+              <!-- friend list goes here -->
+            </ul>
+          </section>
+          <div class="sidebar-header-line"></div>
+          <p class="thisWeek">Keep up the good work! You were increasingly active on these dates:</p>
+          <ul class="card-vertical-list" id="streakListMinutes">
+            <!-- friend list goes here -->
+          </ul>
+        </section>
       </section>
     </section>
     <section class="body-main-infoContainter">
       <section class="main-column-hydration">
         <section class="infoContainer-cardContainer-card-horizontal">
+          <!-- <div class="box">
+            <div class="percent">
+              <svg>
+                <circle cx="70" cy="70" r="70"></circle>
+                <circle cx="70" cy="70" r="70"></circle>
+              </svg>
+              <div class="number">
+                <h2 class="middle">87<span>%</span></h2>
+              </div>
+            </div>
+            <h2 class=“text">Progress</h2>           -->
           <div class="card-today-hydration">
             <p id="hydrationToday"></p>
           </div>
@@ -67,6 +80,24 @@
             </ul>
           </div>
         </section>
+        <div class="box">
+          <div class="percent">
+            <svg>
+              <circle cx="70" cy="70" r="70"></circle>
+              <circle id="chart-bar" cx="70" cy="70" r="70"></circle>
+            </svg>
+            <div class="number">
+              <h2 class="middle" id="chart-num">87<span>oz</span></h2>
+              <p class="text" id="chart-text">Drank Today</p>
+            </div>
+          </div>
+          <div class="hydration-data">
+            <input type="radio" name="hydrationBtn" id="day-oz" value="small" checked="checked" />
+            <label id="day-oz-label" for="day-oz">Today</label>
+            <input type="radio" name="hydrationBtn" id="avg-oz" value="small" checked="checked" />
+            <label id="avg-oz-label" for="avg-oz">Average</label>
+          </div>
+        </div>
       </section>
       <section class="main-column-activity">
         <section class="infoContainer-cardContainer-card-horizontal">
@@ -170,25 +201,25 @@
         <div class="sidebar-header-line"></div>
         <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
         <p class="sidebar-header-userInfo" id="avStepGoalCard">
-          <p>
-            <section class="sidebar-body-friendContainer">
-              <section class="sidebar-friendContainer-listItems">
-                <p class="thisWeek">Rank this week</p>
-                <ul class="card-vertical-list" id="friendChallengeListToday">
-                  <!-- friend list goes here -->
-                </ul>
-                <div class="sidebar-header-line"></div>
-                <p class="historicalWeek">- Historical Rank</p>
-                <ul class="card-vertical-list" id="friendChallengeListHistory">
-                  <!-- friend list goes here -->
-                </ul>
-                <div class="sidebar-header-line"></div>
-              </section>
-              <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
-              <ul class="card-vertical-list" id="streakList">
-                <!-- friend list goes here -->
-              </ul>
-            </section>
+        <p>
+        <section class="sidebar-body-friendContainer">
+          <section class="sidebar-friendContainer-listItems">
+            <p class="thisWeek">Rank this week</p>
+            <ul class="card-vertical-list" id="friendChallengeListToday">
+              <!-- friend list goes here -->
+            </ul>
+            <div class="sidebar-header-line"></div>
+            <p class="historicalWeek">- Historical Rank</p>
+            <ul class="card-vertical-list" id="friendChallengeListHistory">
+              <!-- friend list goes here -->
+            </ul>
+            <div class="sidebar-header-line"></div>
+          </section>
+          <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
+          <ul class="card-vertical-list" id="streakList">
+            <!-- friend list goes here -->
+          </ul>
+        </section>
       </section>
     </section>
   </section>

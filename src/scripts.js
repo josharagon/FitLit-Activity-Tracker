@@ -49,8 +49,14 @@ var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
 var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes');
-
-
+var hydrationChartText = document.getElementById('chart-text');
+var hydrationChartNum = document.getElementById('chart-num');
+var hydrationBar = document.getElementById('chart-bar');
+var hydrationDay = document.getElementById('day-oz')
+var hydrationAvg = document.getElementById('avg-oz')
+var radioBox = document.querySelector('.hydration-data')
+hydrationDay.addEventListener('click', updateHydrationChart);
+var hydrationForToday = null;
 function startApp() {
   fetchData()
   let userList = [];
@@ -63,7 +69,7 @@ function startApp() {
   let userNow = getUserById(userNowId, userRepo);
   let today = makeToday(userRepo, userNowId, hydrationData);
   let activityRepo = new Activity(activityData, today, userNow, userRepo);
-
+  window.averageIntake = 'test'
   fetchData()
   .then(allData => {
     let currentUser = new User(allData.userData.userData[Math.floor(Math.random() * allData.userData.userData.length)]);
@@ -76,6 +82,7 @@ function startApp() {
     let hydrationObject = new Hydration(hydrationData, user);
     let averageHydration = hydrationObject.calculateAverageOunces();
     hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
+ 
   }
 
   function displayActivityData(activityData, user, userRepo) {
@@ -158,12 +165,31 @@ function makeRandomDate(userStorage, id, dataSet) {
 }
 
 function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
-  hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationInfo.calculateDailyOunces(id, dateString)}</span></p><p>oz water today.</p>`);
+  const dayAmount = hydrationInfo.calculateDailyOunces(id, dateString)
+  hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${dayAmount}</span></p><p>oz water today.</p>`);
   // hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
   // hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
   hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateFirstWeekOunces(userStorage, id)));
   hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage)));
+  hydrationChartNum.innerHTML = `${dayAmount}<span>oz</span>`
+  hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dayAmount}) / 100)`
+
 }
+
+function updateHydrationChart() {
+  // let hydrationRepo = new Hydration(hydrationData);
+  // today = 
+  // const dayAmount = hydrationRepo.calculateDailyOunces(userNowId, dateString);
+  // const avgAmount = hydrationRepo.calculateFirstWeekOunces(, userNowId);
+  console.log(hydrationForToday)
+  if(hydrationDay.checked === true){
+  hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dayAmount}) / 100)`
+  } else if (hydrationAvg.checked === true) {
+
+  }
+
+}
+
 
 function makeHydrationHTML(id, hydrationInfo, userStorage, method) {
   return method.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join('');

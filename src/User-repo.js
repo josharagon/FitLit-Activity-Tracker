@@ -4,8 +4,8 @@ class UserRepo {
     this.currentUser = currentUser;
     this.averageAllStepGoals = this.users.map(user => user.stepGoal)/this.users.length;
   }
-  getDataFromID() {
-    return this.users.find((user) => this.currentUser.id === user.id);
+  getDataFromID(id) {
+    return this.users.find((user) => id === user.id);
   }
   getDataFromUserID(id, dataSet) {
     //console.log(dataSet)

@@ -1,5 +1,3 @@
-import User from "./User";
-
 class UserRepo {
   constructor(users, currentUser) {
     this.users = users;
@@ -10,7 +8,7 @@ class UserRepo {
     return this.users.find((user) => this.currentUser.id === user.id);
   }
   getDataFromUserID(id, dataSet) {
-    console.log(dataSet)
+    //console.log(dataSet)
     return dataSet.filter((userData) => id === userData.userID);
   }
   calculateAverageStepGoal() {

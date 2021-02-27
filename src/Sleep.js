@@ -1,5 +1,3 @@
-import sleepData from './data/sleep';
-
 class Sleep {
   constructor(sleepData, userNow, date, userRepo) {
     this.sleepData = sleepData;
@@ -23,7 +21,6 @@ class Sleep {
     return Math.floor(userAverage)
   }
   calculateDailySleep() {
-    console.log(this.user.id)
     let findSleepByDate = this.sleepData.find((data) => this.user.id === data.userID && this.date === data.date);
     return findSleepByDate.hoursSlept;
   }
@@ -38,11 +35,11 @@ class Sleep {
     return this.userRepo.getWeekFromDate(this.date, this.user.id, this.sleepData).map((data) => `${data.date}: ${data.sleepQuality}`);
   }
   calculateAllUserSleepQuality() {
-    var totalSleepQuality = this.sleepData.reduce(function(sumSoFar, dataItem) {
-      sumSoFar += dataItem.sleepQuality;
-      return sumSoFar;
+    var totalSleepQuality = this.sleepData.reduce((sum, dataItem) => {
+      sum += dataItem.sleepQuality;
+      return sum;
     }, 0)
-    let total = totalSleepQuality / sleepData.length;
+    let total = totalSleepQuality / this.sleepData.length;
     return parseFloat(total.toFixed(2));
   }
 //   determineBestSleepers(date, userRepo) {

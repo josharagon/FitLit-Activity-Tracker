@@ -1,4 +1,3 @@
-import User from "./User"
 class Activity {
   constructor(activityData, date, user, userRepo) {
     this.activityData = activityData;

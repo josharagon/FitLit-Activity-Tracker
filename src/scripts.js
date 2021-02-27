@@ -93,7 +93,6 @@ function startApp() {
   }
 
   function compileHydrationChart(hydrationObject) {
-    console.log(hydrationObject.calculateFirstWeekOunces())
     let hydrationChart = new JSC.Chart("chartDiv-hydration", {
       type: 'spline',
       legend_visible: false,
@@ -121,9 +120,7 @@ function startApp() {
     sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
     sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
     avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
-    console.log(sleepObject.calculateAllUserSleepQuality())
-
-    console.log(sleepQuality)
+    //console.log(sleepObject.calculateAllUserSleepQuality())
   }
 
   function displayActivityData(activityData, currentUser, today, userRepo) {

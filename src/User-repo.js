@@ -2,14 +2,15 @@ import User from "./User";
 
 class UserRepo {
   constructor(users) {
-    this.users = users
-  };
+    this.users = users;
+    this.stepGoals = this.users.map(user => user.stepGoal)/this.users.length;
+  }
   getDataFromID(id) {
     return this.users.find((user) => id === user.id);
-  };
+  }
   getDataFromUserID(id, dataSet) {
     return dataSet.filter((userData) => id === userData.userID);
-  };
+  }
   calculateAverageStepGoal() {
     var totalStepGoal = this.users.reduce((sumSoFar, data) => {
       return sumSoFar = sumSoFar + data.dailyStepGoal;
@@ -23,22 +24,22 @@ class UserRepo {
   }
   getToday(id, dataSet) {
     return this.makeSortedUserArray(id, dataSet)[0].date;
-  };
+  }
   getFirstWeek(id, dataSet) {
     return this.makeSortedUserArray(id, dataSet).slice(0, 7);
-  };
+  }
   getWeekFromDate(date, id, dataSet) {
     let dateIndex = this.makeSortedUserArray(id, dataSet)
       .indexOf(this.makeSortedUserArray(id, dataSet)
       .find((sortedItem) => (sortedItem.date === date)));
     return this.makeSortedUserArray(id, dataSet).slice(dateIndex, dateIndex + 7);
-  };
+  }
   chooseWeekDataForAllUsers(dataSet, date) {
     return dataSet.filter(function(dataItem) {
       return (new Date(date)).setDate((new Date(date))
         .getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
     })
-  };
+  }
   chooseDayDataForAllUsers(dataSet, date) {
     return dataSet.filter(function(dataItem) {
       return dataItem.date === date
@@ -69,12 +70,11 @@ class UserRepo {
   combineRankedUserIDsAndAveragedData(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
     let rankedUsersAndAverages = this.rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod)
-    return rankedUsersAndAverages.map(function(rankedUser) {
+    return rankedUsersAndAverages.map(rankedUser => {
       rankedUser = {
-        [rankedUser]: sortedObjectKeys[rankedUser].reduce(
-          function(sumSoFar, sleepQualityValue) {
-            sumSoFar += sleepQualityValue
-            return sumSoFar;
+        [rankedUser]: sortedObjectKeys[rankedUser]
+          .reduce((sum, sleepQualityValue) => {
+            return sum += sleepQualityValue;
           }, 0) / sortedObjectKeys[rankedUser].length
       };
       return rankedUser;

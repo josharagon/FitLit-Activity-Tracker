@@ -61,6 +61,7 @@ function startApp() {
 
   var userNowId = pickUser();
   let userNow = getUserById(userNowId, userRepo);
+  //let userNow = userRepo.users.filter(user => user.id === userNowId);
   let today = makeToday(userRepo, userNowId, hydrationData);
 
   fetchData()
@@ -74,8 +75,8 @@ function startApp() {
 
 
   function displayHydrationData(hydrationData, user, userRepo) {
-    let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
-    let averageHydration = hydrationObject.calculateAverageOunces();
+    const hydrationObject = new Hydration(hydrationData, user, today, userRepo);
+    const averageHydration = hydrationObject.calculateAverageOunces();
     hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
     hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
@@ -88,7 +89,7 @@ function startApp() {
   }
 
   function displayActivityData(activityData, currentUser, userRepo) {
-    let activityRepo = new Activity(activityData, today, currentUser, userRepo);
+    const activityRepo = new Activity(activityData, today, currentUser, userRepo);
     display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
     display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
     const userStairs = activityRepo.userDataForToday('flightsOfStairs')
@@ -120,12 +121,12 @@ function startApp() {
   }
 
   function displayAverageSteps(activityRepo) {
-    let averageSteps = activityRepo.returnUserStepsByDate();
+    const averageSteps = activityRepo.returnUserStepsByDate();
     userStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>You</p><p><span class="number">${averageSteps.numSteps}</span></p>`)
   }
 
   function displayActiveMinutes(activityRepo) {
-    let activeMinutes = activityRepo.getActiveMinutesByDate();
+    const activeMinutes = activityRepo.getActiveMinutesByDate();
     userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activeMinutes}</span></p>`)
   }
 

@@ -3,12 +3,13 @@ import User from "./User";
 class UserRepo {
   constructor(users) {
     this.users = users;
-    this.stepGoals = this.users.map(user => user.stepGoal)/this.users.length;
+    this.averageAllStepGoals = this.users.map(user => user.stepGoal)/this.users.length;
   }
   getDataFromID(id) {
     return this.users.find((user) => id === user.id);
   }
   getDataFromUserID(id, dataSet) {
+    console.log(dataSet)
     return dataSet.filter((userData) => id === userData.userID);
   }
   calculateAverageStepGoal() {

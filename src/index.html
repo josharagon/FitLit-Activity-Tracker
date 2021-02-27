@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Activity Tracker</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap"
     rel="stylesheet" />
 </head>
@@ -47,6 +49,7 @@
     <section class="body-main-infoContainter">
       <section class="main-column-hydration">
         <section class="infoContainer-cardContainer-card-horizontal">
+          <h1 class="hydration-title">Hydration</h1>
           <div class="box">
             <div class="percent">
               <svg>
@@ -54,7 +57,7 @@
                 <circle id="chart-bar" cx="70" cy="70" r="70"></circle>
               </svg>
               <div class="number">
-                <h2 class="middle" id="chart-num">87<span>oz</span></h2>
+                <h2 class="middle" id="chart-num">0<span>oz</span></h2>
                 <p class="text" id="chart-text">Today</p>
               </div>
             </div>
@@ -72,7 +75,7 @@
             <div class="sidebar-header-line"></div>
             <div id="chartDiv-hydration" style="width: 100%; height: 400px;"></div>
           </div>
-          <div class="card-history-hydration">
+          <div class="card-history-hydration hidden">
             <p class="historicalWeek"></p>
             <div class="sidebar-header-line"></div>
             <ul class="card-vertical-list" id="hydrationEarlierWeek">
@@ -173,7 +176,7 @@
         </section>
       </section>
     </section>
-    <section class="main-sidebar-body">
+    <section class="main-sidebar-body hidden">
       <section class="body-sidebar-sidebarContainer">
         <h2 class="sidebar-header-name" id="sidebarName">FRIENDLY STEP CHALLENGE!</h2>
         <div class="sidebar-header-line"></div>

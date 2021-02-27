@@ -109,7 +109,7 @@ function startApp() {
         {
           points: hydrationObject.calculateFirstWeekOunces()
         },
-      ]
+      ],
     });
   }
 
@@ -117,12 +117,8 @@ function startApp() {
     return drinks.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join(''); // needs dates?
   }
 
-<<<<<<< HEAD
 
-  function displaySleepData(sleepData, user, userRepo) {
-=======
   function displaySleepData(sleepData, user, today, userRepo) {
->>>>>>> origin/main
     let sleepObject = new Sleep(sleepData, user, today, userRepo);
     let averageSleep = sleepObject.calculateAverageSleep();
     let sleepQuality = sleepObject.calculateAverageSleepQuality();
@@ -131,11 +127,7 @@ function startApp() {
     let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
     sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
     sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
-<<<<<<< HEAD
-    avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepRepo.calculateAllUserSleepQuality() * 100) / 100}</span></p><p>out of 5.</p>`);
-=======
     avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
->>>>>>> origin/main
     console.log(sleepObject.calculateAllUserSleepQuality())
 
     console.log(sleepQuality)
@@ -197,15 +189,6 @@ startApp();
   // addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
   // addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 
-<<<<<<< HEAD
-function makeUsers(array) {
-  userData.forEach(function (dataItem) {
-    let user = new User(dataItem);
-    array.push(user);
-  })
-}
-=======
->>>>>>> origin/main
 
 // function makeUsers(array) {
 //   userData.forEach(function(dataItem) {
@@ -234,15 +217,10 @@ function makeUsers(array) {
 // }
 // need to refactor and call in our .then callback passing in current info 
 
-<<<<<<< HEAD
-function makeWinnerID(activityInfo, user, dateString, userStorage) {
-  return activityInfo.getWinnerId(user, dateString, userStorage)
-}
-=======
+
 // function makeFriendHTML(user, userRepo) {
 //   return user.getFriendsNames(userRepo).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');
 // }
->>>>>>> origin/main
 
 // function makeWinnerID(activityInfo, user, dateString, userStorage){
 //   return activityInfo.getWinnerId(user, dateString, userStorage)
@@ -326,10 +304,6 @@ function makeWinnerID(activityInfo, user, dateString, userStorage) {
 //   return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
 // }
 
-
-<<<<<<< HEAD
-
-
 function updateHydrationChart() {
   console.log(dailyHydration)
   if (hydrationDay.checked === true) {
@@ -344,5 +318,4 @@ function updateHydrationChart() {
 }
 
 startApp();
-=======
->>>>>>> origin/main
+

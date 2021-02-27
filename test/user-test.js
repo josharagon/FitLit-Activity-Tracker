@@ -3,7 +3,7 @@ import usersTestData from '../test_data/users-data';
 import UserRepo from '../src/User-repo';
 import User from '../src/User';
 
-describe.only('User', function() {
+describe('User', function() {
   let users = usersTestData;
   let userRepo;
   let sleep;

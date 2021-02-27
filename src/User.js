@@ -10,7 +10,6 @@ class User {
 
   }
   getFirstName() {
-    console.log(this.name)
     return this.name.split(' ', 1).join();
   }
   getFriendsNames(userStorage) {

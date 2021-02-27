@@ -27,14 +27,14 @@ var userStridelength = document.getElementById('userStridelength');
 var friendList = document.getElementById('friendList');
 var hydrationToday = document.getElementById('hydrationToday');
 var hydrationAverage = document.getElementById('hydrationAverage');
-var hydrationThisWeek = document.getElementById('hydrationThisWeek');
-var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
+// var hydrationThisWeek = document.getElementById('hydrationThisWeek'); NO LONGER IN HTML, REPLACEDBY CHART
+// var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
 var historicalWeek = document.querySelectorAll('.historicalWeek');
 var sleepToday = document.getElementById('sleepToday');
 var sleepQualityToday = document.getElementById('sleepQualityToday');
 var avUserSleepQuality = document.getElementById('avUserSleepQuality');
-var sleepThisWeek = document.getElementById('sleepThisWeek');
-var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
+// var sleepThisWeek = document.getElementById('sleepThisWeek'); NO LONGER IN HTML, REPLACED BY CHART
+// var sleepEarlierWeek = document.getElementById('sleepEarlierWeek'); UNNECESSARY HTML ELEMENT - MARK FOR DELETION
 var friendChallengeListToday = document.getElementById('friendChallengeListToday');
 var friendChallengeListHistory = document.getElementById('friendChallengeListHistory');
 var bigWinner = document.getElementById('bigWinner');
@@ -45,9 +45,9 @@ var userStairsToday = document.getElementById('userStairsToday');
 var avgStairsToday = document.getElementById('avgStairsToday');
 var userMinutesToday = document.getElementById('userMinutesToday');
 var avgMinutesToday = document.getElementById('avgMinutesToday');
-// var userStepsThisWeek = document.getElementById('userStepsThisWeek'); NO LONGER IN HTML
-// var userStairsThisWeek = document.getElementById('userStairsThisWeek'); NO LONGER IN HTML
-// var userMinutesThisWeek = document.getElementById('userMinutesThisWeek'); NO LONGER IN HTML
+// var userStepsThisWeek = document.getElementById('userStepsThisWeek'); NO LONGER IN HTML, REPLACED BY CHART
+// var userStairsThisWeek = document.getElementById('userStairsThisWeek'); NO LONGER IN HTML, REPLACED BY CHART
+// var userMinutesThisWeek = document.getElementById('userMinutesThisWeek'); NO LONGER IN HTML, REPLACED BY CHART
 var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes');
@@ -89,7 +89,7 @@ function startApp() {
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
     // hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
     // hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
-    compileChart(hydrationObject, "numOunces", "blue")
+    compileChart(hydrationObject, "numOunces", "blue", "fluid ounces of water consumed each day")
   }
 
   function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
@@ -104,8 +104,8 @@ function startApp() {
     // let weekSleep = sleepObject.calculateWeekSleep();
     // let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
     // let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
-    compileChart(sleepObject, "hoursSlept", "purple");
-    compileChart(sleepObject, "sleepQuality", "purple");
+    compileChart(sleepObject, "hoursSlept", "purple", "hours of sleep");
+    compileChart(sleepObject, "sleepQuality", "purple", "quality of sleep on a scale of 1-5");
     sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
     sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
     avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
@@ -135,19 +135,23 @@ function startApp() {
     avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
     // average number of steps for everyone today
     //weekly views:
-    compileChart(activityRepo, "numSteps", "orange")
-    compileChart(activityRepo, "flightsOfStairs", "orange")
-    compileChart(activityRepo, "minutesActive", "orange")
+    compileChart(activityRepo, "numSteps", "orange", "number of steps")
+    compileChart(activityRepo, "flightsOfStairs", "orange", "flights of stairs climbed")
+    compileChart(activityRepo, "minutesActive", "orange", "number of minutes spent physically active")
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
     //console.log(activityRepo.userDataForWeek("minutesActive"));
     //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
 
   }
 
-  function compileChart(healthCategory, propertyName, color) {
+  function compileChart(healthCategory, propertyName, color, chartDescription) {
     let dataPoints = healthCategory.userDataForWeek(propertyName);
     dataPoints.forEach(point => point.color = color);
+    dataPoints.forEach(point => point.name = "test")
+    dataPoints.forEach(point => point.description =`on ${point.x} your ${chartDescription} was ${point.y}`)
     let chart = new JSC.Chart(`chartDiv-${propertyName}`, {
+      tabIndex: "auto",
+      description: `Chart displaying your ${chartDescription} over the last seven days`,
       type: 'spline',
       legend_visible: false,
       box_fill: 'none',
@@ -156,6 +160,7 @@ function startApp() {
       xAxis_defaultTick_gridLine: {visible: false},
       series: [
         {
+          tabIndex: "auto",
           line_color: color,
           points: dataPoints
         },

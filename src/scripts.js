@@ -86,13 +86,10 @@ function startApp() {
 
   function displayHydrationData(hydrationData, user, userRepo) {
     let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
-
     let averageHydration = hydrationObject.calculateAverageOunces();
     let dayAmount = hydrationObject.calculateDailyOunces();
     window.averageHydration = hydrationObject.calculateAverageOunces();
     window.dailyHydration = dayAmount;
-    // hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
-    // hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
     hydrationChartNum.innerHTML = `${dayAmount}<span>oz</span>`
     hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dayAmount}) / 100)`

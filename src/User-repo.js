@@ -1,12 +1,13 @@
 import User from "./User";
 
 class UserRepo {
-  constructor(users) {
+  constructor(users, currentUser) {
     this.users = users;
-    this.stepGoals = this.users.map(user => user.stepGoal)/this.users.length;
+    this.currentUser = currentUser;
+    this.averageAllStepGoals = this.users.map(user => user.stepGoal)/this.users.length;
   }
-  getDataFromID(id) {
-    return this.users.find((user) => id === user.id);
+  getDataFromID() {
+    return this.users.find((user) => this.currentUser.id === user.id);
   }
   getDataFromUserID(id, dataSet) {
     return dataSet.filter((userData) => id === userData.userID);

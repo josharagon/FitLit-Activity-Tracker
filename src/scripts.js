@@ -149,6 +149,7 @@ function startApp() {
     //weekly views:
     compileStepsChart(activityRepo)
     compileStairsChart(activityRepo)
+    compileMinutesActiveChart(activityRepo)
     console.log(activityRepo)
     console.log('check this out:', activityRepo.userDataForWeek("numStairs"))
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
@@ -180,6 +181,20 @@ function startApp() {
       series: [
         {
           points: activityRepo.userDataForWeek("flightsOfStairs")
+        },
+      ]
+    });
+  }
+
+  function compileMinutesActiveChart(activityRepo) {
+    let stairsChart = new JSC.Chart("chartDiv-minutes-active", {
+      type: 'spline',
+      legend_visible: false,
+      axisTick_gridline: {visible: false},
+      box_fill: '#ee6',
+      series: [
+        {
+          points: activityRepo.userDataForWeek("minutesActive")
         },
       ]
     });

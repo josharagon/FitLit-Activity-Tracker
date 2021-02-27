@@ -68,6 +68,7 @@ function startApp() {
     let currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
     let userRepo = new UserRepo(allData.userData);
     let hydrationRepo = new Hydration(allData.hydrationData, currentUser);
+    displaySleepData(allData.sleepData, currentUser, userRepo);
     displayHydrationData(allData.hydrationData, currentUser, userRepo);
     displayActivityData(allData.activityData, currentUser, userRepo);
   })
@@ -85,6 +86,21 @@ function startApp() {
 
   function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
     return drinks.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join(''); // needs dates?
+  }
+
+  function displaySleepData(sleepData, user, userRepo) {
+    let sleepObject = new Sleep(sleepData, user, today, userRepo);
+    let averageSleep = sleepObject.calculateAverageSleep();
+    let sleepQuality = sleepObject.calculateAverageSleepQuality();
+    let weekSleep = sleepObject.calculateWeekSleep();
+    let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
+    let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
+    sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
+    sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
+    avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepRepo.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
+    console.log(sleepObject.calculateAllUserSleepQuality())
+
+    console.log(sleepQuality)
   }
 
   function displayActivityData(activityData, currentUser, userRepo) {
@@ -134,6 +150,7 @@ function startApp() {
   let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToSidebar(userNow, userRepo);
+
   //addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
   addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
@@ -197,11 +214,8 @@ function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateS
 
 
 function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
-  sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepInfo.calculateDailySleep(id, dateString)}</span></p> <p>hours today.</p>`);
-  sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepInfo.calculateDailySleepQuality(id, dateString)}</span></p><p>out of 5.</p>`);
-  avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepInfo.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
-  sleepThisWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(dateString, id, userStorage)));
-  sleepEarlierWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)));
+  // sleepThisWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(dateString, id, userStorage)));
+  // sleepEarlierWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)));
 }
 
 function makeSleepHTML(id, sleepInfo, userStorage, method) {

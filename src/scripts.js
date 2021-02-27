@@ -89,7 +89,7 @@ function startApp() {
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
     // hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
     // hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
-    compileChart(hydrationObject, "numOunces", "blue", "fluid ounces of water consumed each day")
+    compileChart(hydrationObject, "numOunces", "blue", "fluid ounces of water consumed")
   }
 
   function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
@@ -147,11 +147,15 @@ function startApp() {
   function compileChart(healthCategory, propertyName, color, chartDescription) {
     let dataPoints = healthCategory.userDataForWeek(propertyName);
     dataPoints.forEach(point => point.color = color);
-    dataPoints.forEach(point => point.name = "test")
     dataPoints.forEach(point => point.description =`on ${point.x} your ${chartDescription} was ${point.y}`)
     let chart = new JSC.Chart(`chartDiv-${propertyName}`, {
       tabIndex: "auto",
-      description: `Chart displaying your ${chartDescription} over the last seven days`,
+      grid: {
+        enabled: true,
+        tabIndex: true,
+        xAxis_label_text: "Date",
+      },
+      description: `Chart displaying your ${chartDescription} each day over the last seven days`,
       type: 'spline',
       legend_visible: false,
       box_fill: 'none',

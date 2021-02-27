@@ -141,15 +141,15 @@ function startApp() {
 
   }
 
-  function compileChart(activityRepo, activityType) {
-    let chart = new JSC.Chart(`chartDiv-${activityType}`, {
+  function compileChart(healthCategory, propertyName) {
+    let chart = new JSC.Chart(`chartDiv-${propertyName}`, {
       type: 'spline',
       legend_visible: false,
       axisTick_gridline: {visible: false},
       box_fill: '#ee6',
       series: [
         {
-          points: activityRepo.userDataForWeek(activityType)
+          points: healthCategory.userDataForWeek(propertyName)
         },
       ]
     });

@@ -95,22 +95,7 @@ function startApp() {
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
     hydrationChartNum.innerHTML = `${dayAmount}<span>oz</span>`
     hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dayAmount}) / 100)`
-    compileHydrationChart(hydrationObject)
-  }
-
-  function compileHydrationChart(hydrationObject) {
-    console.log(hydrationObject.calculateFirstWeekOunces())
-    let hydrationChart = new JSC.Chart("chartDiv-hydration", {
-      type: 'spline',
-      legend_visible: false,
-      axisTick_gridline: {visible: false},
-      box_fill: '#5bc8ac',
-      series: [
-        {
-          points: hydrationObject.calculateFirstWeekOunces()
-        },
-      ],
-    });
+    compileChart(hydrationObject, "numOunces")
   }
 
   function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
@@ -154,11 +139,27 @@ function startApp() {
     avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
     // average number of steps for everyone today
     //weekly views:
-    const weeklySteps = activityRepo.userDataForWeek("numSteps");
+    compileChart(activityRepo, "numSteps")
+    compileChart(activityRepo, "flightsOfStairs")
+    compileChart(activityRepo, "minutesActive")
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
     //console.log(activityRepo.userDataForWeek("minutesActive"));
     //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
 
+  }
+
+  function compileChart(healthCategory, propertyName) {
+    let chart = new JSC.Chart(`chartDiv-${propertyName}`, {
+      type: 'spline',
+      legend_visible: false,
+      axisTick_gridline: {visible: false},
+      box_fill: '#ee6',
+      series: [
+        {
+          points: healthCategory.userDataForWeek(propertyName)
+        },
+      ]
+    });
   }
   
   function display(element, description, method) {

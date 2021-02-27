@@ -15,6 +15,7 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
 import fetchData from './APICalls';
+import postAllUserData from './PostData';
 
 import * as JSC from 'jscharting';
 
@@ -52,6 +53,28 @@ var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes');
 
+let userSleepData = {
+  "userID" : 2, 
+  "date" : "2021/02/20",
+  "hoursSlept" : 7,
+  "sleepQuality" : 3
+}
+
+let userHydrationData = {
+  "userID" : 2, 
+  "date" : "2021/02/20", 
+  "numOunces": 4
+}
+
+let userActivityData = {
+  "userID" : 5, 
+  "date" : "2021/02/20", 
+  "numSteps" : 3000, 
+  "minutesActive" : 60, 
+  "flightsOfStairs" : 15
+}
+
+
 function startApp() {
   // fetchData();
   // let userList = [];
@@ -74,11 +97,12 @@ function startApp() {
     let hydrationRepo = new Hydration(allData.hydrationData, currentUser);
     // let today = makeToday(userRepo, currentUser.id, hydrationData);
     // console.log(allData.activityData.length, allData.activityData)
+    // displaySleepData(allData.sleepData, currentUser, today, userRepo);
+    postAllUserData(userSleepData, userHydrationData, userActivityData);
     displaySleepData(allData.sleepData, currentUser, today, userRepo);
     displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
     displayActivityData(allData.activityData, currentUser, today, userRepo);
   })
-
 
   function displayHydrationData(hydrationData, user, today, userRepo) {
     let hydrationObject = new Hydration(hydrationData, user, today, userRepo);

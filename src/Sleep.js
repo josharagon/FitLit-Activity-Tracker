@@ -2,11 +2,18 @@ import sleepData from './data/sleep';
 
 class Sleep {
   constructor(sleepData, userNow, date, userRepo) {
+  // constructor(sleepData, userNow, userRepo) {
     this.sleepData = sleepData;
     this.user = userNow;
     this.date = date;
+    // this.date = this.returnToday(this.sleepData);
     this.userRepo = userRepo;
   }
+  // returnToday(data) {
+  //   console.log(allData[data])
+  //    let today = allData[data][allData[data].length - 1].date;
+  //    return today
+  // }
   calculateAverageSleep() {
     console.log(this.user)
     let perDaySleep = this.sleepData.filter((data) => this.user.id === data.userID);
@@ -23,8 +30,9 @@ class Sleep {
     return Math.floor(userAverage)
   }
   calculateDailySleep() {
-    console.log(this.user.id)
+    console.log(this.date)
     let findSleepByDate = this.sleepData.find((data) => this.user.id === data.userID && this.date === data.date);
+    console.log(findSleepByDate)
     return findSleepByDate.hoursSlept;
   }
   calculateDailySleepQuality() {

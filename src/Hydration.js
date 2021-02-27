@@ -13,8 +13,11 @@ class Hydration {
     }, 0) / perDayUserHydration.length
     return Math.floor(userHydration);
   }
-  calculateDailyOunces() {
-    let findOuncesByDate = this.hydrationData.find((data) => this.user.id === data.userID && this.date === data.date);
+  calculateDailyOunces(day) {
+    if (!day) {
+      day = this.date
+    }
+    let findOuncesByDate = this.hydrationData.find(data => this.user.id === data.userID && day === data.date);
     return findOuncesByDate.numOunces;
   }
   calculateFirstWeekOunces() {

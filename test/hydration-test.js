@@ -8,6 +8,7 @@ describe.only('Hydration', function() {
   let hydration;
   let users;
   let userRepo;
+  let date;
 
   beforeEach(function() {
     let user3 = new User({
@@ -123,8 +124,36 @@ describe.only('Hydration', function() {
         "numOunces": 30
       },
     ]
+    date = "2019/09/15";
+    hydration = new Hydration(hydrationData, user3, date, userRepo);
+  });
 
-    hydration = new Hydration(hydrationData, user3);
+  it('should be a function', function() {
+    expect(Hydration).to.be.a(`function`);
+  });
+
+  it(`should be an instance of Hydration`, function() {
+    expect(hydration).to.be.an.instanceOf(Hydration);
+  });
+
+  describe('Should store information', function() {
+
+      it('should store an array of hydration data', function() {
+        expect(hydrationData).to.be.an('array');
+      });
+
+      it('should store a current user object', function() {
+        expect(hydration.user).to.be.equal(users[0])
+      });
+
+      it('should store the most recent date', function() {
+        expect(hydration.date).to.be.equal(date);
+      });
+
+      it('should store an array of users', function() {
+        expect(hydration.userRepo.users).to.be.equal(users)
+      });
+
   });
 
   it('should take in a list of data', function() {
@@ -134,12 +163,12 @@ describe.only('Hydration', function() {
   });
 
   it('should find the average water intake per day for a user', function() {
-    expect(hydration.calculateAverageOunces(3)).to.equal(2);
+    expect(hydration.calculateAverageOunces()).to.equal(2);
   });
 
   it('should find the water intake for a user on a specified date', function() {
-    expect(hydration.calculateDailyOunces("2019/06/15")).to.equal(37);
-    expect(hydration.calculateDailyOunces("2019/04/15")).to.equal(36);
+    expect(hydration.calculateDailyOunces("2016/05/14")).to.equal(3);
+    expect(hydration.calculateDailyOunces("2019/05/09")).to.equal(1);
   });
 
   it('should find water intake by day for first week', function() {

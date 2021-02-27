@@ -90,10 +90,14 @@ function startApp() {
   function compileHydrationChart(hydrationObject) {
     console.log(hydrationObject.calculateFirstWeekOunces())
     let hydrationChart = new JSC.Chart("chartDiv-hydration", {
+      type: 'spline',
+      legend_visible: false,
+      axisTick_gridline: {visible: false},
+      box_fill: '#5bc8ac',
       series: [
         {
           points: hydrationObject.calculateFirstWeekOunces()
-        }
+        },
       ]
     });
   }

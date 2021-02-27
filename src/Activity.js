@@ -62,7 +62,9 @@ class Activity {
   }
 
   userDataForWeek(releventData) {
-    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.activityData).map((data) => `${data.date}: ${data[releventData]}`);
+    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.activityData).map((data) => {
+      return {x: data.date, y: data[releventData]}
+    });
   }
 
   // Friends

@@ -147,12 +147,41 @@ function startApp() {
     avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
     // average number of steps for everyone today
     //weekly views:
-    const weeklySteps = activityRepo.userDataForWeek("numSteps");
+    compileStepsChart(activityRepo)
+    compileStairsChart(activityRepo)
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
     //console.log(activityRepo.userDataForWeek("minutesActive"));
     //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
 
   }
+
+  function compileStepsChart(activityRepo) {
+    let stepsChart = new JSC.Chart("chartDiv-steps", {
+      type: 'spline',
+      legend_visible: false,
+      axisTick_gridline: {visible: false},
+      box_fill: '#ee6',
+      series: [
+        {
+          points: activityRepo.userDataForWeek("flightsOfStairs")
+        },
+      ]
+    });
+  }
+
+  // function compileStairsChart(activityRepo) {
+  //   let stairsChart = new JSC.Chart("chartDiv-stairs", {
+  //     type: 'spline',
+  //     legend_visible: false,
+  //     axisTick_gridline: {visible: false},
+  //     box_fill: '#ee6',
+  //     series: [
+  //       {
+  //         points: activityRepo.userDataForWeek("numStairs")
+  //       },
+  //     ]
+  //   });
+  // }
   
   function display(element, description, method) {
     element.insertAdjacentHTML("afterBegin", `<p>${description}:</p><p>You</p><p><span class="number">${method}</span></p>`)

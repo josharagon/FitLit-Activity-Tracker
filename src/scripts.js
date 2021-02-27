@@ -89,7 +89,7 @@ function startApp() {
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
     // hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
     // hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
-    compileChart(hydrationObject, "numOunces")
+    compileChart(hydrationObject, "numOunces", "blue")
   }
 
   function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
@@ -104,8 +104,8 @@ function startApp() {
     // let weekSleep = sleepObject.calculateWeekSleep();
     // let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
     // let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
-    compileChart(sleepObject, "hoursSlept");
-    compileChart(sleepObject, "sleepQuality");
+    compileChart(sleepObject, "hoursSlept", "purple");
+    compileChart(sleepObject, "sleepQuality", "purple");
     sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
     sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
     avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
@@ -135,24 +135,29 @@ function startApp() {
     avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
     // average number of steps for everyone today
     //weekly views:
-    compileChart(activityRepo, "numSteps")
-    compileChart(activityRepo, "flightsOfStairs")
-    compileChart(activityRepo, "minutesActive")
+    compileChart(activityRepo, "numSteps", "orange")
+    compileChart(activityRepo, "flightsOfStairs", "orange")
+    compileChart(activityRepo, "minutesActive", "orange")
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
     //console.log(activityRepo.userDataForWeek("minutesActive"));
     //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
 
   }
 
-  function compileChart(healthCategory, propertyName) {
+  function compileChart(healthCategory, propertyName, color) {
+    let dataPoints = healthCategory.userDataForWeek(propertyName);
+    dataPoints.forEach(point => point.color = color);
     let chart = new JSC.Chart(`chartDiv-${propertyName}`, {
       type: 'spline',
       legend_visible: false,
-      axisTick_gridline: {visible: false},
-      box_fill: '#ee6',
+      box_fill: 'none',
+      yAxis_alternateGridFill: 'none',
+      yAxis_defaultTick_gridLine: {visible: false},
+      xAxis_defaultTick_gridLine: {visible: false},
       series: [
         {
-          points: healthCategory.userDataForWeek(propertyName)
+          line_color: color,
+          points: dataPoints
         },
       ]
     });

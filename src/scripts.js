@@ -69,32 +69,38 @@ function startApp() {
   var userNowId = pickUser();
   let userNow = getUserById(userNowId, userRepo);
   let today = makeToday(userRepo, userNowId, hydrationData);
+  console.log(today)
 
   fetchData()
-  .then(allData => {
-    let currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
-    let userRepo = new UserRepo(allData.userData);
-    let hydrationRepo = new Hydration(allData.hydrationData, currentUser);
-    displaySleepData(allData.sleepData, currentUser, userRepo);
-    displayHydrationData(allData.hydrationData, currentUser, userRepo);
-    displayActivityData(allData.activityData, currentUser, userRepo);
-  })
+    .then(allData => {
+      let currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
+      let userRepo = new UserRepo(allData.userData);
+      let hydrationRepo = new Hydration(allData.hydrationData, currentUser);
+      displaySleepData(allData.sleepData, currentUser, userRepo);
+      displayHydrationData(allData.hydrationData, currentUser, userRepo);
+      displayActivityData(allData.activityData, currentUser, userRepo);
+    })
 
 
   function displayHydrationData(hydrationData, user, userRepo) {
     let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
     let averageHydration = hydrationObject.calculateAverageOunces();
+    let dayAmount = hydrationObject.calculateDailyOunces();
     window.averageHydration = hydrationObject.calculateAverageOunces();
-    hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
-    hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
+    window.dailyHydration = dayAmount;
+    // hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
+    // hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
     hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
     hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
+    hydrationChartNum.innerHTML = `${dayAmount}<span>oz</span>`
+    hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dayAmount}) / 100)`
   }
 
   function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
     return drinks.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join(''); // needs dates?
   }
+
 
   function displaySleepData(sleepData, user, userRepo) {
     let sleepObject = new Sleep(sleepData, user, today, userRepo);
@@ -105,7 +111,7 @@ function startApp() {
     let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
     sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
     sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
-    avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepRepo.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
+    avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepRepo.calculateAllUserSleepQuality() * 100) / 100}</span></p><p>out of 5.</p>`);
     console.log(sleepObject.calculateAllUserSleepQuality())
 
     console.log(sleepQuality)
@@ -167,7 +173,7 @@ function startApp() {
 }
 
 function makeUsers(array) {
-  userData.forEach(function(dataItem) {
+  userData.forEach(function (dataItem) {
     let user = new User(dataItem);
     array.push(user);
   })
@@ -196,7 +202,7 @@ function makeFriendHTML(user, userRepo) {
   return user.getFriendsNames(userRepo).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');
 }
 
-function makeWinnerID(activityInfo, user, dateString, userStorage){
+function makeWinnerID(activityInfo, user, dateString, userStorage) {
   return activityInfo.getWinnerId(user, dateString, userStorage)
 }
 
@@ -276,6 +282,21 @@ function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
 
 function makeStepStreakHTML(id, activityInfo, userStorage, method) {
   return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
+}
+
+
+
+function updateHydrationChart() {
+  console.log(dailyHydration)
+  if (hydrationDay.checked === true) {
+    hydrationChartNum.innerHTML = `${dailyHydration}<span>oz</span>`
+    hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dailyHydration}) / 100)`
+    hydrationChartText.innerText = 'Today'
+  } else if (hydrationAvg.checked === true) {
+    hydrationChartNum.innerHTML = `${averageHydration}<span>oz</span>`
+    hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${averageHydration}) / 100)`
+    hydrationChartText.innerText = 'On Average'
+  }
 }
 
 startApp();

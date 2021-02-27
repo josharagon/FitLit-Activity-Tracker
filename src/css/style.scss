@@ -259,7 +259,6 @@ h1 {
   align-items:center;
   flex-direction:column;
   background: #fff0;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
 }
 
 
@@ -312,7 +311,7 @@ h1 {
   display:flex;
   justify-content:center;
   align-items: center;
-  color: #999;
+  color: #00aeff;
 }
 
 .box .percent .number h2{
@@ -324,7 +323,7 @@ h1 {
 }
 
 .box .text{
-  color: #fff;
+  color: #00aeff;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -348,6 +347,7 @@ h1 {
   display: inline-block;
   background-color: #8b8b8b;
   padding: 5px 15px;
+  margin: 0px 5px;
   font-family: sans-serif, Arial;
   font-size: 13px;
   border: 1px solid #00aeff;

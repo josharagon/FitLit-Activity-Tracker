@@ -100,9 +100,12 @@ function startApp() {
     let sleepObject = new Sleep(sleepData, user, today, userRepo);
     let averageSleep = sleepObject.calculateAverageSleep();
     let sleepQuality = sleepObject.calculateAverageSleepQuality();
-    let weekSleep = sleepObject.calculateWeekSleep();
-    let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
-    let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
+    console.log(sleepData);
+    // let weekSleep = sleepObject.calculateWeekSleep();
+    // let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
+    // let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
+    compileChart(sleepObject, "hoursSlept");
+    compileChart(sleepObject, "sleepQuality");
     sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
     sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
     avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);

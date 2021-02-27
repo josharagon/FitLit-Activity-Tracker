@@ -16,6 +16,8 @@ import Sleep from './Sleep';
 import UserRepo from './User-repo';
 import fetchData from './APICalls';
 
+import * as JSC from 'jscharting';
+
 var sidebarName = document.getElementById('sidebarName');
 var stepGoalCard = document.getElementById('stepGoalCard');
 var headerText = document.getElementById('headerText');
@@ -75,20 +77,22 @@ function startApp() {
 
   function displayHydrationData(hydrationData, user, userRepo) {
     let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
+
     let averageHydration = hydrationObject.calculateAverageOunces();
     hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
     hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
     // hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
     // hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
-    compileHydrationChart(hydrationData, user, userRepo)
+    compileHydrationChart(hydrationObject)
   }
 
-  function compileHydrationChart(hydrationObject, user, userRepo) {
+  function compileHydrationChart(hydrationObject) {
+    console.log(hydrationObject.calculateFirstWeekOunces())
     let hydrationChart = new JSC.Chart("chartDiv-hydration", {
       series: [
         {
-          points: hydrationObject.calculateFirstWeekOunces(userRepo, currentUser.id)
+          points: hydrationObject.calculateFirstWeekOunces()
         }
       ]
     });

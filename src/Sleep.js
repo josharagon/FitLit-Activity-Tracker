@@ -42,9 +42,9 @@ class Sleep {
     let userSleepObject = userRepo.isolateUsernameAndRelevantData(this.sleepData, date, 'sleepQuality', timeline);
 
     return Object.keys(userSleepObject).filter(function(key) {
-      return (userSleepObject[key].reduce(function(sumSoFar, sleepQualityValue) {
-        sumSoFar += sleepQualityValue
-        return sumSoFar;
+      return (userSleepObject[key].reduce(function(sum, sleepQualityValue) {
+        sum += sleepQualityValue
+        return sum;
       }, 0) / userSleepObject[key].length) > 3
     }).map(function(sleeper) {
       return userRepo.getDataFromID(parseInt(sleeper)).name;

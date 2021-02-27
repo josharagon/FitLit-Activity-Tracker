@@ -12,8 +12,8 @@ class UserRepo {
     return dataSet.filter((userData) => id === userData.userID);
   }
   calculateAverageStepGoal() {
-    var totalStepGoal = this.users.reduce((sumSoFar, data) => {
-      return sumSoFar = sumSoFar + data.dailyStepGoal;
+    var totalStepGoal = this.users.reduce((sum, data) => {
+      return sum = sum + data.dailyStepGoal;
     }, 0);
     return totalStepGoal / this.users.length;
   };

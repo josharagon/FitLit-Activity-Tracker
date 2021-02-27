@@ -149,6 +149,8 @@ function startApp() {
     //weekly views:
     compileStepsChart(activityRepo)
     compileStairsChart(activityRepo)
+    console.log(activityRepo)
+    console.log('check this out:', activityRepo.userDataForWeek("numStairs"))
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
     //console.log(activityRepo.userDataForWeek("minutesActive"));
     //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
@@ -163,25 +165,25 @@ function startApp() {
       box_fill: '#ee6',
       series: [
         {
-          points: activityRepo.userDataForWeek("flightsOfStairs")
+          points: activityRepo.userDataForWeek("numSteps")
         },
       ]
     });
   }
 
-  // function compileStairsChart(activityRepo) {
-  //   let stairsChart = new JSC.Chart("chartDiv-stairs", {
-  //     type: 'spline',
-  //     legend_visible: false,
-  //     axisTick_gridline: {visible: false},
-  //     box_fill: '#ee6',
-  //     series: [
-  //       {
-  //         points: activityRepo.userDataForWeek("numStairs")
-  //       },
-  //     ]
-  //   });
-  // }
+  function compileStairsChart(activityRepo) {
+    let stairsChart = new JSC.Chart("chartDiv-stairs", {
+      type: 'spline',
+      legend_visible: false,
+      axisTick_gridline: {visible: false},
+      box_fill: '#ee6',
+      series: [
+        {
+          points: activityRepo.userDataForWeek("flightsOfStairs")
+        },
+      ]
+    });
+  }
   
   function display(element, description, method) {
     element.insertAdjacentHTML("afterBegin", `<p>${description}:</p><p>You</p><p><span class="number">${method}</span></p>`)

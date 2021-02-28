@@ -4,11 +4,6 @@ import './css/reset.scss';
 import './images/person walking on path.jpg';
 import './images/The Rock.jpg';
 
-import userData from './data/users';
-import hydrationData from './data/hydration';
-import sleepData from './data/sleep';
-import activityData from './data/activity';
-
 import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
@@ -18,39 +13,19 @@ import fetchData from './APICalls';
 
 import * as JSC from 'jscharting';
 
-var sidebarName = document.getElementById('sidebarName');
-var stepGoalCard = document.getElementById('stepGoalCard');
-var headerText = document.getElementById('headerText');
-var userAddress = document.getElementById('userAddress');
-var userEmail = document.getElementById('userEmail');
-var userStridelength = document.getElementById('userStridelength');
-var friendList = document.getElementById('friendList');
-var hydrationToday = document.getElementById('hydrationToday');
-var hydrationAverage = document.getElementById('hydrationAverage');
-var hydrationThisWeek = document.getElementById('hydrationThisWeek');
-var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
-var historicalWeek = document.querySelectorAll('.historicalWeek');
-var sleepToday = document.getElementById('sleepToday');
-var sleepQualityToday = document.getElementById('sleepQualityToday');
-var avUserSleepQuality = document.getElementById('avUserSleepQuality');
-var sleepThisWeek = document.getElementById('sleepThisWeek');
-var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
-var friendChallengeListToday = document.getElementById('friendChallengeListToday');
-var friendChallengeListHistory = document.getElementById('friendChallengeListHistory');
-var bigWinner = document.getElementById('bigWinner');
-var userStepsToday = document.getElementById('userStepsToday');
-var avgStepsToday = document.getElementById('avgStepsToday');
-var avgStepGoalCard = document.getElementById('avStepGoalCard')
-var userStairsToday = document.getElementById('userStairsToday');
-var avgStairsToday = document.getElementById('avgStairsToday');
-var userMinutesToday = document.getElementById('userMinutesToday');
-var avgMinutesToday = document.getElementById('avgMinutesToday');
-var userStepsThisWeek = document.getElementById('userStepsThisWeek');
-var userStairsThisWeek = document.getElementById('userStairsThisWeek');
-var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
-var bestUserSteps = document.getElementById('bestUserSteps');
-var streakList = document.getElementById('streakList');
-var streakListMinutes = document.getElementById('streakListMinutes');
+// var sidebarName = document.getElementById('sidebarName');
+// var headerText = document.getElementById('headerText');
+// var userAddress = document.getElementById('userAddress');
+// var userEmail = document.getElementById('userEmail');
+// var historicalWeek = document.querySelectorAll('.historicalWeek');
+
+
+//var friendChallengeListToday = document.getElementById('friendChallengeListToday');
+//var friendChallengeListHistory = document.getElementById('friendChallengeListHistory');
+//var bigWinner = document.getElementById('bigWinner');
+
+// var streakList = document.getElementById('streakList');
+// var streakListMinutes = document.getElementById('streakListMinutes');
 
 function startApp() {
   // fetchData();
@@ -77,12 +52,18 @@ function startApp() {
     displaySleepData(allData.sleepData, currentUser, today, userRepo);
     displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
     displayActivityData(allData.activityData, currentUser, today, userRepo);
-  })
+  });
+
 
 
   function displayHydrationData(hydrationData, user, today, userRepo) {
-    let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
+    var friendList = document.getElementById('friendList');
+    var hydrationToday = document.getElementById('hydrationToday');
+    var hydrationAverage = document.getElementById('hydrationAverage');
+    var hydrationThisWeek = document.getElementById('hydrationThisWeek');
+    var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
 
+    let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
     let averageHydration = hydrationObject.calculateAverageOunces();
     hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
     hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
@@ -111,12 +92,18 @@ function startApp() {
   }
 
   function displaySleepData(sleepData, user, today, userRepo) {
+    var sleepToday = document.getElementById('sleepToday');
+    var sleepQualityToday = document.getElementById('sleepQualityToday');
+    var avUserSleepQuality = document.getElementById('avUserSleepQuality');
+    var sleepThisWeek = document.getElementById('sleepThisWeek');
+    var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
     let sleepObject = new Sleep(sleepData, user, today, userRepo);
     let averageSleep = sleepObject.calculateAverageSleep();
     let sleepQuality = sleepObject.calculateAverageSleepQuality();
     let weekSleep = sleepObject.calculateWeekSleep();
     let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
     let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
+
     sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
     sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
     avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
@@ -124,26 +111,42 @@ function startApp() {
   }
 
   function displayActivityData(activityData, currentUser, today, userRepo) {
+    var stepGoalCard = document.getElementById('stepGoalCard');
+    var userStridelength = document.getElementById('userStridelength');
+    var avgStepGoalCard = document.getElementById('avStepGoalCard')
+    var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
+    var bestUserSteps = document.getElementById('bestUserSteps');
+    var userStairsThisWeek = document.getElementById('userStairsThisWeek');
+
     let activityRepo = new Activity(activityData, today, currentUser, userRepo);
+
+    var userStepsToday = document.getElementById('userStepsToday');
     display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
+    var userMinutesToday = document.getElementById('userMinutesToday');
     display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
+
     const userStairs = activityRepo.userDataForToday('flightsOfStairs')
+    var userStairsToday = document.getElementById('userStairsToday');
     userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${userStairs}</span></p>`)
-    // need users flights of stairs
+    // need users flights of stairs --??We have flights in activity data
     activityRepo.getMilesFromStepsByDate()
     // need to create dom element
     activityRepo.getStairRecord()
     //  - all time stair record need to create dom element
+    var avgStairsToday = document.getElementById('avgStairsToday');
     const averageStairs = activityRepo.getAllUserAverageForDay('flightsOfStairs')
     avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${averageStairs}</span></p>`)
     // this returns the average # of stairs for today for all users
+    var avgMinutesToday = document.getElementById('avgMinutesToday');
     const averageMinutes = activityRepo.getAllUserAverageForDay('minutesActive')
     avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${averageMinutes}</span></p>`)
     // average minutes active for all users today
+    var avgStepsToday = document.getElementById('avgStepsToday');
     const averageSteps = activityRepo.getAllUserAverageForDay('numSteps')
     avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
     // average number of steps for everyone today
     //weekly views:
+    var userStepsThisWeek = document.getElementById('userStepsThisWeek');
     const weeklySteps = activityRepo.userDataForWeek("numSteps");
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
     //console.log(activityRepo.userDataForWeek("minutesActive"));

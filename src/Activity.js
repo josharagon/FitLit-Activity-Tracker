@@ -1,3 +1,4 @@
+
 class Activity {
   constructor(activityData, date, user, userRepo) {
     this.activityData = activityData;
@@ -38,7 +39,7 @@ class Activity {
     return false
   }
 
-  // this functyion doesn't get displayed as far as I can tell
+  // this function doesn't get displayed as far as I can tell
   getDaysGoalExceeded(id, userRepo) {
     return this.activityData.filter(data => id === data.userID && data.numSteps > userRepo.dailyStepGoal).map(data => data.date);
   }
@@ -51,7 +52,7 @@ class Activity {
   }
 
   getAllUserAverageForDay(relevantData) {
-    let selectedDayData = this.userRepo.chooseDayDataForAllUsers(this.activityData, this.date);
+    let selectedDayData = this.activityData.filter(entry => entry.date === this.date);
     return parseFloat((selectedDayData.reduce((acc, elem) => acc += elem[relevantData], 0) / selectedDayData.length).toFixed(1));
   }
 

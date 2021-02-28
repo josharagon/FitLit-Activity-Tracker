@@ -1,8 +1,7 @@
-
 class Activity {
   constructor(activityData, date, user, userRepo) {
     this.activityData = activityData;
-    this.userStepsByDate = {} //activityData[0].numSteps;
+    this.userStepsByDate = {} 
     this.date = date;
     this.user = user;
     this.userRepo = userRepo;
@@ -14,13 +13,11 @@ class Activity {
 
   getMilesFromStepsByDate() {
     let userStepsByDate = this.returnUserStepsByDate()
-    // let userStepsByDate = this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
     return parseFloat(((userStepsByDate.numSteps * this.user.strideLength) / 5280).toFixed(1));
   }
 
   getActiveMinutesByDate() {
     let userActivityByDate = this.returnUserStepsByDate();
-    // let userActivityByDate = this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
     return userActivityByDate.minutesActive;
   }
 

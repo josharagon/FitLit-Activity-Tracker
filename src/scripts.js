@@ -28,27 +28,12 @@ import * as JSC from 'jscharting';
 // var streakListMinutes = document.getElementById('streakListMinutes');
 
 function startApp() {
-  // fetchData();
-  // let userList = [];
-  // makeUsers(userList);
-  // let userRepo = new UserRepo(userList);
-  // let hydrationRepo = new Hydration(hydrationData);
-  // let sleepRepo = new Sleep(sleepData);
-  // let activityRepo = new Activity(activityData);
-
-  // var userNowId = pickUser();
-  // let userNow = getUserById(userNowId, userRepo);
-  // let today = makeToday(userRepo, userNowId, hydrationData);
-
   fetchData()
   .then(allData => {
     let currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
     let userRepo = new UserRepo(allData.userData, currentUser);
     let today = allData.activityData[allData.activityData.length - 1].date
-    // console.log(userRepo.getToday(currentUser.id))
     let hydrationRepo = new Hydration(allData.hydrationData, currentUser);
-    // let today = makeToday(userRepo, currentUser.id, hydrationData);
-    // console.log(allData.activityData.length, allData.activityData)
     displaySleepData(allData.sleepData, currentUser, today, userRepo);
     displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
     displayActivityData(allData.activityData, currentUser, today, userRepo);

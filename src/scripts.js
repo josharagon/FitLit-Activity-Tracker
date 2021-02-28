@@ -51,15 +51,26 @@ var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
 var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes');
+//HYDRATION CIRCLE CHART
 var hydrationChartText = document.getElementById('chart-text');
 var hydrationChartNum = document.getElementById('chart-num');
-var hydrationBar = document.getElementById('chart-bar');
-var hydrationDay = document.getElementById('day-oz')
-var hydrationAvg = document.getElementById('avg-oz')
-var activityChartNum = document.getElementById('activity-chart-num')
-var activityBar = document.getElementById('activity-bar')
-var radioBox = document.querySelector('.hydration-data')
+var hydrationBar = document.getElementById('chart-barhydro');
+var hydrationDay = document.getElementById('day-oz');
+var hydrationAvg = document.getElementById('avg-oz');
+var radioBox = document.querySelector('.data-radio');
 radioBox.addEventListener('click', updateHydrationChart);
+//ACTIVITY CIRCLE CHART
+var mileError = document.querySelector('.error-message');
+var activityStepChartNum = document.getElementById('activity-chart-num');
+var activityStepBar = document.getElementById('chart-baractivity');
+var allUserChartNum = document.querySelector('.all-user-num');
+var allUserBar = document.querySelector('.all-user-bar');
+var activityCategoryRadio = document.getElementById('category');
+var stepsRadio = document.getElementById('category-steps');
+var milesRadio = document.getElementById('category-miles');
+var stairsRadio = document.getElementById('category-stairs');
+var activeRadio = document.getElementById('category-active');
+activityCategoryRadio.addEventListener('click', updateCategory);
 
 function startApp() {
   // fetchData();
@@ -122,7 +133,16 @@ function startApp() {
 
   function displayActivityData(activityData, currentUser, today, userRepo) {
     let activityRepo = new Activity(activityData, today, currentUser, userRepo);
-    let miAmount = (activityRepo.getMilesFromStepsByDate())
+    let personalAmount = activityRepo.returnUserStepsByDate().numSteps;
+    let personalMiles = activityRepo.getMilesFromStepsByDate();
+    let personalStairs = activityRepo.getStairRecord();
+    let personalActive = activityRepo.getActiveMinutesByDate();
+    window.personalData = {steps: personalAmount, miles: personalMiles, stairCount: personalStairs, minsActive: personalActive};
+    console.log(personalData)
+    let allAmount = activityRepo.getAllUserAverageForDay('numSteps');
+    let allStairs =  activityRepo.getAllUserAverageForDay('flightsOfStairs');
+    let allActive = activityRepo.getAllUserAverageForDay('minutesActive');
+    window.allUserData = {steps: allAmount, stairCount: allStairs, minsActive: allActive};
     // display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
     display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
     const userStairs = activityRepo.userDataForToday('flightsOfStairs')
@@ -142,8 +162,10 @@ function startApp() {
     // avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
     // average number of steps for everyone today
     //weekly views:
-    activityChartNum.innerHTML = `${miAmount}<span>mi</span>`
-    activityBar.style.strokeDashoffset = `calc(440 - (440* ${miAmount}) / 100)`
+    activityStepChartNum.innerHTML = `${personalAmount}<span></span>`
+    activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalAmount}) / 1500)`
+    allUserChartNum.innerHTML = `${allAmount}<span></span>`
+    allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allAmount}) / 1500)`
     compileChart(activityRepo, "numSteps")
     compileChart(activityRepo, "flightsOfStairs")
     compileChart(activityRepo, "minutesActive")
@@ -311,7 +333,6 @@ startApp();
 // }
 
 function updateHydrationChart() {
-  console.log(dailyHydration)
   if (hydrationDay.checked === true) {
     hydrationChartNum.innerHTML = `${dailyHydration}<span>oz</span>`
     hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dailyHydration}) / 100)`
@@ -320,6 +341,34 @@ function updateHydrationChart() {
     hydrationChartNum.innerHTML = `${averageHydration}<span>oz</span>`
     hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${averageHydration}) / 100)`
     hydrationChartText.innerText = 'On Average'
+  }
+}
+
+function updateCategory() {
+  if (stepsRadio.checked === true) {
+    mileError.classList.add('hidden')
+    activityStepChartNum.innerHTML = `${personalData.steps}<span></span>`
+    activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalData.steps}) / 1500)`
+    allUserChartNum.innerHTML = `${allUserData.steps}<span></span>`
+    allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allUserData.steps}) / 1500)`
+  } else if (milesRadio.checked === true) {
+    mileError.classList.remove('hidden')
+    activityStepChartNum.innerHTML = `${personalData.miles}<span>mi</span>`
+    activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.miles}) / 25)`
+    // allUserChartNum.innerHTML = `${allAmount}<span></span>`
+    // allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allU}) / 1000)`
+  } else if (stairsRadio.checked === true) {
+    mileError.classList.add('hidden')
+    activityStepChartNum.innerHTML = `${personalData.stairCount}<span>stairs</span>`
+    activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.stairCount}) / 100)`
+    allUserChartNum.innerHTML = `${allUserData.stairCount}<span>stairs</span>`
+    allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.stairCount}) / 100)`
+  } else if (activeRadio.checked === true) {
+    mileError.classList.add('hidden')
+    activityStepChartNum.innerHTML = `${personalData.minsActive}<span>mins</span>`
+    activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.minsActive}) / 250)`
+    allUserChartNum.innerHTML = `${allUserData.minsActive}<span>mins</span>`
+    allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.minsActive}) / 250)`
   }
 }
 

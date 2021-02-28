@@ -1,3 +1,5 @@
+
+
 * {
   font-family: 'Montserrat', sans-serif !important;
   margin: 0;
@@ -15,6 +17,10 @@ h1 {
   color: #ffffff;
   height: 80px;
   padding-top: 10px;
+}
+
+h2{
+  padding: 10px !important;
 }
 
 .main {
@@ -108,7 +114,8 @@ h1 {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 100%
+  height: 100%;
+  padding: 0px 15px;
 }
 
 .infoContainer-cardContainer-card-horizontal {
@@ -211,7 +218,6 @@ h1 {
   justify-content: flex-start;
   width: 50%;
   height: 93%;
-  overflow: scroll;
 }
 
 .number {
@@ -258,7 +264,7 @@ h1 {
 
 .box{
   position:relative;
-  width:300px;
+  width:fit-content;
   height:400px;
   display:flex;
   justify-content:center;
@@ -299,12 +305,19 @@ h1 {
   to { stroke-dasharray: 0 100; }
 }
 
-.box .percent svg circle:nth-child(2){
+#chart-bar{
   animation: circle-chart-fill 4s reverse;
   transform: rotate(-90deg);
   transform-origin: center;
   stroke-dashoffset: calc(440 - (440*87) / 100);
-  stroke:#03a9f4;
+  &hydro {
+    @extend #chart-bar;
+    stroke: #00aeff;
+  }
+  &activity {
+    @extend #chart-bar;
+    stroke: #DFE166;
+  }
 }
 
 .box .percent .number{
@@ -317,11 +330,19 @@ h1 {
   display:flex;
   justify-content:center;
   align-items: center;
-  color: #00aeff;
+  &hydro {
+    @extend .box, .percent, .number;
+    color: #00aeff;
+  }
+  &activity {
+    @extend .box, .percent, .number;
+    color: #DFE166;
+    height: 105%;
+  }
 }
 
 .box .percent .number h2{
-  font-size: 48px;
+  font-size: 27px;
 }
 
 .box .percent .number h2 span{
@@ -329,27 +350,38 @@ h1 {
 }
 
 .box .text{
-  color: #00aeff;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 1px;
   width: max-content;
   height: 0px;
+  &hydro {
+    @extend .box, .text;
+    color: #00aeff;
+  }
+  &activity {
+    @extend .box, .text;
+    color: #DFE166;
+  }
 }
 
-.hydration-data{
+.data-radio{
   display: flex;
   flex-direction: row;
 }
-
-.hydration-data input[type="radio"] {
+.data-radio-activity {
+  @extend .data-radio;
+  @extend .data-radio, label;
+  @extend .data-radio, input[type="radio"];
+}
+.data-radio input[type="radio"] {
   opacity: 0;
   position: fixed;
   width: 0;
 }
 
-.hydration-data label {
-  color: white;
+.data-radio label {
+  color: rgb(236, 209, 209);
   display: inline-block;
   background-color: #8b8b8b;
   padding: 5px 15px;
@@ -359,19 +391,60 @@ h1 {
   border: 1px solid #00aeff;
   border-radius: 18px;
   z-index: 1;
+  border: 1px solid #00aeff; 
 }
 
-.hydration-data input[type="radio"]:checked + label {
+.data-radio input[type="radio"]:checked + label {
   box-shadow: inset 0px 0px 6px 0px black;
   background-color:#00aeff;
   border-color: rgb(255, 255, 255);
 }
 
-.hydration-title{
-  font-size: 34px;
-  color: #3aa9f4;
+.data-radio-activity label {
+  color: rgb(18, 18, 18);
+  display: inline-block;
+  background-color: #8b8b8b;
+  padding: 5px 15px;
+  margin: 0px 5px;
+  font-family: sans-serif, Arial;
+  font-size: 13px;
+  border: 1px solid #DFE166;
+  border-radius: 18px;
+  z-index: 1;
+  border: 1px solid #DFE166; 
+}
+
+.data-radio-activity input[type="radio"]:checked + label {
+  box-shadow: inset 0px 0px 6px 0px black;
+  background-color:#DFE166;
+  border-color: rgb(255, 255, 255);
+}
+
+.title{
+  font-size: 48px;
+  &hydro {
+    @extend .title;
+    color: #00aeff;
+  }
+  &activity {
+    @extend .title;
+    color: #DFE166;
+  }
+}
+
+
+.activity-charts{
+  display: flex !important;
+  flex: row;
+  justify-content: space-between;
+  width: 75%;
+}
+
+.error-message{
+  color: red;
 }
 
 .hidden {
   display: none;
 }
+

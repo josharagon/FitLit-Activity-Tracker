@@ -49,22 +49,22 @@
     <section class="body-main-infoContainter">
       <section class="main-column-hydration">
         <section class="infoContainer-cardContainer-card-horizontal">
-          <h1 class="hydration-title">Hydration</h1>
+          <h1 class="titlehydro">Hydration</h1>
           <div class="box">
             <div class="percent">
               <svg>
                 <circle cx="70" cy="70" r="70"></circle>
-                <circle id="chart-bar" cx="70" cy="70" r="70"></circle>
+                <circle id="chart-barhydro" cx="70" cy="70" r="70"></circle>
               </svg>
-              <div class="number">
+              <div class="numberhydro">
                 <h2 class="middle" id="chart-num">0<span>oz</span></h2>
-                <p class="text" id="chart-text">Today</p>
+                <p class="texthydro" id="chart-text">Today</p>
               </div>
             </div>
-            <div class="hydration-data">
+            <div class="data-radio">
               <input type="radio" name="hydrationBtn" id="day-oz" value="small" checked="checked" />
               <label id="day-oz-label" for="day-oz">Today</label>
-              <input type="radio" name="hydrationBtn" id="avg-oz" value="small"/>
+              <input type="radio" name="hydrationBtn" id="avg-oz" value="small" />
               <label id="avg-oz-label" for="avg-oz">Average</label>
             </div>
           </div>
@@ -86,132 +86,156 @@
       </section>
       <section class="main-column-activity">
         <section class="infoContainer-cardContainer-card-horizontal">
-          <h1 class="hydration-title">Activity</h1>
+          <h1 class="titleactivity">Activity</h1>
+          <div class="activity-charts">
           <div class="box">
+            <h2>Personal</h2>
             <div class="percent">
               <svg>
                 <circle cx="70" cy="70" r="70"></circle>
-                <circle id="activity-bar" cx="70" cy="70" r="70"></circle>
+                <circle id="chart-baractivity" cx="70" cy="70" r="70"></circle>
               </svg>
-              <div class="number">
-                <h2 class="middle" id="activity-chart-num">0<span>step</span></h2>
-                <p class="text" id="activity-chart-text">Today</p>
+              <div class="numberactivity">
+                <h2 class="middle" id="activity-chart-num">0<span></span></h2>
+                <p class="textactivity" id="activity-chart-text">Today</p>
               </div>
             </div>
-            <div class="activity-data">
-              <input type="radio" name="activityBtn" id="day-step" value="small" checked="checked" />
-              <label id="day-step-label" for="day-step">Today</label>
-              <input type="radio" name="activityBtn" id="avg-step" value="small"/>
-              <label id="avg-step-label" for="avg-step">Average</label>
             </div>
-          </section>
-          <section class="horizontalCard-activity-container">
-            <div class="card-today-activity">
-              <p id="userStairsToday"></p>
-            </div>
-            <div class="card-today-activity">
-              <p id="avgStairsToday"></p>
-            </div>
-          </section>
-          <section class="horizontalCard-activity-container">
-            <div class="card-today-activity">
-              <p id="userMinutesToday"></p>
-            </div>
-            <div class="card-today-activity">
-              <p id="avgMinutesToday"></p>
-            </div>
-          </section>
-        </section>
-        <section class="infoContainer-cardContainer-card-horizontal">
-          <section class="horizontalCard-activity-container">
-            <div class="card-history-activity">
-              <p class="thisWeek">Your steps this week</p>
-              <div class="sidebar-header-line"></div>
-              <div id="chartDiv-numSteps" style="width: 100%; height: 400px;"></div>
-            </div>
-            <div class="card-history-activity">
-              <p class="thisWeek">Your stair count this week</p>
-              <div class="sidebar-header-line"></div>
-              <div id="chartDiv-flightsOfStairs" style="width: 100%; height: 400px;"></div>
-            </div>
-          </section>
-          <section class="horizontalCard-activity-container">
-            <div class="card-history-activity">
-              <p class="thisWeek">Your minutes of activity this week</p>
-              <div class="sidebar-header-line"></div>
-              <div id="chartDiv-minutesActive" style="width: 100%; height: 400px;"></div>
-            </div>
-            <div class="card-history-activity">
-              <p class="thisWeek">Winner's steps this week</p>
-              <div class="sidebar-header-line"></div>
-              <ul class="card-vertical-list" id="bestUserSteps">
-                <!-- Activity week list goes here -->
-              </ul>
-            </div>
-          </section>
-        </section>
-      </section>
-      <section class="main-column-sleep">
-        <section class="infoContainer-cardContainer-card-horizontal">
-          <div class="card-today-sleep">
-            <p id="sleepToday"></p>
+            <div class="box">
+              <h2>All Users</h2>
+              <div class="percent">
+                <svg>
+                  <circle cx="70" cy="70" r="70"></circle>
+                  <circle class="all-user-bar" id="chart-baractivity" cx="70" cy="70" r="70"></circle>
+                </svg>
+                <div class="numberactivity">
+                  <h2 class="middle all-user-num" id="activity-chart-num">0<span></span></h2>
+                  <p class="textactivity" id="activity-chart-text">Today</p>
+                </div>
+              </div>
+              </div>
           </div>
-          <div class="card-today-sleep">
-            <p id="sleepQualityToday"></p>
+            <h2>Activity Category</h2>
+            <h2 class="error-message hidden">!AVERAGE MILES FOR ALL USERS IS NOT AVAILABLE!</h2>
+            <div class="data-radio-activity" id="category">
+              <input type="radio" name="categoryBtn" id="category-steps" value="small" checked="checked" />
+              <label id="category-label" for="category-steps">Steps</label>
+              <input type="radio" name="categoryBtn" id="category-miles" value="small" />
+              <label id="category-label" for="category-miles">Miles</label>
+              <input type="radio" name="categoryBtn" id="category-stairs" value="small" />
+              <label id="category-label" for="category-stairs">Stairs</label>
+              <input type="radio" name="categoryBtn" id="category-active" value="small" />
+              <label id="category-label" for="category-active">Active Minutes</label>
+            </div>
+        </section>
+        <section class="horizontalCard-activity-container hidden">
+          <div class="card-today-activity">
+            <p id="userStairsToday"></p>
           </div>
-          <div class="card-today-sleep">
-            <p id="avUserSleepQuality"></p>
+          <div class="card-today-activity">
+            <p id="avgStairsToday"></p>
           </div>
         </section>
-        <section class="infoContainer-cardContainer-card-vertical">
-          <div class="card-history-sleep">
-            <p class="thisWeek">Hours of sleep this week</p>
+        <section class="horizontalCard-activity-container hidden">
+          <div class="card-today-activity">
+            <p id="userMinutesToday"></p>
+          </div>
+          <div class="card-today-activity">
+            <p id="avgMinutesToday"></p>
+          </div>
+          </div>
+        </section>
+      <section class="infoContainer-cardContainer-card-horizontal">
+        <section class="horizontalCard-activity-container">
+          <div class="card-history-activity">
+            <p class="thisWeek">Your steps this week</p>
             <div class="sidebar-header-line"></div>
-            <ul class="card-vertical-list" id="sleepThisWeek">
-              <!-- Sleep week list goes here -->
-            </ul>
+            <div id="chartDiv-numSteps" style="width: 100%; height: 400px;"></div>
           </div>
-          <div class="card-history-sleep">
-            <p class="historicalWeek"></p>
+          <div class="card-history-activity">
+            <p class="thisWeek">Your stair count this week</p>
             <div class="sidebar-header-line"></div>
-            <ul class="card-vertical-list" id="sleepEarlierWeek">
-              <!-- Sleep week list goes here -->
+            <div id="chartDiv-flightsOfStairs" style="width: 100%; height: 400px;"></div>
+          </div>
+        </section>
+        <section class="horizontalCard-activity-container hidden">
+          <div class="card-history-activity">
+            <p class="thisWeek">Your minutes of activity this week</p>
+            <div class="sidebar-header-line"></div>
+            <div id="chartDiv-minutesActive" style="width: 100%; height: 400px;"></div>
+          </div>
+          <div class="card-history-activity">
+            <p class="thisWeek">Winner's steps this week</p>
+            <div class="sidebar-header-line"></div>
+            <ul class="card-vertical-list" id="bestUserSteps">
+              <!-- Activity week list goes here -->
             </ul>
           </div>
         </section>
       </section>
     </section>
-    <section class="main-sidebar-body hidden">
-      <section class="body-sidebar-sidebarContainer">
-        <h2 class="sidebar-header-name" id="sidebarName">FRIENDLY STEP CHALLENGE!</h2>
-        <div class="sidebar-header-line"></div>
-        <img src="./images/person walking on path.jpg" class="sidebar-header-userImage"></img>
-        <div class="sidebar-header-line"></div>
-        <p class="sidebar-header-userInfo" id="bigWinner"></p>
-        <div class="sidebar-header-line"></div>
-        <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
-        <p class="sidebar-header-userInfo" id="avStepGoalCard">
-        <p>
-        <section class="sidebar-body-friendContainer">
-          <section class="sidebar-friendContainer-listItems">
-            <p class="thisWeek">Rank this week</p>
-            <ul class="card-vertical-list" id="friendChallengeListToday">
-              <!-- friend list goes here -->
-            </ul>
-            <div class="sidebar-header-line"></div>
-            <p class="historicalWeek">- Historical Rank</p>
-            <ul class="card-vertical-list" id="friendChallengeListHistory">
-              <!-- friend list goes here -->
-            </ul>
-            <div class="sidebar-header-line"></div>
-          </section>
-          <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
-          <ul class="card-vertical-list" id="streakList">
-            <!-- friend list goes here -->
+    <section class="main-column-sleep">
+      <section class="infoContainer-cardContainer-card-horizontal">
+        <div class="card-today-sleep">
+          <p id="sleepToday"></p>
+        </div>
+        <div class="card-today-sleep">
+          <p id="sleepQualityToday"></p>
+        </div>
+        <div class="card-today-sleep">
+          <p id="avUserSleepQuality"></p>
+        </div>
+      </section>
+      <section class="infoContainer-cardContainer-card-vertical">
+        <div class="card-history-sleep">
+          <p class="thisWeek">Hours of sleep this week</p>
+          <div class="sidebar-header-line"></div>
+          <ul class="card-vertical-list" id="sleepThisWeek">
+            <!-- Sleep week list goes here -->
           </ul>
-        </section>
+        </div>
+        <div class="card-history-sleep">
+          <p class="historicalWeek"></p>
+          <div class="sidebar-header-line"></div>
+          <ul class="card-vertical-list" id="sleepEarlierWeek">
+            <!-- Sleep week list goes here -->
+          </ul>
+        </div>
       </section>
     </section>
   </section>
+  <section class="main-sidebar-body hidden">
+    <section class="body-sidebar-sidebarContainer">
+      <h2 class="sidebar-header-name" id="sidebarName">FRIENDLY STEP CHALLENGE!</h2>
+      <div class="sidebar-header-line"></div>
+      <img src="./images/person walking on path.jpg" class="sidebar-header-userImage"></img>
+      <div class="sidebar-header-line"></div>
+      <p class="sidebar-header-userInfo" id="bigWinner"></p>
+      <div class="sidebar-header-line"></div>
+      <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
+      <p class="sidebar-header-userInfo" id="avStepGoalCard">
+      <p>
+      <section class="sidebar-body-friendContainer">
+        <section class="sidebar-friendContainer-listItems">
+          <p class="thisWeek">Rank this week</p>
+          <ul class="card-vertical-list" id="friendChallengeListToday">
+            <!-- friend list goes here -->
+          </ul>
+          <div class="sidebar-header-line"></div>
+          <p class="historicalWeek">- Historical Rank</p>
+          <ul class="card-vertical-list" id="friendChallengeListHistory">
+            <!-- friend list goes here -->
+          </ul>
+          <div class="sidebar-header-line"></div>
+        </section>
+        <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
+        <ul class="card-vertical-list" id="streakList">
+          <!-- friend list goes here -->
+        </ul>
+      </section>
+    </section>
+  </section>
+  </section>
 </body>
+
 </html>

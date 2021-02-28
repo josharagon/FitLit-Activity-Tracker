@@ -17,9 +17,14 @@ class Hydration {
     let findOuncesByDate = this.hydrationData.find((data) => this.user.id === data.userID && this.date === data.date);
     return findOuncesByDate.numOunces;
   }
-  calculateFirstWeekOunces() {
-    return this.userRepo.getFirstWeek(this.user.id, this.hydrationData).map((data) => {
-      return {x: data.date, y: data.numOunces};
+  // calculateFirstWeekOunces() {
+  //   return this.userRepo.getFirstWeek(this.user.id, this.hydrationData).map((data) => {
+  //     return {x: data.date, y: data.numOunces};
+  //   });
+  // }
+  userDataForWeek(releventData) {
+    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.hydrationData).map((data) => {
+      return {x: data.date, y: data[releventData]}
     });
   }
 

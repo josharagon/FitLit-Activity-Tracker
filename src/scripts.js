@@ -56,6 +56,8 @@ var hydrationChartNum = document.getElementById('chart-num');
 var hydrationBar = document.getElementById('chart-bar');
 var hydrationDay = document.getElementById('day-oz')
 var hydrationAvg = document.getElementById('avg-oz')
+var activityChartNum = document.getElementById('activity-chart-num')
+var activityBar = document.getElementById('activity-bar')
 var radioBox = document.querySelector('.hydration-data')
 radioBox.addEventListener('click', updateHydrationChart);
 
@@ -120,7 +122,8 @@ function startApp() {
 
   function displayActivityData(activityData, currentUser, today, userRepo) {
     let activityRepo = new Activity(activityData, today, currentUser, userRepo);
-    display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
+    let miAmount = (activityRepo.getMilesFromStepsByDate())
+    // display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
     display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
     const userStairs = activityRepo.userDataForToday('flightsOfStairs')
     userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${userStairs}</span></p>`)
@@ -136,9 +139,11 @@ function startApp() {
     avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${averageMinutes}</span></p>`)
     // average minutes active for all users today
     const averageSteps = activityRepo.getAllUserAverageForDay('numSteps')
-    avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
+    // avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
     // average number of steps for everyone today
     //weekly views:
+    activityChartNum.innerHTML = `${miAmount}<span>mi</span>`
+    activityBar.style.strokeDashoffset = `calc(440 - (440* ${miAmount}) / 100)`
     compileChart(activityRepo, "numSteps")
     compileChart(activityRepo, "flightsOfStairs")
     compileChart(activityRepo, "minutesActive")
@@ -153,7 +158,7 @@ function startApp() {
       type: 'spline',
       legend_visible: false,
       axisTick_gridline: {visible: false},
-      box_fill: '#ee6',
+      box_fill: '#ffffff00',
       series: [
         {
           points: healthCategory.userDataForWeek(propertyName)

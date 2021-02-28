@@ -86,12 +86,23 @@
       </section>
       <section class="main-column-activity">
         <section class="infoContainer-cardContainer-card-horizontal">
-          <section class="horizontalCard-activity-container">
-            <div class="card-today-activity">
-              <p id="userStepsToday"></p>
+          <h1 class="hydration-title">Activity</h1>
+          <div class="box">
+            <div class="percent">
+              <svg>
+                <circle cx="70" cy="70" r="70"></circle>
+                <circle id="activity-bar" cx="70" cy="70" r="70"></circle>
+              </svg>
+              <div class="number">
+                <h2 class="middle" id="activity-chart-num">0<span>step</span></h2>
+                <p class="text" id="activity-chart-text">Today</p>
+              </div>
             </div>
-            <div class="card-today-activity">
-              <p id="avgStepsToday"></p>
+            <div class="activity-data">
+              <input type="radio" name="activityBtn" id="day-step" value="small" checked="checked" />
+              <label id="day-step-label" for="day-step">Today</label>
+              <input type="radio" name="activityBtn" id="avg-step" value="small"/>
+              <label id="avg-step-label" for="avg-step">Average</label>
             </div>
           </section>
           <section class="horizontalCard-activity-container">

@@ -17,14 +17,18 @@ class Hydration {
     let findOuncesByDate = this.hydrationData.find((data) => this.user.id === data.userID && this.date === data.date);
     return findOuncesByDate.numOunces;
   }
-  // calculateFirstWeekOunces() {
-  //   return this.userRepo.getFirstWeek(this.user.id, this.hydrationData).map((data) => {
-  //     return {x: data.date, y: data.numOunces};
-  //   });
-  // }
+  calculateFirstWeekOunces() {
+    return this.userRepo.getFirstWeek(this.user.id, this.hydrationData).map((data) => {
+      return {[data.date]: data.numOunces};
+    });
+  }
+  // hydration data only has numOunces, what is this argument for?
+  // returns proper array unlike above
   userDataForWeek(releventData) {
+    // console.log(this.userRepo.getWeekFromDate(this.date, this.user.id, this.hydrationData).map((data) => {
+    //   return {[data.date]: data[releventData]};}))
     return this.userRepo.getWeekFromDate(this.date, this.user.id, this.hydrationData).map((data) => {
-      return {x: data.date, y: data[releventData]}
+      return {[data.date]: data[releventData]};
     });
   }
 

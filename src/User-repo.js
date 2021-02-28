@@ -2,10 +2,11 @@ class UserRepo {
   constructor(users, currentUser) {
     this.users = users;
     this.currentUser = currentUser;
-    this.averageAllStepGoals = this.users.reduce((stepSum, user) => {
-      stepSum += user.dailyStepGoal;
-      return stepSum;
-    }, 0)/this.users.length;
+    this.averageAllStepGoals = this.calculateAverageStepGoal();
+    // this.averageAllStepGoals = this.users.reduce((stepSum, user) => {
+    //   stepSum += user.dailyStepGoal;
+    //   return stepSum;
+    // }, 0)/this.users.length;
   }
   getDataFromID(id) {
     return this.users.find((user) => id === user.id);
@@ -16,7 +17,7 @@ class UserRepo {
   //FUNCTION BELOW May be UNUSED-- found a workaround
   calculateAverageStepGoal() {
     var totalStepGoal = this.users.reduce((sum, data) => {
-      return sum = sum + data.dailyStepGoal;
+      return sum += data.dailyStepGoal;
     }, 0);
     return totalStepGoal / this.users.length;
   };

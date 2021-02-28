@@ -140,17 +140,17 @@ describe('Activity', function() {
 
   it('should return a weeks worth steps for a given user', function() {
 
-    expect(activity.userDataForWeek('numSteps')[0]).to.deep.eql('2019/06/15: 3577');
+    expect(activity.userDataForWeek('numSteps')[0]).to.deep.eql({'2019/06/15': 3577});
   });
 
   it('should return a weeks worth active minutes for a given user', function() {
 
-    expect(activity.userDataForWeek('minutesActive')[0]).to.deep.eql('2019/06/15: 140');
+    expect(activity.userDataForWeek('minutesActive')[0]).to.deep.eql({'2019/06/15': 140});
   });
 
   it('should return a weeks worth stairs for a given user', function() {
 
-    expect(activity.userDataForWeek('flightsOfStairs')).to.deep.eql(['2019/06/15: 16']);
+    expect(activity.userDataForWeek('flightsOfStairs')).to.deep.eql([{'2019/06/15': 16}]);
   });
 })
 

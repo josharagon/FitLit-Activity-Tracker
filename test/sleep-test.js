@@ -47,7 +47,7 @@ describe('Sleep', function() {
       expect(sleep.sleepData[2].hoursSlept).to.deep.equal(2);
     });
 
-    it('should hol the sleep quality', () => {
+    it('should hold the sleep quality', () => {
 
       expect(sleep.sleepData[6].sleepQuality).to.deep.equal(3);
       expect(sleep.sleepData[4].sleepQuality).to.deep.equal(3.6);
@@ -76,12 +76,12 @@ describe('Sleep', function() {
 
   it('should find sleep by day for that days week', function() {
 
-    expect(sleep.calculateWeekSleep()).to.deep.equal('2017/06/15: 6.1');
+    expect(sleep.calculateWeekSleep()).to.deep.equal(['2017/06/15: 6.1']);
   });
 
   it('should find sleep quality by day for that days week', function() {
 
-    expect(sleep.calculateWeekSleepQuality()).to.deep.eql('2017/06/15: 2.2');
+    expect(sleep.calculateWeekSleepQuality()).to.deep.eql(['2017/06/15: 2.2']);
   });
 
   it('should find average sleep quality for all users for all time', function() {

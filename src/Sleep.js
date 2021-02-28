@@ -33,11 +33,11 @@ class Sleep {
   }
 
   calculateWeekSleep() {
-    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.sleepData).map((data) => `${data.date}: ${data.hoursSlept}`)[0];
+    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.sleepData).map((data) => `${data.date}: ${data.hoursSlept}`);
   }
 
   calculateWeekSleepQuality() {
-    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.sleepData).map((data) => `${data.date}: ${data.sleepQuality}`)[0];
+    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.sleepData).map((data) => `${data.date}: ${data.sleepQuality}`);
   }
 
   calculateAllUserSleepQuality() {

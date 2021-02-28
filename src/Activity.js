@@ -1,7 +1,7 @@
 class Activity {
   constructor(activityData, date, user, userRepo) {
     this.activityData = activityData;
-    this.userStepsByDate = {} 
+    this.userStepsByDate = {}
     this.date = date;
     this.user = user;
     this.userRepo = userRepo;
@@ -60,7 +60,7 @@ class Activity {
 
   userDataForWeek(releventData) {
     return this.userRepo.getWeekFromDate(this.date, this.user.id, this.activityData).map((data) => {
-      return {x: data.date, y: data[releventData]}
+      return {[data.date]: data[releventData]};
     });
   }
 

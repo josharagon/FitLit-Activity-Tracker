@@ -85,11 +85,20 @@ describe('Hydration', function() {
   });
 
   it('should find water intake by day for first week', function() {
-
-    expect(hydration.calculateFirstWeekOunces(userRepo)[0]).to.deep.eql({ x: '2019/06/15', y: 37 });
-    expect(hydration.calculateFirstWeekOunces(userRepo)[1]).to.deep.eql({ x: '2018/06/16', y: 39 });
+    expect(hydration.calculateFirstWeekOunces()).to.deep.eql([ { '2019/06/15': 37 }, { '2018/06/16': 39 }, { '2016/08/22': 30 } ]);
+    expect(hydration.calculateFirstWeekOunces()).to.deep.eql([ { '2019/06/15': 37 }, { '2018/06/16': 39 }, { '2016/08/22': 30 } ]);
   });
 
+  it('should find any dataset property by key for a week', function() {
+
+    expect(hydration.userDataForWeek('numOunces')).to.deep.eql([ { '2019/06/15': 37 }, { '2018/06/16': 39 }, { '2016/08/22': 30 } ]);
+    expect(hydration.userDataForWeek('userID')).to.deep.eql([ { '2019/06/15': 1 }, { '2018/06/16': 1 }, { '2016/08/22': 1 } ]);
+    expect(hydration.userDataForWeek('date')).to.deep.eql([
+      { '2019/06/15': '2019/06/15' },
+      { '2018/06/16': '2018/06/16' },
+      { '2016/08/22': '2016/08/22' }
+    ]);
+  });
   // ---marked for deletion
   // it('should find the quantity of oz. drank in any week', function() {
   //   console.log(hydration.calculateRandomWeekOunces())

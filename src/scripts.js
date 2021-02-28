@@ -81,6 +81,17 @@ function startApp() {
     //console.log(sleepObject.calculateAllUserSleepQuality())
   }
 
+  function makeGraphPoints(dates) {
+    //INPUT: Array w/objects Date/value pairs
+    //OUTPUT: Array w/ objects of x: date and y:value
+    const points = dates.map(date => {
+      return Object.keys(date)[0];
+    });
+    return points.map((dateKey, index) => {
+      return { x: dateKey, y: dates[index][dateKey] }
+    });
+  }
+
   function displayActivityData(activityData, currentUser, today, userRepo) {
     var stepGoalCard = document.getElementById('stepGoalCard');
     var userStridelength = document.getElementById('userStridelength');
@@ -136,7 +147,7 @@ function startApp() {
       box_fill: '#ee6',
       series: [
         {
-          points: healthCategory.userDataForWeek(propertyName)
+          points: makeGraphPoints(healthCategory.userDataForWeek(propertyName))
         },
       ]
     });

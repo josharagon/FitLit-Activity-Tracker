@@ -27,11 +27,31 @@ describe('Sleep', function() {
     sleep = new Sleep(sleepData, user1, sleepData[0].date, userRepo);
   });
 
-  it('should take in a list of data', function() {
-    expect(sleep.sleepData[1].userID).to.deep.equal(2);
-    expect(sleep.sleepData[3].hoursSlept).to.deep.equal(5.4);
-    expect(sleep.sleepData[6].sleepQuality).to.deep.equal(3);
-    expect(sleep.sleepData[7].date).to.deep.equal('2018/07/23');
+  describe('Data Storage', function() {
+
+    it('should hold a user\'s ID', () => {
+
+      expect(sleep.sleepData[1].userID).to.deep.equal(2);
+      expect(sleep.sleepData[4].userID).to.deep.equal(1);
+    });
+
+    it('should have a date', () => {
+
+      expect(sleep.sleepData[1].date).to.deep.equal("2017/06/15");
+      expect(sleep.sleepData[7].date).to.deep.equal('2018/07/23');
+    });
+
+    it('should keep the hours slept', () => {
+
+      expect(sleep.sleepData[3].hoursSlept).to.deep.equal(5.4);
+      expect(sleep.sleepData[2].hoursSlept).to.deep.equal(2);
+    });
+
+    it('should hol the sleep quality', () => {
+
+      expect(sleep.sleepData[6].sleepQuality).to.deep.equal(3);
+      expect(sleep.sleepData[4].sleepQuality).to.deep.equal(3.6);
+    });
   });
 
   it('should find the average sleep hours per day for a user', function() {

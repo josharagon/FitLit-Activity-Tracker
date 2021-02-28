@@ -15,7 +15,6 @@ class Sleep {
   //    return today
   // }
   calculateAverageSleep() {
-    console.log(this.user)
     let perDaySleep = this.sleepData.filter((data) => this.user.id === data.userID);
     const userSleep = perDaySleep.reduce((sumSoFar, data) => {
       return sumSoFar += data.hoursSlept;
@@ -30,13 +29,37 @@ class Sleep {
     return Math.floor(userAverage)
   }
   calculateDailySleep() {
-    console.log(this.date)
     let findSleepByDate = this.sleepData.find((data) => this.user.id === data.userID && this.date === data.date);
-    console.log(findSleepByDate)
     return findSleepByDate.hoursSlept;
   }
+  // calculateDailySleep() {
+  //   let findSleepByDate = this.sleepData.filter((data) =>  {
+  //     // if (this.user.id !== data.userID) {
+  //     //   console.log("it's the user ")
+  //     // } else if (this.date !== data.date){
+  //     //   console.log("it's the dates ")
+  //     // }
+  //      return parseInt(this.user.id) === parseInt(data.userID) && this.date === data.date
+  //     });
+  //   return findSleepByDate.hoursSlept;
+  // }
   calculateDailySleepQuality() {
-    let findSleepQualityByDate = this.sleepData.find((data) => this.user.id === data.userID && this.date === data.date);
+    let findSleepQualityByDate = this.sleepData.find((data) => {
+    return this.user.id === data.userID && this.date === data.date
+    });
+    // testing stuff
+    // let testSleepQualityByID = this.sleepData.filter((data) => {
+    // return this.user.id === data.userID
+    // });
+    // let testSleepQualityByDate = this.sleepData.filter((data) => {
+    // return this.user.id === data.userID
+    // });
+    // console.log('testSleepQualityByID', testSleepQualityByID)
+    // console.log('testSleepQualityByDate', testSleepQualityByDate)
+
+    // if(findSleepQualityByDate === undefined) {
+    //   console.log('undefined test',this.user.id, this.date)
+    // }
     return findSleepQualityByDate.sleepQuality;
   }
   calculateWeekSleep() {

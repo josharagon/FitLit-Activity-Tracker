@@ -24,15 +24,17 @@ const postAllUserData = (userSleepData, userHydrationData, userActivityData) => 
         .catch(err => console.log(err.message))
 
     let activityData = fetch("http://localhost:3001/api/v1/activity", {
-        method : "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        }, 
-        body : JSON.stringify(userActivityData)
-    })
-    .then(response => response.json())
-    .then(data => console.log("post successful :", data))
-    .catch(err => console.log(err.message))
+            method : "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }, 
+            body : JSON.stringify(userActivityData)
+        })
+        .then(response => response.json())
+        .then(data => console.log("post successful :", data))
+        .catch(err => console.log(err.message))
+
+    return Promise.all([sleepData, hydrationData, activityData])
 }
 
 export default postAllUserData

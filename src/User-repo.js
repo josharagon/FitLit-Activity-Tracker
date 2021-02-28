@@ -1,23 +1,27 @@
-import User from "./User";
-
 class UserRepo {
   constructor(users, currentUser) {
     this.users = users;
     this.currentUser = currentUser;
-    this.averageAllStepGoals = this.users.map(user => user.stepGoal)/this.users.length;
+    this.averageAllStepGoals = this.calculateAverageStepGoal();
+    // this.averageAllStepGoals = this.users.reduce((stepSum, user) => {
+    //   stepSum += user.dailyStepGoal;
+    //   return stepSum;
+    // }, 0)/this.users.length;
   }
-  getDataFromID() {
-    return this.users.find((user) => this.currentUser.id === user.id);
+  getDataFromID(id) {
+    return this.users.find((user) => id === user.id);
   }
   getDataFromUserID(id, dataSet) {
     return dataSet.filter((userData) => id === userData.userID);
   }
+  //FUNCTION BELOW May be UNUSED-- found a workaround
   calculateAverageStepGoal() {
-    var totalStepGoal = this.users.reduce((sumSoFar, data) => {
-      return sumSoFar = sumSoFar + data.dailyStepGoal;
+    var totalStepGoal = this.users.reduce((sum, data) => {
+      return sum += data.dailyStepGoal;
     }, 0);
     return totalStepGoal / this.users.length;
   };
+
   makeSortedUserArray(id, dataSet) {
     let selectedID = this.getDataFromUserID(id, dataSet)
     let sortedByDate = selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -41,11 +45,13 @@ class UserRepo {
         .getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
     })
   }
+  //FUNCTION BELOW May be UNUSED-- found a workaround
   chooseDayDataForAllUsers(dataSet, date) {
     return dataSet.filter(function(dataItem) {
       return dataItem.date === date
     });
   }
+
   isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod) {
     return listFromMethod.reduce(function(objectSoFar, dataItem) {
       if (!objectSoFar[dataItem.userID]) {

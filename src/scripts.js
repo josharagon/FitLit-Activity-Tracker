@@ -71,6 +71,8 @@ function postData() {
     postNewData()
   } else {
     console.log("no current user found")
+  }
+}
 
 //   function displayHydrationData(hydrationData, user, today, userRepo) {
 //     var friendList = document.getElementById('friendList');
@@ -122,9 +124,6 @@ function postData() {
 //       return { x: dateKey, y: dates[index][dateKey] }
 //     });
 
-  }
-}
-
 function postNewData() {
   let userSleepData = {
     "userID" : currentUser.id, 
@@ -163,7 +162,8 @@ function makeGraphPoints(dates) {
   });
   return points.map((dateKey, index) => {
     return { x: dateKey, y: dates[index][dateKey] }
-  });
+  })
+};
 
 function compileHydrationChart(hydrationObject) {
   // console.log(hydrationObject.calculateFirstWeekOunces())

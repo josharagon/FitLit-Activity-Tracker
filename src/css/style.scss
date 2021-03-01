@@ -337,7 +337,7 @@ h2{
   &activity {
     @extend .box, .percent, .number;
     color: #DFE166;
-    height: 105%;
+    height: 95%;
   }
 }
 
@@ -436,7 +436,7 @@ h2{
 .activity-charts{
   display: flex !important;
   flex: row;
-  justify-content: space-between;
+  justify-content: center;
   width: 75%;
 }
 

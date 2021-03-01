@@ -60,7 +60,11 @@ var hydrationAvg = document.getElementById('avg-oz');
 var radioBox = document.querySelector('.data-radio');
 radioBox.addEventListener('click', updateHydrationChart);
 //ACTIVITY CIRCLE CHART
-var mileError = document.querySelector('.error-message');
+var dataSelectorRadio = document.getElementById('user-selector');
+var personalDataChart = document.getElementById('personal-data-chart');
+var allUserDataChart = document.getElementById('all-user-chart');
+var personalDataRadio = document.getElementById('personal-data');
+var allUserDataRadio = document.getElementById('all-users');
 var activityStepChartNum = document.getElementById('activity-chart-num');
 var activityStepBar = document.getElementById('chart-baractivity');
 var allUserChartNum = document.querySelector('.all-user-num');
@@ -68,8 +72,13 @@ var allUserBar = document.querySelector('.all-user-bar');
 var activityCategoryRadio = document.getElementById('category');
 var stepsRadio = document.getElementById('category-steps');
 var milesRadio = document.getElementById('category-miles');
+var milesLabel = document.getElementById('category-label-miles');
 var stairsRadio = document.getElementById('category-stairs');
 var activeRadio = document.getElementById('category-active');
+var stepsGraph = document.getElementById('steps-graph');
+var stairGraph = document.getElementById('stairs-graph');
+var activeGraph = document.getElementById('minutes-active-graph');
+dataSelectorRadio.addEventListener('click', changeShownData)
 activityCategoryRadio.addEventListener('click', updateCategory);
 
 function startApp() {
@@ -146,17 +155,17 @@ function startApp() {
     // display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
     display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
     const userStairs = activityRepo.userDataForToday('flightsOfStairs')
-    userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${userStairs}</span></p>`)
+    // userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${userStairs}</span></p>`)
     // need users flights of stairs
     activityRepo.getMilesFromStepsByDate()
     // need to create dom element
     activityRepo.getStairRecord()
     //  - all time stair record need to create dom element
     const averageStairs = activityRepo.getAllUserAverageForDay('flightsOfStairs')
-    avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${averageStairs}</span></p>`)
+    // avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${averageStairs}</span></p>`)
     // this returns the average # of stairs for today for all users
     const averageMinutes = activityRepo.getAllUserAverageForDay('minutesActive')
-    avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${averageMinutes}</span></p>`)
+    // avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${averageMinutes}</span></p>`)
     // average minutes active for all users today
     const averageSteps = activityRepo.getAllUserAverageForDay('numSteps')
     // avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
@@ -190,7 +199,7 @@ function startApp() {
   }
   
   function display(element, description, method) {
-    element.insertAdjacentHTML("afterBegin", `<p>${description}:</p><p>You</p><p><span class="number">${method}</span></p>`)
+    // element.insertAdjacentHTML("afterBegin", `<p>${description}:</p><p>You</p><p><span class="number">${method}</span></p>`)
   }
   
   function displayAverageSteps(activityRepo) {
@@ -344,27 +353,45 @@ function updateHydrationChart() {
   }
 }
 
+function changeShownData() {
+  if(personalDataRadio.checked === true) {
+    personalDataChart.classList.remove('hidden');
+    allUserDataChart.classList.add('hidden');
+    milesLabel.style.display = 'inline-block';
+  } else if (allUserDataRadio.checked === true) {
+    allUserDataChart.classList.remove('hidden');
+    personalDataChart.classList.add('hidden');
+    milesLabel.style.display = 'none';
+  }
+}
+
 function updateCategory() {
   if (stepsRadio.checked === true) {
-    mileError.classList.add('hidden')
+    stepsGraph.classList.remove('hidden');
+    stairGraph.classList.add('hidden');
+    activeGraph.classList.add('hidden');
     activityStepChartNum.innerHTML = `${personalData.steps}<span></span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalData.steps}) / 1500)`
     allUserChartNum.innerHTML = `${allUserData.steps}<span></span>`
     allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allUserData.steps}) / 1500)`
   } else if (milesRadio.checked === true) {
-    mileError.classList.remove('hidden')
+    stepsGraph.classList.remove('hidden');
+    stairGraph.classList.add('hidden');
+    activeGraph.classList.add('hidden');
     activityStepChartNum.innerHTML = `${personalData.miles}<span>mi</span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.miles}) / 25)`
-    // allUserChartNum.innerHTML = `${allAmount}<span></span>`
-    // allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allU}) / 1000)`
   } else if (stairsRadio.checked === true) {
-    mileError.classList.add('hidden')
+    stepsGraph.classList.add('hidden');
+    stairGraph.classList.remove('hidden');
+    activeGraph.classList.add('hidden');
     activityStepChartNum.innerHTML = `${personalData.stairCount}<span>stairs</span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.stairCount}) / 100)`
     allUserChartNum.innerHTML = `${allUserData.stairCount}<span>stairs</span>`
     allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.stairCount}) / 100)`
   } else if (activeRadio.checked === true) {
-    mileError.classList.add('hidden')
+    stepsGraph.classList.add('hidden');
+    stairGraph.classList.add('hidden');
+    activeGraph.classList.remove('hidden');
     activityStepChartNum.innerHTML = `${personalData.minsActive}<span>mins</span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.minsActive}) / 250)`
     allUserChartNum.innerHTML = `${allUserData.minsActive}<span>mins</span>`

@@ -32,36 +32,15 @@ class Sleep {
     let findSleepByDate = this.sleepData.find((data) => this.user.id === data.userID && this.date === data.date);
     return findSleepByDate.hoursSlept;
   }
-  // calculateDailySleep() {
-  //   let findSleepByDate = this.sleepData.filter((data) =>  {
-  //     // if (this.user.id !== data.userID) {
-  //     //   console.log("it's the user ")
-  //     // } else if (this.date !== data.date){
-  //     //   console.log("it's the dates ")
-  //     // }
-  //      return parseInt(this.user.id) === parseInt(data.userID) && this.date === data.date
-  //     });
-  //   return findSleepByDate.hoursSlept;
-  // }
+
   calculateDailySleepQuality() {
     let findSleepQualityByDate = this.sleepData.find((data) => {
     return this.user.id === data.userID && this.date === data.date
     });
-    // testing stuff
-    // let testSleepQualityByID = this.sleepData.filter((data) => {
-    // return this.user.id === data.userID
-    // });
-    // let testSleepQualityByDate = this.sleepData.filter((data) => {
-    // return this.user.id === data.userID
-    // });
-    // console.log('testSleepQualityByID', testSleepQualityByID)
-    // console.log('testSleepQualityByDate', testSleepQualityByDate)
-
-    // if(findSleepQualityByDate === undefined) {
-    //   console.log('undefined test',this.user.id, this.date)
-    // }
+    console.log(findSleepQualityByDate)
     return findSleepQualityByDate.sleepQuality;
   }
+
   calculateWeekSleep() {
     return this.userRepo.getWeekFromDate(this.date, this.user.id, this.sleepData).map((data) => `${data.date}: ${data.hoursSlept}`);
   }

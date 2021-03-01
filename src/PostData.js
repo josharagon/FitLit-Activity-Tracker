@@ -9,7 +9,7 @@ const postAllUserData = (userSleepData, userHydrationData, userActivityData) => 
             body: JSON.stringify(userSleepData),
         })
         .then(response => response.json())
-        .then(data => console.log('post success: ', data))
+        // .then(data => console.log('post success: ', data))
         .catch(err => console.log(err.message))
     
     let hydrationData = fetch("http://localhost:3001/api/v1/hydration", {
@@ -20,7 +20,7 @@ const postAllUserData = (userSleepData, userHydrationData, userActivityData) => 
             body: JSON.stringify(userHydrationData),
         })
         .then(response => response.json())
-        .then(data => console.log('post success: ', data))
+        // .then(data => console.log('post success: ', data))
         .catch(err => console.log(err.message))
 
     let activityData = fetch("http://localhost:3001/api/v1/activity", {
@@ -31,10 +31,16 @@ const postAllUserData = (userSleepData, userHydrationData, userActivityData) => 
             body : JSON.stringify(userActivityData)
         })
         .then(response => response.json())
-        .then(data => console.log("post successful :", data))
         .catch(err => console.log(err.message))
 
     return Promise.all([sleepData, hydrationData, activityData])
+    .then(allPostedData => {
+        let postedData = {}
+        postedData.postedSleepData = allPostedData[0]
+        postedData.postedHydrationData = allPostedData[1]
+        postedData.postedActivityData = allPostedData[2]
+        return postedData
+    })
 }
 
 export default postAllUserData

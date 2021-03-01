@@ -1,8 +1,7 @@
-import User from "./User"
 class Activity {
   constructor(activityData, date, user, userRepo) {
     this.activityData = activityData;
-    this.userStepsByDate = {} //activityData[0].numSteps;
+    this.userStepsByDate = {}
     this.date = date;
     this.user = user;
     this.userRepo = userRepo;
@@ -14,13 +13,11 @@ class Activity {
 
   getMilesFromStepsByDate() {
     let userStepsByDate = this.returnUserStepsByDate()
-    // let userStepsByDate = this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
     return parseFloat(((userStepsByDate.numSteps * this.user.strideLength) / 5280).toFixed(1));
   }
 
   getActiveMinutesByDate() {
     let userActivityByDate = this.returnUserStepsByDate();
-    // let userActivityByDate = this.activityData.find(data => this.user.id === data.userID && this.date === data.date);
     return userActivityByDate.minutesActive;
   }
 
@@ -39,7 +36,7 @@ class Activity {
     return false
   }
 
-  // this functyion doesn't get displayed as far as I can tell
+  // this function doesn't get displayed as far as I can tell
   getDaysGoalExceeded(id, userRepo) {
     return this.activityData.filter(data => id === data.userID && data.numSteps > userRepo.dailyStepGoal).map(data => data.date);
   }
@@ -52,7 +49,7 @@ class Activity {
   }
 
   getAllUserAverageForDay(relevantData) {
-    let selectedDayData = this.userRepo.chooseDayDataForAllUsers(this.activityData, this.date);
+    let selectedDayData = this.activityData.filter(entry => entry.date === this.date);
     return parseFloat((selectedDayData.reduce((acc, elem) => acc += elem[relevantData], 0) / selectedDayData.length).toFixed(1));
   }
 
@@ -62,7 +59,9 @@ class Activity {
   }
 
   userDataForWeek(releventData) {
-    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.activityData).map((data) => `${data.date}: ${data[releventData]}`);
+    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.activityData).map((data) => {
+      return {[data.date]: data[releventData]};
+    });
   }
 
   // Friends

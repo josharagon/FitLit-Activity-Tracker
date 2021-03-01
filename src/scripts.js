@@ -4,11 +4,6 @@ import './css/reset.scss';
 import './images/person walking on path.jpg';
 import './images/The Rock.jpg';
 
-import userData from './data/users';
-import hydrationData from './data/hydration';
-import sleepData from './data/sleep';
-import activityData from './data/activity';
-
 import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
@@ -19,39 +14,19 @@ import postAllUserData from './PostData';
 
 import * as JSC from 'jscharting';
 
-var sidebarName = document.getElementById('sidebarName');
-var stepGoalCard = document.getElementById('stepGoalCard');
-var headerText = document.getElementById('headerText');
-var userAddress = document.getElementById('userAddress');
-var userEmail = document.getElementById('userEmail');
-var userStridelength = document.getElementById('userStridelength');
-var friendList = document.getElementById('friendList');
-var hydrationToday = document.getElementById('hydrationToday');
-var hydrationAverage = document.getElementById('hydrationAverage');
-var hydrationThisWeek = document.getElementById('hydrationThisWeek');
-var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
-var historicalWeek = document.querySelectorAll('.historicalWeek');
-var sleepToday = document.getElementById('sleepToday');
-var sleepQualityToday = document.getElementById('sleepQualityToday');
-var avUserSleepQuality = document.getElementById('avUserSleepQuality');
-var sleepThisWeek = document.getElementById('sleepThisWeek');
-var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
-var friendChallengeListToday = document.getElementById('friendChallengeListToday');
-var friendChallengeListHistory = document.getElementById('friendChallengeListHistory');
-var bigWinner = document.getElementById('bigWinner');
-var userStepsToday = document.getElementById('userStepsToday');
-var avgStepsToday = document.getElementById('avgStepsToday');
-var avgStepGoalCard = document.getElementById('avStepGoalCard')
-var userStairsToday = document.getElementById('userStairsToday');
-var avgStairsToday = document.getElementById('avgStairsToday');
-var userMinutesToday = document.getElementById('userMinutesToday');
-var avgMinutesToday = document.getElementById('avgMinutesToday');
-var userStepsThisWeek = document.getElementById('userStepsThisWeek');
-var userStairsThisWeek = document.getElementById('userStairsThisWeek');
-var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
-var bestUserSteps = document.getElementById('bestUserSteps');
-var streakList = document.getElementById('streakList');
-var streakListMinutes = document.getElementById('streakListMinutes');
+// var sidebarName = document.getElementById('sidebarName');
+// var headerText = document.getElementById('headerText');
+// var userAddress = document.getElementById('userAddress');
+// var userEmail = document.getElementById('userEmail');
+// var historicalWeek = document.querySelectorAll('.historicalWeek');
+
+
+//var friendChallengeListToday = document.getElementById('friendChallengeListToday');
+//var friendChallengeListHistory = document.getElementById('friendChallengeListHistory');
+//var bigWinner = document.getElementById('bigWinner');
+
+// var streakList = document.getElementById('streakList');
+// var streakListMinutes = document.getElementById('streakListMinutes');
 
 
 // NEW VARIABLE AND EVENT LISTENERS 
@@ -80,12 +55,14 @@ function fetchCurrentData() {
   })
 }
 
+
 function returnLatestDate(allData) {
   let userActivityData = allData.activityData.filter(userData => {
     return currentUser.id === userData.userID
   })
   return userActivityData[userActivityData.length - 1].date
 }
+
 
 startApp();
 
@@ -94,6 +71,57 @@ function postData() {
     postNewData()
   } else {
     console.log("no current user found")
+
+//   function displayHydrationData(hydrationData, user, today, userRepo) {
+//     var friendList = document.getElementById('friendList');
+//     var hydrationToday = document.getElementById('hydrationToday');
+//     var hydrationAverage = document.getElementById('hydrationAverage');
+//     var hydrationThisWeek = document.getElementById('hydrationThisWeek');
+//     var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
+
+//     let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
+//     let averageHydration = hydrationObject.calculateAverageOunces();
+//     hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
+//     hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
+//     const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
+//     // hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
+//     // hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
+//     compileChart(hydrationObject, "numOunces")
+//   }
+
+//   function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
+//     return drinks.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join(''); // needs dates?
+//   }
+
+//   function displaySleepData(sleepData, user, today, userRepo) {
+//     var sleepToday = document.getElementById('sleepToday');
+//     var sleepQualityToday = document.getElementById('sleepQualityToday');
+//     var avUserSleepQuality = document.getElementById('avUserSleepQuality');
+//     var sleepThisWeek = document.getElementById('sleepThisWeek');
+//     var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
+//     let sleepObject = new Sleep(sleepData, user, today, userRepo);
+//     let averageSleep = sleepObject.calculateAverageSleep();
+//     let sleepQuality = sleepObject.calculateAverageSleepQuality();
+//     let weekSleep = sleepObject.calculateWeekSleep();
+//     let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
+//     let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
+
+//     sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
+//     sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
+//     avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
+//     //console.log(sleepObject.calculateAllUserSleepQuality())
+//   }
+
+//   function makeGraphPoints(dates) {
+//     //INPUT: Array w/objects Date/value pairs
+//     //OUTPUT: Array w/ objects of x: date and y:value
+//     const points = dates.map(date => {
+//       return Object.keys(date)[0];
+//     });
+//     return points.map((dateKey, index) => {
+//       return { x: dateKey, y: dates[index][dateKey] }
+//     });
+
   }
 }
 
@@ -127,6 +155,16 @@ function postNewData() {
   })
 }
 
+function makeGraphPoints(dates) {
+  //INPUT: Array w/objects Date/value pairs
+  //OUTPUT: Array w/ objects of x: date and y:value
+  const points = dates.map(date => {
+    return Object.keys(date)[0];
+  });
+  return points.map((dateKey, index) => {
+    return { x: dateKey, y: dates[index][dateKey] }
+  });
+
 function compileHydrationChart(hydrationObject) {
   // console.log(hydrationObject.calculateFirstWeekOunces())
   let hydrationChart = new JSC.Chart("chartDiv-hydration", {
@@ -146,52 +184,129 @@ function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
   return drinks.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join(''); // needs dates?
 }
 
-function displaySleepData(sleepData, user, today, userRepo) {
-  let sleepObject = new Sleep(sleepData, user, today, userRepo);
-  let averageSleep = sleepObject.calculateAverageSleep();
-  let sleepQuality = sleepObject.calculateAverageSleepQuality();
-  let weekSleep = sleepObject.calculateWeekSleep();
-  let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
-  let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
+  function displaySleepData(sleepData, user, today, userRepo) {
+    var sleepToday = document.getElementById('sleepToday');
+    var sleepQualityToday = document.getElementById('sleepQualityToday');
+    var avUserSleepQuality = document.getElementById('avUserSleepQuality');
+    var sleepThisWeek = document.getElementById('sleepThisWeek');
+    var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
+    let sleepObject = new Sleep(sleepData, user, today, userRepo);
+    let averageSleep = sleepObject.calculateAverageSleep();
+    let sleepQuality = sleepObject.calculateAverageSleepQuality();
+    let weekSleep = sleepObject.calculateWeekSleep();
+    let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
+    let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
 
-  let dailySleepQuality = sleepObject.calculateDailySleepQuality();
+    sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
+    sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
+    avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
+    //console.log(sleepObject.calculateAllUserSleepQuality())
+  }
+  
+  function displayHydrationData(hydrationData, user, today, userRepo) {
+    var friendList = document.getElementById('friendList');
+    var hydrationToday = document.getElementById('hydrationToday');
+    var hydrationAverage = document.getElementById('hydrationAverage');
+    var hydrationThisWeek = document.getElementById('hydrationThisWeek');
+    var hydrationEarlierWeek = document.getElementById('hydrationEarlierWeek');
 
-  // console.log(dailySleepQuality)
-  sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep()}</span></p> <p>hours today.</p>`);
-  // sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
-  avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
-  // console.log(sleepObject.calculateAllUserSleepQuality())
-
-  // console.log(sleepQuality)
-}
-
+    let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
+    let averageHydration = hydrationObject.calculateAverageOunces();
+    hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
+    hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
+    const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
+    // hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
+    // hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
+    compileChart(hydrationObject, "numOunces")
+  }
+  
 function displayActivityData(activityData, currentUser, today, userRepo) {
-  let activityRepo = new Activity(activityData, today, currentUser, userRepo);
-  display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
-  display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
-  const userStairs = activityRepo.userDataForToday('flightsOfStairs')
-  userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${userStairs}</span></p>`)
+    var stepGoalCard = document.getElementById('stepGoalCard');
+    var userStridelength = document.getElementById('userStridelength');
+    var avgStepGoalCard = document.getElementById('avStepGoalCard')
+    var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
+    var bestUserSteps = document.getElementById('bestUserSteps');
+    var userStairsThisWeek = document.getElementById('userStairsThisWeek');
+
+    let activityRepo = new Activity(activityData, today, currentUser, userRepo);
+
+    var userStepsToday = document.getElementById('userStepsToday');
+    display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
+    var userMinutesToday = document.getElementById('userMinutesToday');
+    display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
+
+    const userStairs = activityRepo.userDataForToday('flightsOfStairs')
+    var userStairsToday = document.getElementById('userStairsToday');
+    userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${userStairs}</span></p>`)
+    // need users flights of stairs --??We have flights in activity data
+    activityRepo.getMilesFromStepsByDate()
+    // need to create dom element
+    activityRepo.getStairRecord()
+    //  - all time stair record need to create dom element
+    var avgStairsToday = document.getElementById('avgStairsToday');
+    const averageStairs = activityRepo.getAllUserAverageForDay('flightsOfStairs')
+    avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${averageStairs}</span></p>`)
+    // this returns the average # of stairs for today for all users
+    var avgMinutesToday = document.getElementById('avgMinutesToday');
+    const averageMinutes = activityRepo.getAllUserAverageForDay('minutesActive')
+    avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${averageMinutes}</span></p>`)
+    // average minutes active for all users today
+    var avgStepsToday = document.getElementById('avgStepsToday');
+    const averageSteps = activityRepo.getAllUserAverageForDay('numSteps')
+    avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
+    // average number of steps for everyone today
+    //weekly views:
+    var userStepsThisWeek = document.getElementById('userStepsThisWeek');
+    const weeklySteps = activityRepo.userDataForWeek("numSteps");
+    compileChart(activityRepo, "numSteps")
+    compileChart(activityRepo, "flightsOfStairs")
+    compileChart(activityRepo, "minutesActive")
+    // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
+    //console.log(activityRepo.userDataForWeek("minutesActive"));
+    //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
+
+  }
+  
+ function compileChart(healthCategory, propertyName) {
+    let chart = new JSC.Chart(`chartDiv-${propertyName}`, {
+      type: 'spline',
+      legend_visible: false,
+      axisTick_gridline: {visible: false},
+      box_fill: '#ee6',
+      series: [
+        {
+          points: makeGraphPoints(healthCategory.userDataForWeek(propertyName))
+        },
+      ]
+    });
+  }
+
+//function displayActivityData(activityData, currentUser, today, userRepo) {
+  //let activityRepo = new Activity(activityData, today, currentUser, userRepo);
+  //display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
+  //display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
+ // const userStairs = activityRepo.userDataForToday('flightsOfStairs')
+  //userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${userStairs}</span></p>`)
   // need users flights of stairs
-  activityRepo.getMilesFromStepsByDate()
+ // activityRepo.getMilesFromStepsByDate()
   // need to create dom element
-  activityRepo.getStairRecord()
+ // activityRepo.getStairRecord()
   //  - all time stair record need to create dom element
-  const averageStairs = activityRepo.getAllUserAverageForDay('flightsOfStairs')
-  avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${averageStairs}</span></p>`)
+ // const averageStairs = activityRepo.getAllUserAverageForDay('flightsOfStairs')
+ // avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${averageStairs}</span></p>`)
   // this returns the average # of stairs for today for all users
-  const averageMinutes = activityRepo.getAllUserAverageForDay('minutesActive')
-  avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${averageMinutes}</span></p>`)
+ // const averageMinutes = activityRepo.getAllUserAverageForDay('minutesActive')
+ // avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${averageMinutes}</span></p>`)
   // average minutes active for all users today
-  const averageSteps = activityRepo.getAllUserAverageForDay('numSteps')
-  avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
+ // const averageSteps = activityRepo.getAllUserAverageForDay('numSteps')
+ // avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
   // average number of steps for everyone today
   //weekly views:
-  const weeklySteps = activityRepo.userDataForWeek("numSteps");
+  //const weeklySteps = activityRepo.userDataForWeek("numSteps");
   // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
   //console.log(activityRepo.userDataForWeek("minutesActive"));
   //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
-
-}
+//}
 
 function display(element, description, method) {
   element.insertAdjacentHTML("afterBegin", `<p>${description}:</p><p>You</p><p><span class="number">${method}</span></p>`)
@@ -207,17 +322,6 @@ function displayActiveMinutes(activityRepo) {
   userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activeMinutes}</span></p>`)
 }
 
-function displayHydrationData(hydrationData, user, today, userRepo) {
-  let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
-
-  let averageHydration = hydrationObject.calculateAverageOunces();
-  hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${averageHydration}</span></p> <p>oz per day.</p>`);
-  hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationObject.calculateDailyOunces()}</span></p><p>oz water today.</p>`); //userRepo.getToday()
-  const weekHydrationRecord = hydrationObject.hydrationData.filter(drink => drink.userID === hydrationObject.user.id);
-  // hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateFirstWeekOunces()));
-  // hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(hydrationObject.user.id, hydrationObject, hydrationObject.user, hydrationObject.calculateRandomWeekOunces()));
-  compileHydrationChart(hydrationObject)
-}
 
 
 
@@ -263,7 +367,7 @@ function displayHydrationData(hydrationData, user, today, userRepo) {
 //   userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;
 //   friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userRepo))
 // }
-// need to refactor and call in our .then callback passing in current info 
+// need to refactor and call in our .then callback passing in current info
 
 // function makeFriendHTML(user, userRepo) {
 //   return user.getFriendsNames(userRepo).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');
@@ -350,5 +454,3 @@ function displayHydrationData(hydrationData, user, today, userRepo) {
 // function makeStepStreakHTML(id, activityInfo, userStorage, method) {
 //   return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
 // }
-
-

@@ -1,5 +1,3 @@
-import sleepData from './data/sleep';
-
 class Sleep {
   constructor(sleepData, userNow, date, userRepo) {
   // constructor(sleepData, userNow, userRepo) {
@@ -9,25 +7,23 @@ class Sleep {
     // this.date = this.returnToday(this.sleepData);
     this.userRepo = userRepo;
   }
-  // returnToday(data) {
-  //   console.log(allData[data])
-  //    let today = allData[data][allData[data].length - 1].date;
-  //    return today
-  // }
+  
   calculateAverageSleep() {
     let perDaySleep = this.sleepData.filter((data) => this.user.id === data.userID);
-    const userSleep = perDaySleep.reduce((sumSoFar, data) => {
-      return sumSoFar += data.hoursSlept;
+    const userSleep = perDaySleep.reduce((sum, data) => {
+      return sum += data.hoursSlept;
     }, 0) / perDaySleep.length;
     return Math.floor(userSleep);
   }
+
   calculateAverageSleepQuality() {
     let perDaySleepQuality = this.sleepData.filter((data) => this.user.id === data.userID);
-    const userAverage = perDaySleepQuality.reduce((sumSoFar, data) => {
-      return sumSoFar += data.sleepQuality;
+    const userAverage = perDaySleepQuality.reduce((sum, data) => {
+      return sum += data.sleepQuality;
     }, 0) / perDaySleepQuality.length;
     return Math.floor(userAverage)
   }
+
   calculateDailySleep() {
     let findSleepByDate = this.sleepData.find((data) => this.user.id === data.userID && this.date === data.date);
     return findSleepByDate.hoursSlept;
@@ -43,15 +39,17 @@ class Sleep {
   calculateWeekSleep() {
     return this.userRepo.getWeekFromDate(this.date, this.user.id, this.sleepData).map((data) => `${data.date}: ${data.hoursSlept}`);
   }
+
   calculateWeekSleepQuality() {
     return this.userRepo.getWeekFromDate(this.date, this.user.id, this.sleepData).map((data) => `${data.date}: ${data.sleepQuality}`);
   }
+
   calculateAllUserSleepQuality() {
-    var totalSleepQuality = this.sleepData.reduce(function(sumSoFar, dataItem) {
-      sumSoFar += dataItem.sleepQuality;
-      return sumSoFar;
+    var totalSleepQuality = this.sleepData.reduce((sum, dataItem) => {
+      sum += dataItem.sleepQuality;
+      return sum;
     }, 0)
-    let total = totalSleepQuality / sleepData.length;
+    let total = totalSleepQuality / this.sleepData.length;
     return parseFloat(total.toFixed(2));
   }
 //   determineBestSleepers(date, userRepo) {

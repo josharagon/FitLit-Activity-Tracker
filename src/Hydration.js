@@ -22,10 +22,23 @@ class Hydration {
   }
   calculateFirstWeekOunces() {
     return this.userRepo.getFirstWeek(this.user.id, this.hydrationData).map((data) => {
-      return {x: data.date, y: data.numOunces};
+      return {[data.date]: data.numOunces};
     });
   }
+  // hydration data only has numOunces, what is this argument for?
+  // returns proper array unlike above
+  userDataForWeek(releventData) {
+    // console.log(this.userRepo.getWeekFromDate(this.date, this.user.id, this.hydrationData).map((data) => {
+    //   return {[data.date]: data[releventData]};}))
+    return this.userRepo.getWeekFromDate(this.date, this.user.id, this.hydrationData).map((data) => {
+      return {[data.date]: data[releventData]};
+    });
+  }
+
+  //---marked for deletion
   calculateRandomWeekOunces() {
+    //console.log(this.userRepo.getWeekFromDate(this.date, this.user.id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`))
+
     return this.userRepo.getWeekFromDate(this.date, this.user.id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
   }
 }

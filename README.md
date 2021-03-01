@@ -40,9 +40,9 @@ This project has challenged our team in many ways and utilizes technologies that
 ---
 ### Credits
 ---
-* Paige Vannelli -> [view PaigeVannelli on Github](github.com/PaigeVannelli)
 * Josh Aragon -> [view josharagon on Github](github.com/josharagon)
-* Cameron Mackintosh -> -> [view cameronmackintosh on Github](github.com/cbmackintosh)
+* Paige Vannelli -> [view PaigeVannelli on Github](github.com/PaigeVannelli)
+* Cameron Mackintosh -> [view cameronmackintosh on Github](github.com/cbmackintosh)
 * Chuck Morris -> [view percworld on Github](github.com/percworld)
 ---
 #### Project part of curriculum at Turing School of Software Design - 

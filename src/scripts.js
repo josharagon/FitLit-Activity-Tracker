@@ -75,11 +75,30 @@ var milesRadio = document.getElementById('category-miles');
 var milesLabel = document.getElementById('category-label-miles');
 var stairsRadio = document.getElementById('category-stairs');
 var activeRadio = document.getElementById('category-active');
-var stepsGraph = document.getElementById('steps-graph');
-var stairGraph = document.getElementById('stairs-graph');
-var activeGraph = document.getElementById('minutes-active-graph');
+// var stepsGraph = document.getElementById('chartDiv-numSteps');
+// var stairGraph = document.getElementById('chartDiv-flightsOfStairs');
+// var activeGraph = document.getElementById('chartDiv-minutesActive');
+var activityChart = document.querySelector('.activity-chart');
+var activityChartHeader = document.querySelector('.activity-chart-header');
 dataSelectorRadio.addEventListener('click', changeShownData)
-activityCategoryRadio.addEventListener('click', updateCategory);
+// SLEEP CIRCLE CHART
+var sleepChart = document.querySelector('.sleep-chart');
+var sleepChartHeader = document.querySelector('.sleepChartHeader')
+var sleepDataSelector = document.getElementById('selector-sleep');
+var personalSleepChart = document.getElementById('personal-sleep-chart');
+var personalSleepRadio = document.getElementById('personal-sleep');
+var allSleepRadio = document.getElementById('all-sleep');
+var sleepChartNum = document.getElementById('sleep-chart-num');
+var sleepChartBar = document.getElementById('chart-barsleep');
+var allSleepChart = document.getElementById('all-sleep-chart')
+var allSleepChartNum = document.querySelector('.all-sleep-num');
+var allSleepChartBar = document.querySelector('.all-sleep-bar');
+var sleepTypeRadio = document.getElementById('sleep-type');
+var hoursSleptRadio = document.getElementById('type-hours');
+var sleepQualityRadio = document.getElementById('type-quality');
+sleepDataSelector.addEventListener('click', changeShownType);
+
+
 
 function startApp() {
   // fetchData();
@@ -93,20 +112,20 @@ function startApp() {
   // var userNowId = pickUser();
   // let userNow = getUserById(userNowId, userRepo);
   // let today = makeToday(userRepo, userNowId, hydrationData);
-  
+
   fetchData()
-  .then(allData => {
-    let currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
-    let userRepo = new UserRepo(allData.userData, currentUser);
-    let today = allData.activityData[allData.activityData.length - 1].date
-    // console.log(userRepo.getToday(currentUser.id))
-    let hydrationRepo = new Hydration(allData.hydrationData, currentUser);
-    // let today = makeToday(userRepo, currentUser.id, hydrationData);
-    // console.log(allData.activityData.length, allData.activityData)
-    displaySleepData(allData.sleepData, currentUser, today, userRepo);
-    displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
-    displayActivityData(allData.activityData, currentUser, today, userRepo);
-  })
+    .then(allData => {
+      let currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
+      let userRepo = new UserRepo(allData.userData, currentUser);
+      let today = allData.activityData[allData.activityData.length - 1].date
+      // console.log(userRepo.getToday(currentUser.id))
+      let hydrationRepo = new Hydration(allData.hydrationData, currentUser);
+      // let today = makeToday(userRepo, currentUser.id, hydrationData);
+      // console.log(allData.activityData.length, allData.activityData)
+      displaySleepData(allData.sleepData, currentUser, today, userRepo);
+      displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
+      displayActivityData(allData.activityData, currentUser, today, userRepo);
+    })
 
   function displayHydrationData(hydrationData, user, today, userRepo) {
     let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
@@ -127,18 +146,27 @@ function startApp() {
 
   function displaySleepData(sleepData, user, today, userRepo) {
     let sleepObject = new Sleep(sleepData, user, today, userRepo);
+    let daySleep = sleepObject.calculateDailySleep();
+    console.log(daySleep)
+    let dayQuality = sleepObject.calculateDailySleepQuality();
+    window.sleepDay = { hours: daySleep, quality: dayQuality};
+    console.log(sleepDay)
     let averageSleep = sleepObject.calculateAverageSleep();
     let sleepQuality = sleepObject.calculateAverageSleepQuality();
-    let weekSleep = sleepObject.calculateWeekSleep();
-    let averageWeekSleep = sleepObject.calculateWeekSleepQuality();
+    window.sleepAvg = { hours: averageSleep, quality: sleepQuality };
     let allUsersSleepQuality = sleepObject.calculateAllUserSleepQuality();
-    sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepObject.calculateDailySleep(today)}</span></p> <p>hours today.</p>`);
-    sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepObject.calculateDailySleepQuality()}</span></p><p>out of 5.</p>`);
-    avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepObject.calculateAllUserSleepQuality() *100)/100}</span></p><p>out of 5.</p>`);
-    console.log(sleepObject.calculateAllUserSleepQuality())
-
-    console.log(sleepQuality)
+    sleepChartHeader.innerText = 'Your hours slept this week';
+    sleepChartNum.innerHTML = `${sleepDay.hours}<span>hr</span>`
+    sleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepDay.hours}) / 12)`
+    allSleepChartNum.innerHTML = `${sleepAvg.hours}<span></span>`
+    allSleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepAvg.hours}) / 12)`
+    compileChart(sleepObject, 'hoursSlept');
+    sleepTypeRadio.addEventListener('click', function () {
+      updateSleepChart(sleepObject);
+    });
   }
+
+  
 
   function displayActivityData(activityData, currentUser, today, userRepo) {
     let activityRepo = new Activity(activityData, today, currentUser, userRepo);
@@ -146,12 +174,12 @@ function startApp() {
     let personalMiles = activityRepo.getMilesFromStepsByDate();
     let personalStairs = activityRepo.getStairRecord();
     let personalActive = activityRepo.getActiveMinutesByDate();
-    window.personalData = {steps: personalAmount, miles: personalMiles, stairCount: personalStairs, minsActive: personalActive};
+    window.personalData = { steps: personalAmount, miles: personalMiles, stairCount: personalStairs, minsActive: personalActive };
     console.log(personalData)
     let allAmount = activityRepo.getAllUserAverageForDay('numSteps');
-    let allStairs =  activityRepo.getAllUserAverageForDay('flightsOfStairs');
+    let allStairs = activityRepo.getAllUserAverageForDay('flightsOfStairs');
     let allActive = activityRepo.getAllUserAverageForDay('minutesActive');
-    window.allUserData = {steps: allAmount, stairCount: allStairs, minsActive: allActive};
+    window.allUserData = { steps: allAmount, stairCount: allStairs, minsActive: allActive };
     // display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
     display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
     const userStairs = activityRepo.userDataForToday('flightsOfStairs')
@@ -176,19 +204,21 @@ function startApp() {
     allUserChartNum.innerHTML = `${allAmount}<span></span>`
     allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allAmount}) / 1500)`
     compileChart(activityRepo, "numSteps")
-    compileChart(activityRepo, "flightsOfStairs")
-    compileChart(activityRepo, "minutesActive")
+    // compileChart(activityRepo, "flightsOfStairs")
+    // compileChart(activityRepo, "minutesActive")
     // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
     //console.log(activityRepo.userDataForWeek("minutesActive"));
     //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
-
+    activityCategoryRadio.addEventListener('click', function () {
+      updateCategory(activityRepo);
+    });
   }
 
   function compileChart(healthCategory, propertyName) {
     let chart = new JSC.Chart(`chartDiv-${propertyName}`, {
       type: 'spline',
       legend_visible: false,
-      axisTick_gridline: {visible: false},
+      axisTick_gridline: { visible: false },
       box_fill: '#ffffff00',
       series: [
         {
@@ -197,16 +227,69 @@ function startApp() {
       ]
     });
   }
-  
+
+  function updateCategory(activityRepo) {
+    if (stepsRadio.checked === true) {
+      activityChart.id = 'chartDiv-numSteps';
+      compileChart(activityRepo, 'numSteps');
+      activityChartHeader.innerText = 'Your steps this week';
+      activityStepChartNum.innerHTML = `${personalData.steps}<span></span>`
+      activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalData.steps}) / 1500)`
+      allUserChartNum.innerHTML = `${allUserData.steps}<span></span>`
+      allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allUserData.steps}) / 1500)`
+    } else if (milesRadio.checked === true) {
+      activityChart.id = 'chartDiv-numSteps';
+      compileChart(activityRepo, 'numSteps');
+      activityChartHeader.innerText = 'Your steps this week'
+      activityStepChartNum.innerHTML = `${personalData.miles}<span>mi</span>`
+      activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.miles}) / 25)`
+    } else if (stairsRadio.checked === true) {
+      activityChart.id = 'chartDiv-flightsOfStairs';
+      compileChart(activityRepo, 'flightsOfStairs');
+      activityChartHeader.innerText = 'Your stairs this week';
+      activityStepChartNum.innerHTML = `${personalData.stairCount}<span>stairs</span>`
+      activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.stairCount}) / 100)`
+      allUserChartNum.innerHTML = `${allUserData.stairCount}<span>stairs</span>`
+      allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.stairCount}) / 100)`
+    } else if (activeRadio.checked === true) {
+      activityChart.id = 'chartDiv-minutesActive';
+      compileChart(activityRepo, 'minutesActive');
+      activityChartHeader.innerText = 'Your active minutes this week';
+      activityStepChartNum.innerHTML = `${personalData.minsActive}<span>mins</span>`
+      activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.minsActive}) / 250)`
+      allUserChartNum.innerHTML = `${allUserData.minsActive}<span>mins</span>`
+      allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.minsActive}) / 250)`
+    }
+  }
+
+  function updateSleepChart(sleepObject) {
+    if (hoursSleptRadio.checked === true) {
+      sleepChart.id = 'chartDiv-hoursSlept';
+      compileChart(sleepObject, 'hoursSlept');
+      sleepChartHeader.innerText = 'Your hours slept this week';
+      sleepChartNum.innerHTML = `${sleepDay.hours}<span>hr</span>`
+      sleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepDay.hours}) / 12)`
+      allSleepChartNum.innerHTML = `${sleepAvg.hours}<span>hr</span>`
+      allSleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepAvg.hours}) / 12)`
+    } else if (sleepQualityRadio.checked === true) {
+      sleepChart.id = 'chartDiv-sleepQuality';
+      compileChart(sleepObject, 'sleepQuality');
+      sleepChartHeader.innerText = 'Your sleep quality this week'
+      sleepChartNum.innerHTML = `${sleepDay.quality}<span>/5</span>`
+      sleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepDay.quality}) / 5)`
+      allSleepChartNum.innerHTML = `${sleepAvg.quality}<span>/5</span>`
+      allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.quality}) / 5)`
+    }
+  }
   function display(element, description, method) {
     // element.insertAdjacentHTML("afterBegin", `<p>${description}:</p><p>You</p><p><span class="number">${method}</span></p>`)
   }
-  
+
   function displayAverageSteps(activityRepo) {
     let averageSteps = activityRepo.returnUserStepsByDate();
     userStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>You</p><p><span class="number">${averageSteps.numSteps}</span></p>`)
   }
-  
+
   function displayActiveMinutes(activityRepo) {
     let activeMinutes = activityRepo.getActiveMinutesByDate();
     userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activeMinutes}</span></p>`)
@@ -214,17 +297,17 @@ function startApp() {
 }
 startApp();
 
-  // function displayDistanceWalked()
+// function displayDistanceWalked()
 
-  // let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
-  // historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
-  // addInfoToSidebar(userNow, userRepo);
+// let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
+// historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
+// addInfoToSidebar(userNow, userRepo);
 
-  //addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
-  // addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
-  // let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-  // addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
-  // addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
+//addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
+// addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
+// let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
+// addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
+// addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 
 
 // function makeUsers(array) {
@@ -276,11 +359,11 @@ startApp();
 // }
 
 // function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
-  //hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationInfo.calculateDailyOunces(id, dateString)}</span></p><p>oz water today.</p>`);
-  //hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
-  //hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
-  //hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateFirstWeekOunces(userStorage, id)));
-  // hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage)));
+//hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationInfo.calculateDailyOunces(id, dateString)}</span></p><p>oz water today.</p>`);
+//hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
+//hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
+//hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateFirstWeekOunces(userStorage, id)));
+// hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage)));
 // }
 
 
@@ -298,16 +381,16 @@ startApp();
 // }
 
 // function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
-  // userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'flightsOfStairs')}</span></p>`)
-  // avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'flightsOfStairs')}</span></p>`)
-  // userStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'numSteps')}</span></p>`)
-  // avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'numSteps')}</span></p>`)
-  // userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'minutesActive')}</span></p>`)
-  // avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'minutesActive')}</span></p>`)
-  // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")));
-  // userStairsThisWeek.insertAdjacentHTML("afterBegin", makeStairsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs")));
-  // userMinutesThisWeek.insertAdjacentHTML("afterBegin", makeMinutesHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive")));
-  /////bestUserSteps.insertAdjacentHTML("afterBegin", makeStepsHTML(user, activityInfo, userStorage, activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps")));
+// userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'flightsOfStairs')}</span></p>`)
+// avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'flightsOfStairs')}</span></p>`)
+// userStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'numSteps')}</span></p>`)
+// avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'numSteps')}</span></p>`)
+// userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'minutesActive')}</span></p>`)
+// avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'minutesActive')}</span></p>`)
+// userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")));
+// userStairsThisWeek.insertAdjacentHTML("afterBegin", makeStairsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs")));
+// userMinutesThisWeek.insertAdjacentHTML("afterBegin", makeMinutesHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive")));
+/////bestUserSteps.insertAdjacentHTML("afterBegin", makeStepsHTML(user, activityInfo, userStorage, activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps")));
 // }
 
 // function makeStepsHTML(id, activityInfo, userStorage, method) {
@@ -354,7 +437,7 @@ function updateHydrationChart() {
 }
 
 function changeShownData() {
-  if(personalDataRadio.checked === true) {
+  if (personalDataRadio.checked === true) {
     personalDataChart.classList.remove('hidden');
     allUserDataChart.classList.add('hidden');
     milesLabel.style.display = 'inline-block';
@@ -365,37 +448,13 @@ function changeShownData() {
   }
 }
 
-function updateCategory() {
-  if (stepsRadio.checked === true) {
-    stepsGraph.classList.remove('hidden');
-    stairGraph.classList.add('hidden');
-    activeGraph.classList.add('hidden');
-    activityStepChartNum.innerHTML = `${personalData.steps}<span></span>`
-    activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalData.steps}) / 1500)`
-    allUserChartNum.innerHTML = `${allUserData.steps}<span></span>`
-    allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allUserData.steps}) / 1500)`
-  } else if (milesRadio.checked === true) {
-    stepsGraph.classList.remove('hidden');
-    stairGraph.classList.add('hidden');
-    activeGraph.classList.add('hidden');
-    activityStepChartNum.innerHTML = `${personalData.miles}<span>mi</span>`
-    activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.miles}) / 25)`
-  } else if (stairsRadio.checked === true) {
-    stepsGraph.classList.add('hidden');
-    stairGraph.classList.remove('hidden');
-    activeGraph.classList.add('hidden');
-    activityStepChartNum.innerHTML = `${personalData.stairCount}<span>stairs</span>`
-    activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.stairCount}) / 100)`
-    allUserChartNum.innerHTML = `${allUserData.stairCount}<span>stairs</span>`
-    allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.stairCount}) / 100)`
-  } else if (activeRadio.checked === true) {
-    stepsGraph.classList.add('hidden');
-    stairGraph.classList.add('hidden');
-    activeGraph.classList.remove('hidden');
-    activityStepChartNum.innerHTML = `${personalData.minsActive}<span>mins</span>`
-    activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.minsActive}) / 250)`
-    allUserChartNum.innerHTML = `${allUserData.minsActive}<span>mins</span>`
-    allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.minsActive}) / 250)`
+function changeShownType() {
+  if (personalSleepRadio.checked === true) {
+    personalSleepChart.classList.remove('hidden');
+    allSleepChart.classList.add('hidden');
+  } else if (allSleepRadio.checked === true) {
+    allSleepChart.classList.remove('hidden');
+    personalSleepChart.classList.add('hidden');
   }
 }
 

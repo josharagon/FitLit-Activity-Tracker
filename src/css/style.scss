@@ -88,11 +88,10 @@ h2{
 
 .body-main-infoContainter {
   width: 100%;
-  border: 1px solid black;
   margin: 0 0 1em;
   display: flex;
   flex-direction: row;
-  overflow: scroll;
+  justify-content: space-between;
 }
 
 .main-column-hydration {
@@ -107,7 +106,7 @@ h2{
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 100%
+  height: 100%;
 }
 
 .main-column-sleep {
@@ -197,26 +196,23 @@ h2{
 
 .card-history-sleep {
   text-align: center;
-  background-color: #EC96A4;
   font-size: 1em;
   margin: .5em;
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 50%;
 }
 
 .card-history-activity {
   text-align: center;
-  background-color: #DFE166;
   font-size: 1em;
   margin: .5em;
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 50%;
+  // width: 50%;
   height: 93%;
 }
 
@@ -318,6 +314,10 @@ h2{
     @extend #chart-bar;
     stroke: #DFE166;
   }
+  &sleep {
+    @extend #chart-bar;
+    stroke: #EC96A4;
+  }
 }
 
 .box .percent .number{
@@ -338,6 +338,10 @@ h2{
     @extend .box, .percent, .number;
     color: #DFE166;
     height: 95%;
+  }
+  &sleep {
+    @extend .box, .percent, .number;
+    color: #EC96A4;
   }
 }
 
@@ -363,6 +367,10 @@ h2{
     @extend .box, .text;
     color: #DFE166;
   }
+  &sleep {
+    @extend .box, .text;
+    color: #EC96A4;
+  }
 }
 
 .data-radio{
@@ -374,6 +382,11 @@ h2{
   @extend .data-radio, label;
   @extend .data-radio, input[type="radio"];
 }
+
+.data-radio-sleep {
+  @extend .data-radio-activity;
+}
+
 .data-radio input[type="radio"] {
   opacity: 0;
   position: fixed;
@@ -381,7 +394,7 @@ h2{
 }
 
 .data-radio label {
-  color: rgb(236, 209, 209);
+  color: rgb(255, 255, 255);
   display: inline-block;
   background-color: #8b8b8b;
   padding: 5px 15px;
@@ -420,6 +433,26 @@ h2{
   border-color: rgb(255, 255, 255);
 }
 
+.data-radio-sleep label {
+  color: rgb(18, 18, 18);
+  display: inline-block;
+  background-color: #8b8b8b;
+  padding: 5px 15px;
+  margin: 0px 5px;
+  font-family: sans-serif, Arial;
+  font-size: 13px;
+  border: 1px solid #EC96A4;
+  border-radius: 18px;
+  z-index: 1;
+  border: 1px solid #EC96A4; 
+}
+
+.data-radio-sleep input[type="radio"]:checked + label {
+  box-shadow: inset 0px 0px 6px 0px black;
+  background-color:#EC96A4;
+  border-color: rgb(255, 255, 255);
+}
+
 .title{
   font-size: 48px;
   &hydro {
@@ -429,6 +462,10 @@ h2{
   &activity {
     @extend .title;
     color: #DFE166;
+  }
+  &sleep{
+    @extend .title;
+    color: #EC96A4;
   }
 }
 
@@ -444,7 +481,12 @@ h2{
   color: red;
 }
 
+
 .hidden {
   display: none;
 }
 
+
+.visibility {
+  visibility: hidden;
+}

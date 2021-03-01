@@ -1,11 +1,13 @@
 class Sleep {
   constructor(sleepData, userNow, date, userRepo) {
+  // constructor(sleepData, userNow, userRepo) {
     this.sleepData = sleepData;
     this.user = userNow;
     this.date = date;
+    // this.date = this.returnToday(this.sleepData);
     this.userRepo = userRepo;
   }
-
+  
   calculateAverageSleep() {
     let perDaySleep = this.sleepData.filter((data) => this.user.id === data.userID);
     const userSleep = perDaySleep.reduce((sum, data) => {
@@ -28,7 +30,9 @@ class Sleep {
   }
 
   calculateDailySleepQuality() {
-    let findSleepQualityByDate = this.sleepData.find((data) => this.user.id === data.userID && this.date === data.date);
+    let findSleepQualityByDate = this.sleepData.find((data) => {
+    return this.user.id === data.userID && this.date === data.date
+    });
     return findSleepQualityByDate.sleepQuality;
   }
 

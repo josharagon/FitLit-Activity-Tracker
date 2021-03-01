@@ -46,12 +46,10 @@ describe('Hydration', function() {
   describe('Should store information', function() {
 
       it('should store an array of hydration data', function() {
-
         expect(hydrationData).to.be.an('array');
       });
 
       it('should store a current user object', function() {
-
         expect(hydration.user).to.deep.equal(user1)
       });
 
@@ -75,7 +73,6 @@ describe('Hydration', function() {
   });
 
   it('should find the average water intake per day for a user', function() {
-
     expect(hydration.calculateAverageOunces()).to.deep.equal(35);
   });
 

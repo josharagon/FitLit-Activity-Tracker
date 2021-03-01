@@ -1,6 +1,7 @@
 # FitLit Lifestyle Tracker 
 ---
 Check out the github pages deployment here to interact with the app ---> 
+[We'll need to follow these instructions once last commit is settled](https://github.com/josharagon/Refactor-Tractor/blob/main/gh-pages-procedure.md)
 
 1. As the user, there are many options of what kind of information you would like to see, as there is much available to you. Your stats can interact with other users and you can see your averages and how they compare to theirs, giving you the opportunity to challenge yourself to overcome mediocrity, or to even set yourself apart and get ahead of the curve.
 2. Beginning from the main page, you will see your user section and a grid of charts that are interactive.  Pick one based on your interest at the time.  The three main categories of this app can be thought of as Activity, Hydration and Sleep.

@@ -6,7 +6,7 @@ Check out the github pages deployment here to interact with the app --->
 2. Beginning from the main page, you will see your user section and a grid of charts that are interactive.  Pick one based on your interest at the time.  The three main categories of this app can be thought of as Activity, Hydration and Sleep.
 3. Within each graph, the option for displaying as a grid will give you the opportunity to see this information and GRID more in a way where it will be easier to differentiate averages and goals with other users.
 4. When you finish an activity or in the morning after a night's sleep or before bed when you are brushing up, make sure to enter your data for the day.  This will be added to your account and tallied up with all data for your reference.  You may want to add a stair climb (measured by flights) or your step reading off of your step tracker (make sure your stride length is accounted for so we can calculate miles more accurately). 
-##### Note: when entering units of water make your measurement of intake in ounces.
+#####         Note: when entering units of water make your measurement of intake in ounces.
 5. You have a step goal that you should try to complete every day so stay on track in entering this information so that you can see your development over time.  In your entry field, you may enter a week's end date and see that week's data for reference. This weekly data reflects any information you have about that week regarding yopur activities, sleep or how much water intake you logged throughout that week.
 
 ![](.gif)
@@ -44,7 +44,7 @@ This project has challenged our team in many ways and utilizes technologies that
 * Josh Aragon [view josharagon on Github](github.com/josharagon)
 * Cameron Mackintosh [view cameronmackintosh on Github](github.com/cbmackintosh)
 * Chuck Morris [view percworld on Github](github.com/percworld)
-
+---
 #### Project part of curriculum at Turing School of Software Design - 
 #### Future updates may include:
 * a page for challenges between friends involving the Activity class.  

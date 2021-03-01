@@ -19,11 +19,27 @@ This project has challenged our team in many ways and utilizes technologies that
 *  Promise.all - [Promise.all on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
 * API/localhost - [with node](https://medium.com/chaya-thilakumara/how-to-create-a-local-api-server-rest-api-for-testing-945bbb2d31b7)
 
+---
+### Technologies
+<br><img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/><br>
+<img src="https://img.shields.io/badge/css%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/><br>
+<img src="https://img.shields.io/badge/sass%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/><br>
+<img src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/>
 
+* npm 6.14.8 (package manager)
+* Mocha ^6.1.4 (test framework)
+* Chai ^4.2.0 (assertion library)
+* Webpack ^4.31.0
+* css-loader ^5.0.1
+* node-sass ^5.0.0
+* sass-loader ^2.0.0
+
+
+* Turing School of Software Design - 
 ---
 ### Credits
 ---
 * Paige Vannelli [view PaigeVannelli on Github](github.com/PaigeVannelli)
 * Josh Aragon [view josharagon on Github](github.com/josharagon)
 * Cameron Mackintosh [view cameronmackintosh on Github](github.com/cbmackintosh)
-* Chuck Morris [view percworld](github.com/percworld)
+* Chuck Morris [view percworld on Github](github.com/percworld)

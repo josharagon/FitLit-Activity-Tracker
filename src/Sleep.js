@@ -37,7 +37,6 @@ class Sleep {
     let findSleepQualityByDate = this.sleepData.find((data) => {
     return this.user.id === data.userID && this.date === data.date
     });
-    console.log(findSleepQualityByDate)
     return findSleepQualityByDate.sleepQuality;
   }
 

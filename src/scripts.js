@@ -63,20 +63,28 @@ window.addEventListener('keydown', postData)
 //this event listener will be fire upon submitting a form 
 
 function startApp() {
-   fetchData()
+  fetchCurrentData()
+}
+    
+function fetchCurrentData() {
+  fetchData()
   .then(allData => {
-    currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
-    let userRepo = new UserRepo(allData.userData, currentUser);
-    // let today = allData.activityData[allData.activityData.length - 1].date
-    let userActivityData = allData.activityData.filter(userData => {
-      return currentUser.id === userData.userID
-    })
-    today = userActivityData[userActivityData.length - 1].date
-    // let hydrationRepo = new Hydration(allData.hydrationData, currentUser);
-    displaySleepData(allData.sleepData, currentUser, today, userRepo);
-    displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
-    displayActivityData(allData.activityData, currentUser, today, userRepo);
+    if (!currentUser) {
+      currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
+    } 
+  today = returnLatestDate(allData)
+  let userRepo = new UserRepo(allData.userData, currentUser);
+  displaySleepData(allData.sleepData, currentUser, today, userRepo);
+  displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
+  displayActivityData(allData.activityData, currentUser, today, userRepo);
   })
+}
+
+function returnLatestDate(allData) {
+  let userActivityData = allData.activityData.filter(userData => {
+    return currentUser.id === userData.userID
+  })
+  return userActivityData[userActivityData.length - 1].date
 }
 
 startApp();
@@ -90,7 +98,6 @@ function postData() {
 }
 
 function postNewData() {
-  console.log(currentUser)
   let userSleepData = {
     "userID" : currentUser.id, 
     "date" : "2019/02/20",
@@ -101,7 +108,7 @@ function postNewData() {
   let userHydrationData = {
     "userID" : currentUser.id, 
     "date" : "2019/02/20", 
-    "numOunces": 4
+    "numOunces": 14
   }
   
   let userActivityData = {
@@ -115,8 +122,8 @@ function postNewData() {
 
   postAllUserData(userSleepData, userHydrationData, userActivityData)
   .then(response => {
-    console.log("this is all the posted data", response)
-    // we will need to use this data to connect to our display 
+    fetchCurrentData()
+    // current adds to the display instead of overwriting it - need to fix when we connect to DOM
   })
 }
 

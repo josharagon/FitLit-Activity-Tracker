@@ -25,6 +25,7 @@ This project has challenged our team in many ways and utilizes technologies that
 <img src="https://img.shields.io/badge/css%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/><br>
 <img src="https://img.shields.io/badge/sass%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white"/><br>
 <img src="https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/>
+<img src="https://img.shields.io/badge/webpack%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white"/>
 
 * npm 6.14.8 (package manager)
 * Mocha ^6.1.4 (test framework)
@@ -35,7 +36,7 @@ This project has challenged our team in many ways and utilizes technologies that
 * sass-loader ^2.0.0
 
 
-* Turing School of Software Design - 
+
 ---
 ### Credits
 ---
@@ -43,3 +44,8 @@ This project has challenged our team in many ways and utilizes technologies that
 * Josh Aragon [view josharagon on Github](github.com/josharagon)
 * Cameron Mackintosh [view cameronmackintosh on Github](github.com/cbmackintosh)
 * Chuck Morris [view percworld on Github](github.com/percworld)
+
+#### Project part of curriculum at Turing School of Software Design - 
+#### Future updates may include:
+* a page for challenges between friends involving the Activity class.  
+

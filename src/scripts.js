@@ -110,9 +110,9 @@ function fetchCurrentData() {
     window.sleepAvg = { hours: averageSleep, quality: sleepQuality };
     sleepChartHeader.innerText = 'Your hours slept this week';
     sleepChartNum.innerHTML = `${sleepDay.hours}<span>hr</span>`;
-    sleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepDay.hours}) / 12)`;
+    sleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepDay.hours}) / 12)`;
     allSleepChartNum.innerHTML = `${sleepAvg.hours}<span></span>`;
-    allSleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepAvg.hours}) / 12)`;
+    allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.hours}) / 12)`;
     compileChart(sleepObject, "hoursSlept", "purple", "hours of sleep");
     sleepTypeRadio.addEventListener('click', function () {
       updateSleepChart(sleepObject);
@@ -213,7 +213,7 @@ function fetchCurrentData() {
   
     postAllUserData(userSleepData, userHydrationData, userActivityData)
     .then(response => {
-      fetchCurrentData()
+      // fetchCurrentData()
       // current adds to the display instead of overwriting it - need to fix when we connect to DOM
     })
   }
@@ -258,15 +258,15 @@ function fetchCurrentData() {
       compileChart(sleepObject, "hoursSlept", "purple", "hours of sleep");
       sleepChartHeader.innerText = 'Your hours slept this week';
       sleepChartNum.innerHTML = `${sleepDay.hours}<span>hr</span>`
-      sleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepDay.hours}) / 12)`
+      sleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepDay.hours}) / 12)`
       allSleepChartNum.innerHTML = `${sleepAvg.hours}<span>hr</span>`
-      allSleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepAvg.hours}) / 12)`
+      allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.hours}) / 12)`
     } else if (sleepQualityRadio.checked === true) {
       sleepChart.id = 'chartDiv-sleepQuality';
       compileChart(sleepObject, "sleepQuality", "purple", "quality of sleep on a scale of 1-5");
       sleepChartHeader.innerText = 'Your sleep quality this week';
       sleepChartNum.innerHTML = `${sleepDay.quality}<span>/5</span>`
-      sleepChartBar.style.strokeDashoffset = `calc(440 - (40 * ${sleepDay.quality}) / 5)`
+      sleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepDay.quality}) / 5)`
       allSleepChartNum.innerHTML = `${sleepAvg.quality}<span>/5</span>`
       allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.quality}) / 5)`
     }

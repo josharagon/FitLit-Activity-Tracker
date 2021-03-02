@@ -2,181 +2,107 @@ import { expect } from 'chai';
 import Hydration from '../src/Hydration';
 import UserRepo from '../src/User-repo';
 import User from '../src/User';
+import Activity from '../src/Activity';
+import hydrationTestData from '../test_data/hydration-data';
+import usersTestData from '../test_data/users-data';
+import activityTestData from '../test_data/activity-data';
 
-describe.only('Hydration', function() {
+
+describe('Hydration', function() {
+  let activityData = activityTestData;
+  let activity;
   let hydrationData;
   let hydration;
-  let users;
+  let users = usersTestData;
   let userRepo;
+  let sleep;
+  let user1;
+  let user2;
+  let user3;
+  let user4;
+  let user5;
 
   beforeEach(function() {
-    let user3 = new User({
-      id: 3,
-      name: "The Rock",
-      address: "1236 Awesome Street, Denver CO 80301-1697",
-      email: "therock@hotmail.com",
-      strideLength: 10,
-      dailyStepGoal: 60000,
-      friends: [1, 2, 4]
-    });
+    user1 = new User(users[0]);
+    user2 = new User(users[1]);
+    user3 = new User(users[2]);
+    user4 = new User(users[3]);
+    user5 = new User(users[4]);
+    users = [user1, user2, user3, user4, user5];
+    userRepo = new UserRepo(users, user1);
+    activity = new Activity(activityData, activityData[0].date, user1, userRepo)
+    hydration = new Hydration(hydrationTestData, user1, activity.activityData[0].date, userRepo);
+    hydrationData = hydration.hydrationData;
+  });
 
-    let user4 = new User({
-      id: 4,
-      name: "Rainbow Dash",
-      address: "1237 Equestria Street, Denver CO 80301-1697",
-      email: "rainbowD1@hotmail.com",
-      strideLength: 3.8,
-      dailyStepGoal: 7000,
-      friends: [1, 2, 3]
-    });
-    users = [user3, user4];
-    userRepo = new UserRepo(users);
+  it('should be a function', function() {
+    expect(Hydration).to.be.a(`function`);
+  });
 
-    hydrationData = [{
-        "userID": 1,
-        "date": "2019/06/15",
-        "numOunces": 37
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/15",
-        "numOunces": 38
-      },
-      {
-        "userID": 3,
-        "date": "2019/05/09",
-        "numOunces": 1
-      },
-      {
-        "userID": 4,
-        "date": "2019/04/15",
-        "numOunces": 36
-      },
-      {
-        "userID": 2,
-        "date": "2018/10/23",
-        "numOunces": 34
-      },
-      {
-        "userID": 1,
-        "date": "2018/06/16",
-        "numOunces": 39
-      },
-      {
-        "userID": 3,
-        "date": "2018/03/30",
-        "numOunces": 2
-      },
-      {
-        "userID": 4,
-        "date": "2018/02/01",
-        "numOunces": 28
-      },
-      {
-        "userID": 1,
-        "date": "2016/08/22",
-        "numOunces": 30
-      },
-      {
-        "userID": 3,
-        "date": "2016/05/14",
-        "numOunces": 3
-      },
-      {
-        "userID": 2,
-        "date": "2016/04/27",
-        "numOunces": 40
-      },
-      {
-        "userID": 4,
-        "date": "2019/03/15",
-        "numOunces": 35
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/20",
-        "numOunces": 40
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/19",
-        "numOunces": 30
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/18",
-        "numOunces": 40
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/17",
-        "numOunces": 40
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/16",
-        "numOunces": 30
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/15",
-        "numOunces": 30
-      },
-    ]
+  it(`should be an instance of Hydration`, function() {
+    expect(hydration).to.be.an.instanceOf(Hydration);
+  });
 
-    hydration = new Hydration(hydrationData, user3);
+  describe('Should store information', function() {
+
+      it('should store an array of hydration data', function() {
+        expect(hydrationData).to.be.an('array');
+      });
+
+      it('should store a current user object', function() {
+        expect(hydration.user).to.deep.equal(user1)
+      });
+
+      it('should store the most recent date', function() {
+
+        expect(hydration.date).to.deep.equal(activity.activityData[0].date);
+      });
+
+      it('should store an array of users', function() {
+
+        expect(hydration.userRepo.users).to.deep.equal(users)
+      });
   });
 
   it('should take in a list of data', function() {
-    expect(hydration.hydrationData[0].userID).to.equal(1);
-    expect(hydration.hydrationData[2].numOunces).to.equal(1);
-    expect(hydration.hydrationData[4].date).to.equal('2018/10/23');
+
+
+    expect(hydration.hydrationData[0].userID).to.deep.equal(1);
+    expect(hydration.hydrationData[2].numOunces).to.deep.equal(1);
+    expect(hydration.hydrationData[4].date).to.deep.equal('2018/10/23');
   });
 
   it('should find the average water intake per day for a user', function() {
-    expect(hydration.calculateAverageOunces(3)).to.equal(2);
+    expect(hydration.calculateAverageOunces()).to.deep.equal(35);
   });
 
   it('should find the water intake for a user on a specified date', function() {
-    expect(hydration.calculateDailyOunces("2019/06/15")).to.equal(37);
-    expect(hydration.calculateDailyOunces("2019/04/15")).to.equal(36);
+
+    expect(hydration.calculateDailyOunces()).to.deep.equal(37);
   });
 
   it('should find water intake by day for first week', function() {
-
-
-      // console.log(hydration.calculateFirstWeekOunces(userRepo, 4));
-    expect(hydration.calculateFirstWeekOunces(userRepo)[0]).to.eql('2019/05/09: 1');
-    expect(hydration.calculateFirstWeekOunces(userRepo)[1]).to.eql('2018/03/30: 2');
+    expect(hydration.calculateFirstWeekOunces()).to.deep.eql([ { '2019/06/15': 37 }, { '2018/06/16': 39 }, { '2016/08/22': 30 } ]);
+    expect(hydration.calculateFirstWeekOunces()).to.deep.eql([ { '2019/06/15': 37 }, { '2018/06/16': 39 }, { '2016/08/22': 30 } ]);
   });
 
-  it('should find sleep quality by day for that days week', function() {
-    const user3 = new User({
-      id: 3,
-      name: "The Rock",
-      address: "1236 Awesome Street, Denver CO 80301-1697",
-      email: "therock@hotmail.com",
-      strideLength: 10,
-      dailyStepGoal: 60000,
-      friends: [1, 2, 4]
-    });
+  it('should find any dataset property by key for a week', function() {
 
-    const user4 = new User({
-      id: 4,
-      name: "Rainbow Dash",
-      address: "1237 Equestria Street, Denver CO 80301-1697",
-      email: "rainbowD1@hotmail.com",
-      strideLength: 3.8,
-      dailyStepGoal: 7000,
-      friends: [1, 2, 3]
-    });
-    const users = [user3, user4];
-    const userRepo = new UserRepo(users);
-    console.log("HELOOO", hydration.calculateRandomWeekOunces('2018/02/01', 4, userRepo));
-    expect(hydration.calculateRandomWeekOunces('2019/09/18', 4, userRepo)[0]).to.eql('2019/09/18: 40');
-    // expect(hydration.calculateRandomWeekOunces('2018/02/01', 4, userRepo)[6]).to.eql('2019/09/16: 30');
-    //this is failing because it doesn't exist, need a failure case
-  })
+    expect(hydration.userDataForWeek('numOunces')).to.deep.eql([ { '2019/06/15': 37 }, { '2018/06/16': 39 }, { '2016/08/22': 30 } ]);
+    expect(hydration.userDataForWeek('userID')).to.deep.eql([ { '2019/06/15': 1 }, { '2018/06/16': 1 }, { '2016/08/22': 1 } ]);
+    expect(hydration.userDataForWeek('date')).to.deep.eql([
+      { '2019/06/15': '2019/06/15' },
+      { '2018/06/16': '2018/06/16' },
+      { '2016/08/22': '2016/08/22' }
+    ]);
+  });
+  // ---marked for deletion
+  // it('should find the quantity of oz. drank in any week', function() {
+  //   console.log(hydration.calculateRandomWeekOunces())
+  //   expect(hydration.calculateRandomWeekOunces()).to.deep.eql('2019/09/18: 40');
+  // expect(hydration.calculateRandomWeekOunces('2018/02/01', 4, userRepo)[6]).to.eql('2019/09/16: 30');
+  //this is failing because it doesn't exist, need a failure case
+  //})
   //day of hydration should not include user 2 or user 1 on August 22
   //week of hydration should not include user 4 not during the week
 

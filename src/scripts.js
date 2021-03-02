@@ -4,17 +4,13 @@ import './css/reset.scss';
 import './images/person walking on path.jpg';
 import './images/The Rock.jpg';
 
-import userData from './data/users';
-import hydrationData from './data/hydration';
-import sleepData from './data/sleep';
-import activityData from './data/activity';
-
 import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
 import fetchData from './APICalls';
+import postAllUserData from './PostData';
 
 import * as JSC from 'jscharting';
 
@@ -75,9 +71,7 @@ var milesRadio = document.getElementById('category-miles');
 var milesLabel = document.getElementById('category-label-miles');
 var stairsRadio = document.getElementById('category-stairs');
 var activeRadio = document.getElementById('category-active');
-// var stepsGraph = document.getElementById('chartDiv-numSteps');
-// var stairGraph = document.getElementById('chartDiv-flightsOfStairs');
-// var activeGraph = document.getElementById('chartDiv-minutesActive');
+
 var activityChart = document.querySelector('.activity-chart');
 var activityChartHeader = document.querySelector('.activity-chart-header');
 dataSelectorRadio.addEventListener('click', changeShownData)
@@ -100,18 +94,30 @@ sleepDataSelector.addEventListener('click', changeShownType);
 
 
 
-function startApp() {
-  // fetchData();
-  // let userList = [];
-  // makeUsers(userList);
-  // let userRepo = new UserRepo(userList);
-  // let hydrationRepo = new Hydration(hydrationData);
-  // let sleepRepo = new Sleep(sleepData);
-  // let activityRepo = new Activity(activityData);
 
-  // var userNowId = pickUser();
-  // let userNow = getUserById(userNowId, userRepo);
-  // let today = makeToday(userRepo, userNowId, hydrationData);
+let currentUser = null
+let today
+
+window.addEventListener('keydown', postData)
+//this event listener will be fire upon submitting a form 
+
+function startApp() {
+  fetchCurrentData()
+}
+    
+function fetchCurrentData() {
+  fetchData()
+  .then(allData => {
+    if (!currentUser) {
+      currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
+    } 
+  today = returnLatestDate(allData)
+  let userRepo = new UserRepo(allData.userData, currentUser);
+  displaySleepData(allData.sleepData, currentUser, today, userRepo);
+  displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
+  displayActivityData(allData.activityData, currentUser, today, userRepo);
+  })
+}
 
   fetchData()
     .then(allData => {
@@ -127,7 +133,14 @@ function startApp() {
       displayActivityData(allData.activityData, currentUser, today, userRepo);
     })
 
-  function displayHydrationData(hydrationData, user, today, userRepo) {
+  function returnLatestDate(allData) {
+  let userActivityData = allData.activityData.filter(userData => {
+    return currentUser.id === userData.userID
+  })
+  return userActivityData[userActivityData.length - 1].date
+}
+
+function displayHydrationData(hydrationData, user, today, userRepo) {
     let hydrationObject = new Hydration(hydrationData, user, today, userRepo);
     let averageHydration = hydrationObject.calculateAverageOunces();
     let dayAmount = hydrationObject.calculateDailyOunces();
@@ -139,12 +152,68 @@ function startApp() {
     compileChart(hydrationObject, "numOunces")
   }
 
-  function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
-    return drinks.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join(''); // needs dates?
+startApp();
+
+function postData() {
+  if (currentUser) {
+    postNewData()
+  } else {
+    console.log("no current user found")
   }
+}
+
+function postNewData() {
+  let userSleepData = {
+    "userID" : currentUser.id, 
+    "date" : "2019/02/20",
+    "hoursSlept" : 7,
+    "sleepQuality" : 3
+  }
+  
+  let userHydrationData = {
+    "userID" : currentUser.id, 
+    "date" : "2019/02/20", 
+    "numOunces": 14
+  }
+  
+  let userActivityData = {
+    "userID" : currentUser.id, 
+    "date" : "2019/02/20", 
+    "numSteps" : 3000, 
+    "minutesActive" : 60, 
+    "flightsOfStairs" : 15
+  }
+  // This is all placeholder info. All of of this data will be retrieved from values on our form 
+
+  postAllUserData(userSleepData, userHydrationData, userActivityData)
+  .then(response => {
+    fetchCurrentData()
+    // current adds to the display instead of overwriting it - need to fix when we connect to DOM
+  })
+}
+
+function makeGraphPoints(dates) {
+  //INPUT: Array w/objects Date/value pairs
+  //OUTPUT: Array w/ objects of x: date and y:value
+  const points = dates.map(date => {
+    return Object.keys(date)[0];
+  });
+  return points.map((dateKey, index) => {
+    return { x: dateKey, y: dates[index][dateKey] }
+  })
+};
+
+function makeHydrationHTML(id, hydrationInfo, userStorage, drinks) {
+  return drinks.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join(''); // needs dates?
+}
 
 
   function displaySleepData(sleepData, user, today, userRepo) {
+    var sleepToday = document.getElementById('sleepToday');
+    var sleepQualityToday = document.getElementById('sleepQualityToday');
+    var avUserSleepQuality = document.getElementById('avUserSleepQuality');
+    var sleepThisWeek = document.getElementById('sleepThisWeek');
+    var sleepEarlierWeek = document.getElementById('sleepEarlierWeek');
     let sleepObject = new Sleep(sleepData, user, today, userRepo);
     let daySleep = sleepObject.calculateDailySleep();
     console.log(daySleep)
@@ -164,9 +233,7 @@ function startApp() {
     sleepTypeRadio.addEventListener('click', function () {
       updateSleepChart(sleepObject);
     });
-  }
-
-  
+  }  
 
   function displayActivityData(activityData, currentUser, today, userRepo) {
     let activityRepo = new Activity(activityData, today, currentUser, userRepo);
@@ -180,21 +247,24 @@ function startApp() {
     let allStairs = activityRepo.getAllUserAverageForDay('flightsOfStairs');
     let allActive = activityRepo.getAllUserAverageForDay('minutesActive');
     window.allUserData = { steps: allAmount, stairCount: allStairs, minsActive: allActive };
-    // display(userStepsToday, 'Step Count', activityRepo.returnUserStepsByDate().numSteps)
+
+   
     display(userMinutesToday, 'Active Minutes', activityRepo.getActiveMinutesByDate())
+
     const userStairs = activityRepo.userDataForToday('flightsOfStairs')
-    // userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${userStairs}</span></p>`)
-    // need users flights of stairs
     activityRepo.getMilesFromStepsByDate()
     // need to create dom element
     activityRepo.getStairRecord()
     //  - all time stair record need to create dom element
+    var avgStairsToday = document.getElementById('avgStairsToday');
     const averageStairs = activityRepo.getAllUserAverageForDay('flightsOfStairs')
     // avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${averageStairs}</span></p>`)
     // this returns the average # of stairs for today for all users
+    var avgMinutesToday = document.getElementById('avgMinutesToday');
     const averageMinutes = activityRepo.getAllUserAverageForDay('minutesActive')
     // avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${averageMinutes}</span></p>`)
     // average minutes active for all users today
+    var avgStepsToday = document.getElementById('avgStepsToday');
     const averageSteps = activityRepo.getAllUserAverageForDay('numSteps')
     // avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${averageSteps}</span></p>`)
     // average number of steps for everyone today
@@ -203,18 +273,15 @@ function startApp() {
     activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalAmount}) / 1500)`
     allUserChartNum.innerHTML = `${allAmount}<span></span>`
     allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allAmount}) / 1500)`
+    var userStepsThisWeek = document.getElementById('userStepsThisWeek');
+    const weeklySteps = activityRepo.userDataForWeek("numSteps");
     compileChart(activityRepo, "numSteps")
-    // compileChart(activityRepo, "flightsOfStairs")
-    // compileChart(activityRepo, "minutesActive")
-    // userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(activityRepo.userDataForWeek("numSteps")));
-    //console.log(activityRepo.userDataForWeek("minutesActive"));
-    //console.log(activityRepo.userDataForWeek("flightsOfStairs"));
     activityCategoryRadio.addEventListener('click', function () {
       updateCategory(activityRepo);
     });
   }
-
-  function compileChart(healthCategory, propertyName) {
+  
+ function compileChart(healthCategory, propertyName) {
     let chart = new JSC.Chart(`chartDiv-${propertyName}`, {
       type: 'spline',
       legend_visible: false,
@@ -222,7 +289,7 @@ function startApp() {
       box_fill: '#ffffff00',
       series: [
         {
-          points: healthCategory.userDataForWeek(propertyName)
+          points: makeGraphPoints(healthCategory.userDataForWeek(propertyName))
         },
       ]
     });
@@ -281,9 +348,6 @@ function startApp() {
       allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.quality}) / 5)`
     }
   }
-  function display(element, description, method) {
-    // element.insertAdjacentHTML("afterBegin", `<p>${description}:</p><p>You</p><p><span class="number">${method}</span></p>`)
-  }
 
   function displayAverageSteps(activityRepo) {
     let averageSteps = activityRepo.returnUserStepsByDate();
@@ -295,134 +359,6 @@ function startApp() {
     userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activeMinutes}</span></p>`)
   }
 }
-startApp();
-
-// function displayDistanceWalked()
-
-// let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
-// historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
-// addInfoToSidebar(userNow, userRepo);
-
-//addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
-// addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
-// let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-// addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
-// addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
-
-
-// function makeUsers(array) {
-//   userData.forEach(function(dataItem) {
-//     let user = new User(dataItem);
-//     array.push(user);
-//   })
-// }
-
-// function pickUser() {
-//   return Math.floor(Math.random() * 50);
-// }
-
-// function getUserById(id, listRepo) {
-//   return listRepo.getDataFromID(id);
-// }
-
-// function addInfoToSidebar(user, userRepo) {
-//   sidebarName.innerText = user.name;
-//   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
-//   stepGoalCard.innerText = `Your daily step goal is ${user.dailyStepGoal}.`
-//   avgStepGoalCard.innerText = `The average daily step goal is ${userRepo.calculateAverageStepGoal()}`;
-//   userAddress.innerText = user.address;
-//   userEmail.innerText = user.email;
-//   userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;
-//   friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userRepo))
-// }
-// need to refactor and call in our .then callback passing in current info 
-
-
-// function makeFriendHTML(user, userRepo) {
-//   return user.getFriendsNames(userRepo).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');
-// }
-
-// function makeWinnerID(activityInfo, user, dateString, userStorage){
-//   return activityInfo.getWinnerId(user, dateString, userStorage)
-// }
-
-// function makeToday(userStorage, id, dataSet) {
-//   //console.log(userStorage, id, dataSet)
-//   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
-//   return sortedArray[0].date;
-// }
-
-// function makeRandomDate(userStorage, id, dataSet) {
-//   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
-//   return sortedArray[Math.floor(Math.random() * sortedArray.length + 1)].date
-
-// }
-
-// function addHydrationInfo(id, hydrationInfo, dateString, userStorage, laterDateString) {
-//hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationInfo.calculateDailyOunces(id, dateString)}</span></p><p>oz water today.</p>`);
-//hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
-//hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(id)}</span></p> <p>oz per day.</p>`)
-//hydrationThisWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateFirstWeekOunces(userStorage, id)));
-// hydrationEarlierWeek.insertAdjacentHTML('afterBegin', makeHydrationHTML(id, hydrationInfo, userStorage, hydrationInfo.calculateRandomWeekOunces(laterDateString, id, userStorage)));
-// }
-
-
-// function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
-//   // sleepThisWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(dateString, id, userStorage)));
-//   // sleepEarlierWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)));
-// }
-
-// function makeSleepHTML(id, sleepInfo, userStorage, method) {
-//   return method.map(sleepData => `<li class="historical-list-listItem">On ${sleepData} hours</li>`).join('');
-// }
-
-// function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
-//   return method.map(sleepQualityData => `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`).join('');
-// }
-
-// function addActivityInfo(id, activityInfo, dateString, userStorage, laterDateString, user, winnerId) {
-// userStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count:</p><p>You</><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'flightsOfStairs')}</span></p>`)
-// avgStairsToday.insertAdjacentHTML("afterBegin", `<p>Stair Count: </p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'flightsOfStairs')}</span></p>`)
-// userStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'numSteps')}</span></p>`)
-// avgStepsToday.insertAdjacentHTML("afterBegin", `<p>Step Count:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'numSteps')}</span></p>`)
-// userMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>You</p><p><span class="number">${activityInfo.userDataForToday(id, dateString, userStorage, 'minutesActive')}</span></p>`)
-// avgMinutesToday.insertAdjacentHTML("afterBegin", `<p>Active Minutes:</p><p>All Users</p><p><span class="number">${activityInfo.getAllUserAverageForDay(dateString, userStorage, 'minutesActive')}</span></p>`)
-// userStepsThisWeek.insertAdjacentHTML("afterBegin", makeStepsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "numSteps")));
-// userStairsThisWeek.insertAdjacentHTML("afterBegin", makeStairsHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "flightsOfStairs")));
-// userMinutesThisWeek.insertAdjacentHTML("afterBegin", makeMinutesHTML(id, activityInfo, userStorage, activityInfo.userDataForWeek(id, dateString, userStorage, "minutesActive")));
-/////bestUserSteps.insertAdjacentHTML("afterBegin", makeStepsHTML(user, activityInfo, userStorage, activityInfo.userDataForWeek(winnerId, dateString, userStorage, "numSteps")));
-// }
-
-// function makeStepsHTML(id, activityInfo, userStorage, method) {
-//   return method.map(activityData => `<li class="historical-list-listItem">On ${activityData} steps</li>`).join('');
-// }
-// function makeStepsHTML(method) {
-//   return method.map(activityData => `<li class="historical-list-listItem">On ${activityData} steps</li>`).join('');
-// }
-
-// function makeStairsHTML(id, activityInfo, userStorage, method) {
-//   return method.map(data => `<li class="historical-list-listItem">On ${data} flights</li>`).join('');
-// }
-
-// function makeMinutesHTML(id, activityInfo, userStorage, method) {
-//   return method.map(data => `<li class="historical-list-listItem">On ${data} minutes</li>`).join('');
-// }
-
-// function addFriendGameInfo(id, activityInfo, userStorage, dateString, laterDateString, user) {
-//   friendChallengeListToday.insertAdjacentHTML("afterBegin", makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage)));
-//   streakList.insertAdjacentHTML("afterBegin", makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'numSteps')));
-//   streakListMinutes.insertAdjacentHTML("afterBegin", makeStepStreakHTML(id, activityInfo, userStorage, activityInfo.getStreak(userStorage, id, 'minutesActive')));
-//   friendChallengeListHistory.insertAdjacentHTML("afterBegin", makeFriendChallengeHTML(id, activityInfo, userStorage, activityInfo.showChallengeListAndWinner(user, dateString, userStorage)));
-//   bigWinner.insertAdjacentHTML('afterBegin', `THIS WEEK'S WINNER! ${activityInfo.showcaseWinner(user, dateString, userStorage)} steps`)
-// }
-
-// function makeFriendChallengeHTML(id, activityInfo, userStorage, method) {
-//   return method.map(friendChallengeData => `<li class="historical-list-listItem">Your friend ${friendChallengeData} average steps.</li>`).join('');
-// }
-
-// function makeStepStreakHTML(id, activityInfo, userStorage, method) {
-//   return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
-// }
 
 function updateHydrationChart() {
   if (hydrationDay.checked === true) {

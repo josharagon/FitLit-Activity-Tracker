@@ -21,6 +21,19 @@ let today
 let submitButton = document.querySelector('.submit-button');
 submitButton.addEventListener('click', postData);
 
+
+//FORM DATA
+const addDataButton = document.getElementById('addDataButton');
+const userInputForm = document.getElementById('formContainer');
+const allDisplayedData = document.getElementById('mainInfoContainer')
+addDataButton.addEventListener('click', displayForm);
+
+function displayForm() {
+  userInputForm.classList.remove('hidden');
+  allDisplayedData.classList.add('hidden');
+}
+
+
 //HYDRATION CIRCLE CHART
 var hydrationChartText = document.getElementById('chart-text');
 var hydrationChartNum = document.getElementById('chart-num');

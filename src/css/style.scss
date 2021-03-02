@@ -1,4 +1,4 @@
-
+@import "_variables";
 
 * {
   font-family: 'Montserrat', sans-serif !important;
@@ -475,6 +475,38 @@ h2{
   flex: row;
   justify-content: center;
   width: 75%;
+}
+
+
+// ~~~~~~~~~~~~ FORM STYLING ~~~~~~~~~~~ //
+
+.main-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65em;
+  width: 100%;
+}
+
+.form-container {
+  height: 60%;
+  width: 70%;
+  margin-top: 5em;
+  align-self: flex-start;
+  background-color: $main-color;
+  border-radius: 5%;
+  display: flex;
+  align-items: center;
+}
+
+.user-input {
+  font-size: x-large;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: row;
+  margin: 30px;
 }
 
 .error-message{

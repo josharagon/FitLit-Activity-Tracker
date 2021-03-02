@@ -74,14 +74,14 @@ describe('Sleep', function() {
     expect(sleep.calculateDailySleepQuality()).to.deep.equal(2.2);
   });
 
-  it('should find sleep by day for that days week', function() {
+  it('should find hours slept over the past week, returning data in chart coordinate form', function() {
 
-    expect(sleep.calculateWeekSleep()).to.deep.equal(['2017/06/15: 6.1']);
+    expect(sleep.userDataForWeek('hoursSlept')).to.deep.equal([{x: '2017/06/15', y: 6.1}]);
   });
 
-  it('should find sleep quality by day for that days week', function() {
+  it('should find sleep quality for each day over the last week, returning data in chart coordinate form', function() {
 
-    expect(sleep.calculateWeekSleepQuality()).to.deep.eql(['2017/06/15: 2.2']);
+    expect(sleep.userDataForWeek('sleepQuality')).to.deep.eql([{x: '2017/06/15', y: 2.2}]);
   });
 
   it('should find average sleep quality for all users for all time', function() {

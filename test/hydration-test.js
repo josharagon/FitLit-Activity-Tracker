@@ -88,13 +88,8 @@ describe('Hydration', function() {
 
   it('should find any dataset property by key for a week', function() {
 
-    expect(hydration.userDataForWeek('numOunces')).to.deep.eql([ { '2019/06/15': 37 }, { '2018/06/16': 39 }, { '2016/08/22': 30 } ]);
-    expect(hydration.userDataForWeek('userID')).to.deep.eql([ { '2019/06/15': 1 }, { '2018/06/16': 1 }, { '2016/08/22': 1 } ]);
-    expect(hydration.userDataForWeek('date')).to.deep.eql([
-      { '2019/06/15': '2019/06/15' },
-      { '2018/06/16': '2018/06/16' },
-      { '2016/08/22': '2016/08/22' }
-    ]);
+    expect(hydration.userDataForWeek('numOunces')).to.deep.eql([{x: '2019/06/15', y: 37}, {x: '2018/06/16', y: 39 }, {x: '2016/08/22', y: 30}]);
+  
   });
   // ---marked for deletion
   // it('should find the quantity of oz. drank in any week', function() {

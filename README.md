@@ -35,6 +35,7 @@ This project has challenged our team in many ways and utilizes technologies that
 * css-loader ^5.0.1
 * node-sass ^5.0.0
 * sass-loader ^2.0.0
+* JSCharting ^3.0.2 (dependency providing chart functionality)
 
 
 

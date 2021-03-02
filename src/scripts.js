@@ -33,6 +33,12 @@ function displayForm() {
   allDisplayedData.classList.add('hidden');
 }
 
+//USER DATA
+var userAddress = document.getElementById('userAddress')
+var userEmail = document.getElementById('userEmail')
+var userStridelength = document.getElementById('userStridelength')
+var userStepGoal = document.getElementById('stepGoalCard')
+var userAvgStepGoal = document.getElementById('avStepGoalCard')
 
 //HYDRATION CIRCLE CHART
 var hydrationChartText = document.getElementById('chart-text');
@@ -91,7 +97,8 @@ function fetchCurrentData() {
     if (!currentUser) {
       currentUser = new User(allData.userData[Math.floor(Math.random() * allData.userData.length)]);
     }
-  today = returnLatestDate(allData);
+    displayUser(currentUser);
+    today = returnLatestDate(allData);
   let userRepo = new UserRepo(allData.userData, currentUser);
   displaySleepData(allData.sleepData, currentUser, today, userRepo);
   displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
@@ -354,4 +361,13 @@ function changeShownType() {
     allSleepChart.classList.remove('hidden');
     personalSleepChart.classList.add('hidden');
   }
+}
+
+
+function displayUser(user) {
+  userName.innerHTML = `Name: </br> ${user.name}`
+  userAddress.innerHTML = `Address: </br> ${user.address}`;
+  userEmail.innerHTML = `Email: </br> ${user.email}`;
+  userStridelength.innerHTML = `Stride Length: </br> ${user.strideLength}`;
+  userStepGoal.innerHTML = `Step Goal: </br> ${user.dailyStepGoal}`;
 }

@@ -98,7 +98,7 @@ h2{
   justify-content: space-between;
 }
 
-.main-column-hydration {
+.main-column-hydration, .main-column-activity, .main-column-sleep{
   align-items: center;
   padding: 0px 15px;
   display: flex;
@@ -106,32 +106,31 @@ h2{
   height: 100%
 }
 
-.main-column-activity {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
+// .main-column-activity {
+//   align-items: center;
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+// }
 
-.main-column-sleep {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 0px 15px;
-}
+// .main-column-sleep {
+//   align-items: center;
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+//   padding: 0px 15px;
+// }
 
 .infoContainer-cardContainer-card-horizontal {
   width: 100%;
   background-color: white;
-  // border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
 
-.horizontalCard-activity-container {
+.horizontalCard-activity-container, .horizontalCard-sleep-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -140,11 +139,8 @@ h2{
 
 .infoContainer-cardContainer-card-vertical {
   width: 100%;
-  // background-color: white;
-  // border: 1px solid black;
   display: flex;
   flex-direction: row;
-  // margin: 1%;
 }
 
 .card-today-hydration {
@@ -516,6 +512,7 @@ h2{
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  text-align: -webkit-center;
 }
 
 .dropdown-content a {
@@ -537,4 +534,27 @@ nav {
 
 .dropdown-menus {
   padding-left: 35px;
+}
+
+
+@media only screen and (max-width: 900px) {
+  nav{
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: center;
+    grid-template-columns: unset;
+  }
+  .body-main-infoContainter {
+    flex-direction: column;
+  }
+  .main-column-hydration, .main-column-activity, .main-column-sleep {
+    padding: 0px;
+  }
+  .card-history-activity, .card-history-hydration, .card-history-sleep {
+    width: -webkit-fill-available;
+  }
+.dropdown-content {
+  right: -111%;
+  width: 360px;
+  padding: 10px;
+}
 }

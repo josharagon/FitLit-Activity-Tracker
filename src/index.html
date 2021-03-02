@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" lang="en">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,12 @@
 </head>
 
 <body>
-  <h1 id="headerText">Activity Tracker</h1>
-  <section class="main">
-    <section class="main-sidebar-body">
-      <section class="body-sidebar-sidebarContainer">
-        <h2 class="sidebar-header-name" id="sidebarName">Name Name</h2>
-        <div class="sidebar-header-line"></div>
-        <img src="./images/The Rock.jpg" class="sidebar-header-userImage" alt="User Photo"></img>
+  <nav>
+    <div class="dropdown-menus">
+    <div class="dropdown">
+      <img src="./images/The Rock.jpg" class="sidebar-header-userImage dropbbtn" alt="User Photo" </img>
+      <div class="dropdown-content">
+        <p class="sidebar-header-userInfo" id="userName"></p>
         <div class="sidebar-header-line"></div>
         <p class="sidebar-header-userInfo" id="userAddress"></p>
         <div class="sidebar-header-line"></div>
@@ -28,22 +28,13 @@
         <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
         <p class="sidebar-header-userInfo" id="avStepGoalCard">
         <p>
-        <div class="sidebar-header-line"></div>
-        <section class="sidebar-body-friendContainer">
-          <p class="sidebar-header-userInfo">Friends</p>
-          <section class="sidebar-friendContainer-listItems">
-            <ul class="card-vertical-list" id="friendList">
-              <!-- friend list goes here -->
-            </ul>
-          </section>
-          <div class="sidebar-header-line"></div>
-          <p class="thisWeek">Keep up the good work! You were increasingly active on these dates:</p>
-          <ul class="card-vertical-list" id="streakListMinutes">
-            <!-- friend list goes here -->
-          </ul>
-        </section>
-      </section>
-    </section>
+      </div>
+    </div>
+    </div>
+    <h1 id="headerText">Activity Tracker</h1>
+
+  </nav>
+  <section class="main">
     <section class="body-main-infoContainter">
       <section class="main-column-hydration">
         <section class="infoContainer-cardContainer-card-horizontal">
@@ -224,22 +215,22 @@
       </section>
     </section>
   </section>
-  <form class="userInputField" action="index.html" method="post">
-    <label for="hoursSleptEntry">Time Slept: </label>
-    <input class="userInput" id="hoursSleptEntry" type="text" placeholder="hours">
-    <label for="sleepQualityEntry">Sleep Quality: </label>
-    <input class="userInput" id="sleepQualityEntry" type="text" placeholder="rating">
-    <label for="numOuncesEntry">Amount drank: </label>
-    <input class="userInput" id="numOuncesEntry" type="text" placeholder="in ounces">
-    <label for="numStepsEntry">Number of Steps: </label>
-    <input class="userInput" id="numStepsEntry" type="text" placeholder="555">
-    <label for="minutesActiveEntry">Minutes Active: </label>
-    <input class="userInput" id="minutesActiveEntry" type="text" placeholder="132">
-    <label for="flightsOfStairsEntry">Flights of Stairs: </label>
-    <input class="userInput" id="flightsOfStairsEntry" type="text" placeholder="Enter total stair flights climbed">
-    <button class="submit-button" type="button" name="button" style="font-size:14px">SUBMIT ACTIVITIES UPDATE</button>
-    <p class="user-input" id="updatingDisplay"></p>
-  </form>
+      <form class="userInputField" action="index.html" method="post">
+        <label for="hoursSleptEntry">Time Slept: </label>
+        <input class="userInput" id="hoursSleptEntry" type="text" placeholder="hours">
+        <label for="sleepQualityEntry">Sleep Quality: </label>
+        <input class="userInput" id="sleepQualityEntry" type="text" placeholder="rating">
+        <label for="numOuncesEntry">Amount drank: </label>
+        <input class="userInput" id="numOuncesEntry" type="text" placeholder="in ounces">
+        <label for="numStepsEntry">Number of Steps: </label>
+        <input class="userInput" id="numStepsEntry" type="text" placeholder="555">
+        <label for="minutesActiveEntry">Minutes Active: </label>
+        <input class="userInput" id="minutesActiveEntry" type="text" placeholder="132">
+        <label for="flightsOfStairsEntry">Flights of Stairs: </label>
+        <input class="userInput" id="flightsOfStairsEntry" type="text" placeholder="Enter total stair flights climbed">
+        <button class="submit-button" type="button" name="button" style="font-size:14px">SUBMIT ACTIVITIES UPDATE</button>
+        <p class="user-input" id="updatingDisplay"></p>
+      </form>
   </section>
 </body>
 

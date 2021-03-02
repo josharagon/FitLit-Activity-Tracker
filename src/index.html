@@ -195,32 +195,57 @@
         </section>
       </section>
       <section class="form-container" id="formContainer">
-        <form class="userInputField" id="userInputForm" action="index.html" method="post">
+        <form class="user-input-form" id="userInputForm" action="index.html" method="post">
+          <h2 class="form-header">LOG TODAY'S ACTIVITY</h2>
           <div class="form-input">
-            <label for="hoursSleptEntry">Time Slept: </label>
-            <input class="user-input" id="hoursSleptEntry" type="text" placeholder="hours">
+            <div class="label-container">
+              <label for="hoursSleptEntry" class="label"">Time Slept: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="hoursSleptEntry" type="text" placeholder="hours">
+            </div>
           </div>
           <div class="form-input">
-            <label for="sleepQualityEntry">Sleep Quality: </label>
-            <input class="user-input" id="sleepQualityEntry" type="text" placeholder="rating">
+            <div class="label-container">
+              <label for="sleepQualityEntry" class="label">Sleep Quality: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="sleepQualityEntry" type="text" placeholder="rating">
+            </div>
           </div>
           <div class="form-input">
-            <label for="numOuncesEntry">Amount drank: </label>
-            <input class="user-input" id="numOuncesEntry" type="text" placeholder="in ounces">
+            <div class="label-container">
+              <label for="numOuncesEntry" class="label">Amount drank: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="numOuncesEntry" type="text" placeholder="in ounces">
+            </div>
           </div>
           <div class="form-input">
-            <label for="numStepsEntry">Number of Steps: </label>
-            <input class="user-input" id="numStepsEntry" type="text" placeholder="555">
+            <div class="label-container">
+              <label for="numStepsEntry" class="label">Number of Steps: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="numStepsEntry" type="text" placeholder="555">
+            </div>
           </div>
           <div class="form-input">
-            <label for="minutesActiveEntry">Minutes Active: </label>
-            <input class="user-input" id="minutesActiveEntry" type="text" placeholder="132">
+            <div class="label-container">
+              <label for="minutesActiveEntry" class="label">Minutes Active: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="minutesActiveEntry" type="text" placeholder="132">
+            </div>
           </div>
           <div class="form-input">
-            <label for="flightsOfStairsEntry">Flights of Stairs: </label>
-            <input class="user-input" id="flightsOfStairsEntry" type="text" placeholder="Enter total stair flights climbed">
+            <div class="label-container">
+              <label for="flightsOfStairsEntry" class="label">Flights of Stairs: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="flightsOfStairsEntry" type="text" placeholder="Total stair flights climbed">
+            </div>
           </div>
-          <div>
+          <div class="button-container">
             <button class="submit-button" type="button" name="button" style="font-size:14px">SUBMIT ACTIVITIES UPDATE</button>
           </div>
           <p class="user-input" id="updatingDisplay"></p>

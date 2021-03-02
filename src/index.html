@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" lang="en">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Activity Tracker</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -18,9 +17,8 @@
       <section class="body-sidebar-sidebarContainer">
         <h2 class="sidebar-header-name" id="sidebarName">Name Name</h2>
         <div class="sidebar-header-line"></div>
-        <img src="./images/The Rock.jpg" class="sidebar-header-userImage"></img>
+        <img src="./images/The Rock.jpg" class="sidebar-header-userImage" alt="User Photo"></img>
         <div class="sidebar-header-line"></div>
-        <input type="date" value="2019-09-22" min="2019-06-15" max="2019-09-22">
         <p class="sidebar-header-userInfo" id="userAddress"></p>
         <div class="sidebar-header-line"></div>
         <p class="sidebar-header-userInfo" id="userEmail"></p>
@@ -226,6 +224,22 @@
       </section>
     </section>
   </section>
+  <form class="userInputField" action="index.html" method="post">
+    <label for="hoursSleptEntry">Time Slept: </label>
+    <input class="userInput" id="hoursSleptEntry" type="text" placeholder="hours">
+    <label for="sleepQualityEntry">Sleep Quality: </label>
+    <input class="userInput" id="sleepQualityEntry" type="text" placeholder="rating">
+    <label for="numOuncesEntry">Amount drank: </label>
+    <input class="userInput" id="numOuncesEntry" type="text" placeholder="in ounces">
+    <label for="numStepsEntry">Number of Steps: </label>
+    <input class="userInput" id="numStepsEntry" type="text" placeholder="555">
+    <label for="minutesActiveEntry">Minutes Active: </label>
+    <input class="userInput" id="minutesActiveEntry" type="text" placeholder="132">
+    <label for="flightsOfStairsEntry">Flights of Stairs: </label>
+    <input class="userInput" id="flightsOfStairsEntry" type="text" placeholder="Enter total stair flights climbed">
+    <button class="submit-button" type="button" name="button" style="font-size:14px">SUBMIT ACTIVITIES UPDATE</button>
+    <p class="user-input" id="updatingDisplay"></p>
+  </form>
   </section>
 </body>
 

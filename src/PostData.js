@@ -15,7 +15,6 @@ export const postAllUserData = (userSleepData, userHydrationData, userActivityDa
             body: JSON.stringify(userSleepData),
         })
         .then(response => response.json())
-        .then(response => console.log(response))
         .catch(err => displayError(err))
 
     let hydrationData = fetch("http://localhost:3001/api/v1/hydration", {
@@ -26,7 +25,6 @@ export const postAllUserData = (userSleepData, userHydrationData, userActivityDa
             body: JSON.stringify(userHydrationData),
         })
         .then(response => response.json())
-        .then(data => console.log('post success: ', data))
         .catch(err => displayError(err))
 
     let activityData = fetch("http://localhost:3001/api/v1/activity", {

@@ -93,7 +93,10 @@ function postNewData() {
     "minutesActive" : minutesActiveEntry.value,
     "flightsOfStairs" : flightsOfStairsEntry.value
   }
+  addFormData(newEntry);
+}
 
+function addFormData(newEntry) {
   const date = setNewDate();
   let userSleepData = {
     "userID" : currentUser.id,
@@ -101,13 +104,11 @@ function postNewData() {
     "hoursSlept" : newEntry.hoursSlept,
     "sleepQuality" : newEntry.sleepQuality
   }
-
   let userHydrationData = {
     "userID" : currentUser.id,
     "date" : date,
     "numOunces": newEntry.numOunces
   }
-
   let userActivityData = {
     "userID" : currentUser.id,
     "date" : date,
@@ -115,13 +116,14 @@ function postNewData() {
     "minutesActive" : newEntry.minutesActive,
     "flightsOfStairs" : newEntry.flightsOfStairs
   }
-
   checkUserData(newEntry, userSleepData, userHydrationData, userActivityData);
 }
 
 function checkUserData(newEntry,userSleepData, userHydrationData, userActivityData) {
   let updatingDisplay = document.getElementById('updatingDisplay');
-  if (!newEntry.hoursSlept || !newEntry.sleepQuality || !newEntry.numOunces || !newEntry.numSteps || !newEntry.minutesActive || !newEntry.flightsOfStairs) {
+  if (!newEntry.hoursSlept || !newEntry.sleepQuality ||
+    !newEntry.numOunces || !newEntry.numSteps ||
+    !newEntry.minutesActive || !newEntry.flightsOfStairs) {
     updatingDisplay.innerText = "Please make sure fields are all filled."
   } else if (!isNumber(newEntry.hoursSlept) ||
     !isNumber(newEntry.sleepQuality) ||

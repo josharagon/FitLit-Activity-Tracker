@@ -466,7 +466,9 @@ fieldset {
 .form-container {
   height: 60%;
   width: 70%;
-  background-color: grey;
+  background-color: $main-background;
+  opacity: 0.85;
+  color: $text-color;
   border-radius: 5%;
   display: flex;
   align-items: center;

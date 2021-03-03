@@ -55,4 +55,6 @@ This project has challenged our team in many ways and utilizes technologies that
 #### Project part of curriculum at Turing School of Software Design - 
 #### Future updates may include:
 * a page for challenges between friends involving the Activity class.  
+* further error handling of responses that deals with any potential issue
+* update for potential data security issues and secure login
 

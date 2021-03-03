@@ -2,8 +2,7 @@
 ---
 Instructions for install:
 1. Install the API
- * Go to [fitlit repo](https://github.com/turingschool-examples/fitlit-api)
- * Copy Code 
+ * Go to [fitlit repo](https://github.com/turingschool-examples/fitlit-api) & copy code OR copy this: git@github.com:turingschool-examples/fitlit-api.git 
  * ``` git clone``` and paste code
  * ```cd``` into new folder
  * run ```npm install``` then ```npm start```

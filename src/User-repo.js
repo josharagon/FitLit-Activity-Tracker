@@ -3,18 +3,17 @@ class UserRepo {
     this.users = users;
     this.currentUser = currentUser;
     this.averageAllStepGoals = this.calculateAverageStepGoal();
-    // this.averageAllStepGoals = this.users.reduce((stepSum, user) => {
-    //   stepSum += user.dailyStepGoal;
-    //   return stepSum;
-    // }, 0)/this.users.length;
   }
+
   getDataFromID(id) {
     return this.users.find((user) => id === user.id);
   }
+
   getDataFromUserID(id, dataSet) {
     return dataSet.filter((userData) => id === userData.userID);
   }
-  //FUNCTION BELOW May be UNUSED-- found a workaround
+
+
   calculateAverageStepGoal() {
     var totalStepGoal = this.users.reduce((sum, data) => {
       return sum += data.dailyStepGoal;
@@ -27,12 +26,15 @@ class UserRepo {
     let sortedByDate = selectedID.sort((a, b) => new Date(b.date) - new Date(a.date));
     return sortedByDate;
   }
+
   getToday(id, dataSet) {
     return this.makeSortedUserArray(id, dataSet)[0].date;
   }
+
   getFirstWeek(id, dataSet) {
     return this.makeSortedUserArray(id, dataSet).slice(0, 7);
   }
+
   getWeekFromDate(date, id, dataSet) {
     let dateIndex = this.makeSortedUserArray(id, dataSet)
       .indexOf(this.makeSortedUserArray(id, dataSet)
@@ -45,7 +47,7 @@ class UserRepo {
         .getDate() - 7) <= new Date(dataItem.date) && new Date(dataItem.date) <= new Date(date)
     })
   }
-  //FUNCTION BELOW May be UNUSED-- found a workaround
+
   chooseDayDataForAllUsers(dataSet, date) {
     return dataSet.filter(function(dataItem) {
       return dataItem.date === date
@@ -62,6 +64,7 @@ class UserRepo {
       return objectSoFar;
     }, {});
   }
+
   rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
     return Object.keys(sortedObjectKeys).sort(function(b, a) {
@@ -74,6 +77,7 @@ class UserRepo {
       }, 0) / sortedObjectKeys[b].length)
     });
   }
+  
   combineRankedUserIDsAndAveragedData(dataSet, date, relevantData, listFromMethod) {
     let sortedObjectKeys = this.isolateUsernameAndRelevantData(dataSet, date, relevantData, listFromMethod)
     let rankedUsersAndAverages = this.rankUserIDsbyRelevantDataValue(dataSet, date, relevantData, listFromMethod)

@@ -9,8 +9,8 @@ import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
 import UserRepo from './User-repo';
-import fetchData from './APICalls';
-import postAllUserData from './PostData';
+import { fetchData, displayError } from './APICalls';
+import { checkForError, postAllUserData } from './PostData';
 
 import * as JSC from 'jscharting';
 
@@ -135,14 +135,13 @@ function postNewData() {
 
   let updatingDisplay = document.getElementById('updatingDisplay');
   postAllUserData(userSleepData, userHydrationData, userActivityData)
-  .then(response => {
+    .then(response => {
     updatingDisplay.innerHTML = "Updating Your Account...";
     setTimeout(() => {updatingDisplay.innerHTML = ""}, 1500)
-    console.log(response)
-  })
-  .catch(err => {
-    alert(err.message)
-  })
+    })
+    .catch(err => {
+      displayError(err)
+    })
 }
 
 function setNewDate() {
@@ -155,11 +154,10 @@ function setNewDate() {
 }
 
 function catchData(data) {
-  //let error = "You need to enter valid numbers, try again!"
   const properties = Object.keys(data);
   properties.map(property => {
     let enteredNum = parseInt(data[property])
-    if (enteredNum <= 0 || !enteredNum) {
+    if (enteredNum < 0 || !enteredNum) {
       data[property] = 0;
     }
   })

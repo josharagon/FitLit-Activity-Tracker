@@ -1,32 +1,32 @@
 
-const fetchData = () => {
+export const fetchData = () => {
     let userData =  fetch("http://localhost:3001/api/v1/users")
         .then(response => response.json())
         .then(userData => {
             return userData
         })
-        .catch(err => console.log(err.message))
+        .catch(err => displayError(err))
 
     let hydrationData = fetch("http://localhost:3001/api/v1/hydration")
         .then(response => response.json())
         .then(hydrationData => {
-            return hydrationData
+            return hydrationData;
         })
-        .catch(err => console.log(err.message))
+        .catch(err => displayError(err))
 
     let activityData = fetch("http://localhost:3001/api/v1/activity")
         .then(response => response.json())
         .then(activityData => {
-            return activityData
+            return activityData;
         })
-        .catch(err => console.log(err.message))
+        .catch(err => displayError(err))
 
     let sleepData = fetch("http://localhost:3001/api/v1/sleep")
         .then(response => response.json())
         .then(sleepData => {
-            return sleepData
+            return sleepData;
         })
-        .catch(err => console.log(err.message));
+        .catch(err => displayError(err));
 
         return Promise.all([userData, hydrationData, activityData, sleepData])
         .then(data => {
@@ -39,4 +39,9 @@ const fetchData = () => {
         });
 }
 
-export default fetchData;
+export const displayError = (errorMessage) => {
+  const updatingDisplay =  document.getElementById('updatingDisplay');
+  const message = errorMessage.message === 'Failed to fetch' ?
+    "Internet connection may be unstable. Check again in a moment please." : errorMessage
+  updatingDisplay.innerText = message;
+}

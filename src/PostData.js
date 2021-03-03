@@ -1,37 +1,43 @@
-// on a button click we will access the data we need from values in a form 
+import { displayError } from './APICalls';
 
-const postAllUserData = (userSleepData, userHydrationData, userActivityData) => {
+export const checkForError = response => {
+  if (!response.ok) {
+    throw new Error("Please make sure fields are all filled.")
+  }
+}
+
+export const postAllUserData = (userSleepData, userHydrationData, userActivityData) => {
     let sleepData = fetch("http://localhost:3001/api/v1/sleep", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
-            }, 
+            },
             body: JSON.stringify(userSleepData),
         })
         .then(response => response.json())
-        // .then(data => console.log('post success: ', data))
-        .catch(err => console.log(err.message))
-    
+        .then(response => console.log(response))
+        .catch(err => displayError(err))
+
     let hydrationData = fetch("http://localhost:3001/api/v1/hydration", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
-            }, 
+            },
             body: JSON.stringify(userHydrationData),
         })
         .then(response => response.json())
-        // .then(data => console.log('post success: ', data))
-        .catch(err => console.log(err.message))
+        .then(data => console.log('post success: ', data))
+        .catch(err => displayError(err))
 
     let activityData = fetch("http://localhost:3001/api/v1/activity", {
             method : "POST",
             headers: {
                 'Content-Type': 'application/json'
-            }, 
+            },
             body : JSON.stringify(userActivityData)
         })
         .then(response => response.json())
-        .catch(err => console.log(err.message))
+        .catch(err => displayError(err))
 
     return Promise.all([sleepData, hydrationData, activityData])
     .then(allPostedData => {
@@ -42,5 +48,3 @@ const postAllUserData = (userSleepData, userHydrationData, userActivityData) => 
         return postedData
     })
 }
-
-export default postAllUserData

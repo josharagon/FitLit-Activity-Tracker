@@ -1,4 +1,4 @@
-
+@import "_variables";
 
 * {
   font-family: 'Montserrat', sans-serif !important;
@@ -46,6 +46,11 @@ h2{
   overflow: scroll;
 }
 
+#headerText {
+  place-self: center;
+  height: fit-content;
+}
+
 .sidebar-header-name {
   text-align: center;
 }
@@ -71,8 +76,7 @@ h2{
   border-color: black;
   border-style: solid;
   border-width: 1px;
-  height: 200px;
-  width: 200px;
+  height: 100px;
   margin: 4px 2px 2px 2px;
   justify-content: center;
 }
@@ -94,7 +98,7 @@ h2{
   justify-content: space-between;
 }
 
-.main-column-hydration {
+.main-column-hydration, .main-column-activity, .main-column-sleep{
   align-items: center;
   padding: 0px 15px;
   display: flex;
@@ -102,32 +106,16 @@ h2{
   height: 100%
 }
 
-.main-column-activity {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.main-column-sleep {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 0px 15px;
-}
-
 .infoContainer-cardContainer-card-horizontal {
   width: 100%;
   background-color: white;
-  // border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
 
-.horizontalCard-activity-container {
+.horizontalCard-activity-container, .horizontalCard-sleep-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -136,16 +124,12 @@ h2{
 
 .infoContainer-cardContainer-card-vertical {
   width: 100%;
-  // background-color: white;
-  // border: 1px solid black;
   display: flex;
   flex-direction: row;
-  // margin: 1%;
 }
 
-.card-today-hydration {
+.card-today {
   text-align: center;
-  background-color: #5BC8AC;
   height: auto;
   font-size: 1.5em;
   margin: .5em;
@@ -154,66 +138,38 @@ h2{
   flex-direction: column;
   justify-content: space-between;
   width: 80%;
+  &-hydration {
+    @extend .card-today;
+    background-color: #5BC8AC;
+  }
+  &-activity {
+    @extend .card-today;
+    background-color: #DFE166;
+    width: 40%;
+  }
+  &-sleep {
+    @extend .card-today;
+    background-color: #EC96A4;
+  }
 }
 
-.card-today-sleep {
+.card-history {
   text-align: center;
-  background-color: #EC96A4;
-  height: auto;
-  font-size: 1.5em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 80%;
-}
-
-.card-today-activity {
-  text-align: center;
-  background-color: #DFE166;
-  height: auto;
-  font-size: 1.5em;
-  margin: .3em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 40%;
-}
-
-.card-history-hydration {
-  text-align: center;
-  background-color: #ffffff;
   font-size: 1em;
-  // margin: .5em;
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  // width: 50%;
-}
-
-.card-history-sleep {
-  text-align: center;
-  font-size: 1em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.card-history-activity {
-  text-align: center;
-  font-size: 1em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  // width: 50%;
-  height: 93%;
+  &-hydration {
+    @extend .card-history;
+  }
+  &-activity {
+    @extend .card-history;
+    height: 93%;
+  }
+  &-sleep {
+    @extend .card-history;
+  }
 }
 
 .number {
@@ -477,16 +433,147 @@ h2{
   width: 75%;
 }
 
+
+// ~~~~~~~~~~~~ FORM STYLING ~~~~~~~~~~~ //
+
+.main-section {
+  display: flex;
+  justify-content: center;
+  height: 65em;
+  width: 100%;
+}
+
+.form-container {
+  height: 60%;
+  width: 70%;
+  background-color: $grey-background;
+  border-radius: 5%;
+  display: flex;
+  align-items: center;
+}
+
+.user-input-form {
+  width: 100%;
+  vertical-align: top;
+}
+
+.form-header{
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.2em;
+}
+
+.label-container {
+  justify-content: flex-start;
+  align-self: center;
+  width: 30%;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  margin: 30px;
+}
+
+.input-container {
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.user-input {
+  width: 100%;
+  height: 1.5em;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.button-container {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  justify-self: flex-end;
+}
+
+.submit-button {
+  background-color: #8b8b8b;
+  height: 3em;
+  border-radius: 5%;
+  margin: 2em 0 .5em 0;
+}
+
 .error-message{
   color: red;
 }
-
 
 .hidden {
   display: none;
 }
 
+.dropbtn {
+  background-color: rgba(255, 255, 255, 0);
+  color: #ddd;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
 
-.visibility {
-  visibility: hidden;
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  text-align: -webkit-center;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+
+nav {
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+}
+
+.dropdown-menus {
+  padding-left: 35px;
+}
+
+
+@media only screen and (max-width: 900px) {
+  nav{
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: center;
+    grid-template-columns: unset;
+  }
+  .body-main-infoContainter {
+    flex-direction: column;
+  }
+  .main-column-hydration, .main-column-activity, .main-column-sleep {
+    padding: 0px;
+  }
+  .card-history-activity, .card-history-hydration, .card-history-sleep {
+    width: -webkit-fill-available;
+  }
+.dropdown-content {
+  right: -111%;
+  width: 360px;
+  padding: 10px;
+}
 }

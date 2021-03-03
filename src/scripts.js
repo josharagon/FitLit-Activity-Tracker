@@ -94,7 +94,6 @@ function postData() {
   }
 }
 
-
 function postNewData() {
   const hoursSleptEntry = document.getElementById('hoursSleptEntry');
   const sleepQualityEntry = document.getElementById('sleepQualityEntry');
@@ -110,38 +109,46 @@ function postNewData() {
     "minutesActive" : minutesActiveEntry.value,
     "flightsOfStairs" : flightsOfStairsEntry.value
   }
-  let newData = catchData(newEntry);
+
   const date = setNewDate();
   let userSleepData = {
     "userID" : currentUser.id,
     "date" : date,
-    "hoursSlept" : newData.hoursSlept,
-    "sleepQuality" : newData.sleepQuality
+    "hoursSlept" : newEntry.hoursSlept,
+    "sleepQuality" : newEntry.sleepQuality
   }
 
   let userHydrationData = {
     "userID" : currentUser.id,
     "date" : date,
-    "numOunces": newData.numOunces
+    "numOunces": newEntry.numOunces
   }
 
   let userActivityData = {
     "userID" : currentUser.id,
     "date" : date,
-    "numSteps" : newData.numSteps,
-    "minutesActive" : newData.minutesActive,
-    "flightsOfStairs" : newData.flightsOfStairs
+    "numSteps" : newEntry.numSteps,
+    "minutesActive" : newEntry.minutesActive,
+    "flightsOfStairs" : newEntry.flightsOfStairs
   }
 
+  checkUserData(newEntry, userSleepData, userHydrationData, userActivityData);
+}
+
+function checkUserData(newEntry,userSleepData, userHydrationData, userActivityData) {
   let updatingDisplay = document.getElementById('updatingDisplay');
-  postAllUserData(userSleepData, userHydrationData, userActivityData)
+  if (!newEntry.hoursSlept || !newEntry.sleepQuality || !newEntry.numOunces || !newEntry.numSteps || !newEntry.minutesActive || !newEntry.flightsOfStairs) {
+    updatingDisplay.innerText = "Please make sure fields are all filled."
+  } else {
+    postAllUserData(userSleepData, userHydrationData, userActivityData)
     .then(response => {
-    updatingDisplay.innerHTML = "Updating Your Account...";
-    setTimeout(() => {updatingDisplay.innerHTML = ""}, 1500)
+      updatingDisplay.innerHTML = "Updating Your Account...";
+      setTimeout(() => {updatingDisplay.innerHTML = ""}, 1500)
     })
     .catch(err => {
       displayError(err)
     })
+  }
 }
 
 function setNewDate() {
@@ -151,17 +158,6 @@ function setNewDate() {
   splitDate.pop();
   splitDate.push(day);
   return splitDate.join("");
-}
-
-function catchData(data) {
-  const properties = Object.keys(data);
-  properties.map(property => {
-    let enteredNum = parseInt(data[property])
-    if (enteredNum < 0 || !enteredNum) {
-      data[property] = 0;
-    }
-  })
-  return data;
 }
 
 function returnLatestDate(allData) {

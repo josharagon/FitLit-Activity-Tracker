@@ -1,8 +1,16 @@
 # FitLit Lifestyle Tracker 
 ---
 Instructions for install:
-1. Copy this Repo's code on github and Clone the Repo in your console. CD into the new folder.
-2. run ```npm install```
+1. Install itlit Repo
+ * Go to [fitlit repo](https://github.com/turingschool-examples/fitlit-api)
+ * Copy Code 
+ * ``` git clone``` and paste code
+ * ```cd``` into new folder
+ * run ```npm install``` then ```npm start```
+2. Copy this Repo's code  and ```git clone``` the Repo in your console.
+ * ```CD``` into the new folder.
+ * run ```npm install``` then ```npm start```
+3. In your browser: navigate to [host](http://localhost:8080/)  
 
 ## User Instructions:
 1. As the user, there are many options of what kind of information you would like to see, as there is much available to you. Your stats can interact with other users and you can see your averages and how they compare to theirs, giving you the opportunity to challenge yourself to overcome mediocrity, or to even set yourself apart and get ahead of the curve.

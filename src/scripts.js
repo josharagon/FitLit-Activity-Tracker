@@ -26,7 +26,10 @@ submitButton.addEventListener('click', postData);
 const addDataButton = document.getElementById('addDataButton');
 const userInputForm = document.getElementById('formContainer');
 const allDisplayedData = document.getElementById('mainInfoContainer')
-// addDataButton.addEventListener('click', displayForm);
+// const displayedHydrationData = document.getElementById('hydrationInfoContainer')
+// const displayedActivityData = document.getElementById('activityInfoContainer')
+// const allDisplayedData = document.getElementById('mainInfoContainer')
+addDataButton.addEventListener('click', displayForm);
 
 function displayForm() {
   userInputForm.classList.remove('hidden');

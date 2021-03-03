@@ -22,7 +22,10 @@ Instructions for install:
  * This will be added to your account and tallied up with all data for your reference.  You may want to add a stair climb  (measured by flights) or your step reading off of your step tracker (make sure your stride length is accounted for so we can calculate miles more accurately). Each field should let you know units to enter. Note: when entering units of water make your measurement of intake in ounces.
 5. You have a step goal that you should try to complete every day so stay on track in entering this information so that you can see your development over time. Your weekly data reflects any information you have about that week regarding your activities, sleep or how much water intake you logged throughout that week.
 
-![](.gif)
+**Screenshot of the main dashboard:**
+
+![Screen Shot 2021-03-03 at 1 32 48 PM](https://user-images.githubusercontent.com/72054706/109868661-27e6bf80-7c25-11eb-90a7-eab43cfddc43.png)
+
 ---
 ### Learning and Development
 This project has challenged our team in many ways and utilizes technologies that are new to us.  Some of these are:

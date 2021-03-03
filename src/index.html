@@ -28,14 +28,14 @@
           <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
           <p class="sidebar-header-userInfo" id="avStepGoalCard">
           <p>
-            <button>ADD NEW DAY DATA</button>
+            <button id="addDataButton">ADD NEW DAY DATA</button>
         </div>
       </div>
     </div>
     <h1 id="headerText">Activity Tracker</h1>
   </nav>
   <section class="main">
-    <section class="body-main-infoContainter">
+    <section class="body-main-infoContainter" id="mainInfoContainer">
       <section class="main-column-hydration">
         <section class="infoContainer-cardContainer-card-horizontal">
           <h1 class="titlehydro">Hydration</h1>
@@ -64,7 +64,7 @@
           </div>
         </section>
       </section>
-        <section class="main-column-activity">
+        <section class="main-column-activity" id="activityInfoContainer">
           <section class="infoContainer-cardContainer-card-horizontal">
             <h1 class="titleactivity">Activity</h1>
             <div class="data-radio-activity" id="user-selector">
@@ -174,7 +174,7 @@
           </section>
         </section>
       </section>
-      <section class="form-container" id="formContainer">
+      <section class="form-container hidden" id="formContainer">
         <form class="user-input-form" id="userInputForm" action="index.html" method="post">
           <h2 class="form-header">LOG TODAY'S ACTIVITY</h2>
           <div class="form-input">

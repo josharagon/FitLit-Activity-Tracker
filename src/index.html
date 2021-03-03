@@ -64,116 +64,174 @@
           </div>
         </section>
       </section>
-      <section class="main-column-activity">
-        <section class="infoContainer-cardContainer-card-horizontal">
-          <h1 class="titleactivity">Activity</h1>
-          <div class="data-radio-activity" id="user-selector">
-            <input type="radio" name="dataBtn" id="personal-data" value="small" checked="checked" />
-            <label id="data-selector" for="personal-data">Personal</label>
-            <input type="radio" name="dataBtn" id="all-users" value="small" />
-            <label id="data-selector" for="all-users">All Users</label>
-          </div>
-          <div class="activity-charts">
-            <div class="box" id="personal-data-chart">
-              <div class="percent">
-                <svg>
-                  <circle cx="70" cy="70" r="70"></circle>
-                  <circle id="chart-baractivity" cx="70" cy="70" r="70"></circle>
-                </svg>
-                <div class="numberactivity">
-                  <h2 class="middle" id="activity-chart-num">0<span></span></h2>
-                  <p class="textactivity" id="activity-chart-text">Today</p>
+        <section class="main-column-activity">
+          <section class="infoContainer-cardContainer-card-horizontal">
+            <h1 class="titleactivity">Activity</h1>
+            <div class="data-radio-activity" id="user-selector">
+              <input type="radio" name="dataBtn" id="personal-data" value="small" checked="checked" />
+              <label id="data-selector" for="personal-data">Personal</label>
+              <input type="radio" name="dataBtn" id="all-users" value="small" />
+              <label id="data-selector" for="all-users">All Users</label>
+            </div>
+            <div class="activity-charts">
+              <div class="box" id="personal-data-chart">
+                <div class="percent">
+                  <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle id="chart-baractivity" cx="70" cy="70" r="70"></circle>
+                  </svg>
+                  <div class="numberactivity">
+                    <h2 class="middle" id="activity-chart-num">0<span></span></h2>
+                    <p class="textactivity" id="activity-chart-text">Today</p>
+                  </div>
+                </div>
+              </div>
+              <div class="box hidden" id="all-user-chart">
+                <div class="percent">
+                  <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle class="all-user-bar" id="chart-baractivity" cx="70" cy="70" r="70"></circle>
+                  </svg>
+                  <div class="numberactivity">
+                    <h2 class="middle all-user-num" id="activity-chart-num">0<span></span></h2>
+                    <p class="textactivity" id="activity-chart-text">Today</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="box hidden" id="all-user-chart">
-              <div class="percent">
-                <svg>
-                  <circle cx="70" cy="70" r="70"></circle>
-                  <circle class="all-user-bar" id="chart-baractivity" cx="70" cy="70" r="70"></circle>
-                </svg>
-                <div class="numberactivity">
-                  <h2 class="middle all-user-num" id="activity-chart-num">0<span></span></h2>
-                  <p class="textactivity" id="activity-chart-text">Today</p>
-                </div>
-              </div>
+            <h2>Activity Category</h2>
+            <div class="data-radio-activity" id="category">
+              <input type="radio" name="categoryBtn" id="category-steps" value="small" checked="checked" />
+              <label id="category-label-steps" for="category-steps">Steps</label>
+              <input type="radio" name="categoryBtn" id="category-miles" value="small" />
+              <label id="category-label-miles" for="category-miles">Miles</label>
+              <input type="radio" name="categoryBtn" id="category-stairs" value="small" />
+              <label id="category-label-stairs" for="category-stairs">Stairs</label>
+              <input type="radio" name="categoryBtn" id="category-active" value="small" />
+              <label id="category-label-active" for="category-active">Active Minutes</label>
             </div>
-          </div>
-          <h2>Activity Category</h2>
-          <div class="data-radio-activity" id="category">
-            <input type="radio" name="categoryBtn" id="category-steps" value="small" checked="checked" />
-            <label id="category-label-steps" for="category-steps">Steps</label>
-            <input type="radio" name="categoryBtn" id="category-miles" value="small" />
-            <label id="category-label-miles" for="category-miles">Miles</label>
-            <input type="radio" name="categoryBtn" id="category-stairs" value="small" />
-            <label id="category-label-stairs" for="category-stairs">Stairs</label>
-            <input type="radio" name="categoryBtn" id="category-active" value="small" />
-            <label id="category-label-active" for="category-active">Active Minutes</label>
-          </div>
+          </section>
+          <section class="infoContainer-cardContainer-card-horizontal">
+            <section class="horizontalCard-activity-container">
+              <div class="card-history-activity" id="steps-graph">
+                <p class="activity-chart-header">Your steps this week</p>
+                <div class="sidebar-header-line"></div>
+                <div class="activity-chart" id="chartDiv-numSteps"></div>
+              </div>
+            </section>
+          </section>
         </section>
-        <section class="infoContainer-cardContainer-card-horizontal">
-          <section class="horizontalCard-activity-container">
-            <div class="card-history-activity" id="steps-graph">
-              <p class="activity-chart-header">Your steps this week</p>
-              <div class="sidebar-header-line"></div>
-              <div class="activity-chart" id="chartDiv-numSteps"></div>
+        <section class="main-column-sleep">
+          <section class="infoContainer-cardContainer-card-horizontal">
+            <h1 class="titlesleep">Sleep</h1>
+            <div class="data-radio-sleep" id="selector-sleep">
+              <input type="radio" name="dataBtnSleep" id="personal-sleep" value="small" checked="checked" />
+              <label id="data-selector-sleep" for="personal-sleep">Today</label>
+              <input type="radio" name="dataBtnSleep" id="all-sleep" value="small" />
+              <label id="data-selector-sleep" for="all-sleep">All Time</label>
             </div>
+            <div class="activity-charts">
+              <div class="box" id="personal-sleep-chart">
+                <div class="percent">
+                  <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle id="chart-barsleep" cx="70" cy="70" r="70"></circle>
+                  </svg>
+                  <div class="numbersleep">
+                    <h2 class="middle" id="sleep-chart-num">0<span></span></h2>
+                    <p class="textsleep" id="sleep-chart-text">Today</p>
+                  </div>
+                </div>
+              </div>
+              <div class="box hidden" id="all-sleep-chart">
+                <div class="percent">
+                  <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle class="all-sleep-bar" id="chart-barsleep" cx="70" cy="70" r="70"></circle>
+                  </svg>
+                  <div class="numbersleep">
+                    <h2 class="middle all-sleep-num" id="all-chart-num">0<span></span></h2>
+                    <p class="textsleep" id="sleep-chart-text">On Average</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="data-radio-sleep" id="sleep-type">
+              <input type="radio" name="typeBtn" id="type-hours" value="small" checked="checked" />
+              <label id="type-label-hours" for="type-hours">Hours Slept</label>
+              <input type="radio" name="typeBtn" id="type-quality" value="small" />
+              <label id="type-label-quality" for="type-quality">Sleep Quality</label>
+            </div>
+          </section>
+          <section class="infoContainer-cardContainer-card-horizontal">
+            <section class="horizontalCard-sleep-container">
+              <div class="card-history-sleep" id="sleep-graph">
+                <p class="sleepChartHeader">Your sleep this week</p>
+                <div class="sidebar-header-line"></div>
+                <div class="sleep-chart" id="chartDiv-hoursSlept"></div>
+              </div>
+            </section>
           </section>
         </section>
       </section>
-      <section class="main-column-sleep">
-        <section class="infoContainer-cardContainer-card-horizontal">
-          <h1 class="titlesleep">Sleep</h1>
-          <div class="data-radio-sleep" id="selector-sleep">
-            <input type="radio" name="dataBtnSleep" id="personal-sleep" value="small" checked="checked" />
-            <label id="data-selector-sleep" for="personal-sleep">Today</label>
-            <input type="radio" name="dataBtnSleep" id="all-sleep" value="small" />
-            <label id="data-selector-sleep" for="all-sleep">All Time</label>
-          </div>
-          <div class="activity-charts">
-            <div class="box" id="personal-sleep-chart">
-              <div class="percent">
-                <svg>
-                  <circle cx="70" cy="70" r="70"></circle>
-                  <circle id="chart-barsleep" cx="70" cy="70" r="70"></circle>
-                </svg>
-                <div class="numbersleep">
-                  <h2 class="middle" id="sleep-chart-num">0<span></span></h2>
-                  <p class="textsleep" id="sleep-chart-text">Today</p>
-                </div>
-              </div>
+      <section class="form-container" id="formContainer">
+        <form class="user-input-form" id="userInputForm" action="index.html" method="post">
+          <h2 class="form-header">LOG TODAY'S ACTIVITY</h2>
+          <div class="form-input">
+            <div class="label-container">
+              <label for="hoursSleptEntry" class="label"">Time Slept: </label>
             </div>
-            <div class="box hidden" id="all-sleep-chart">
-              <div class="percent">
-                <svg>
-                  <circle cx="70" cy="70" r="70"></circle>
-                  <circle class="all-sleep-bar" id="chart-barsleep" cx="70" cy="70" r="70"></circle>
-                </svg>
-                <div class="numbersleep">
-                  <h2 class="middle all-sleep-num" id="all-chart-num">0<span></span></h2>
-                  <p class="textsleep" id="sleep-chart-text">On Average</p>
-                </div>
-              </div>
+            <div class="input-container">
+              <input class="user-input" id="hoursSleptEntry" type="text" placeholder="hours">
             </div>
           </div>
-          <div class="data-radio-sleep" id="sleep-type">
-            <input type="radio" name="typeBtn" id="type-hours" value="small" checked="checked" />
-            <label id="type-label-hours" for="type-hours">Hours Slept</label>
-            <input type="radio" name="typeBtn" id="type-quality" value="small" />
-            <label id="type-label-quality" for="type-quality">Sleep Quality</label>
-          </div>
-        </section>
-        <section class="infoContainer-cardContainer-card-horizontal">
-          <section class="horizontalCard-sleep-container">
-            <div class="card-history-sleep" id="sleep-graph">
-              <p class="sleepChartHeader">Your sleep this week</p>
-              <div class="sidebar-header-line"></div>
-              <div class="sleep-chart" id="chartDiv-hoursSlept"></div>
+          <div class="form-input">
+            <div class="label-container">
+              <label for="sleepQualityEntry" class="label">Sleep Quality: </label>
             </div>
-          </section>
-        </section>
+            <div class="input-container">
+              <input class="user-input" type="number" id="sleepQualityEntry" min="0" max="5" placeholder="rating out of 5">
+            </div>
+          </div>
+          <div class="form-input">
+            <div class="label-container">
+              <label for="numOuncesEntry" class="label">Amount drank: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="numOuncesEntry" type="text" placeholder="in ounces">
+            </div>
+          </div>
+          <div class="form-input">
+            <div class="label-container">
+              <label for="numStepsEntry" class="label">Number of Steps: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="numStepsEntry" type="text" placeholder="555">
+            </div>
+          </div>
+          <div class="form-input">
+            <div class="label-container">
+              <label for="minutesActiveEntry" class="label">Minutes Active: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="minutesActiveEntry" type="text" placeholder="132">
+            </div>
+          </div>
+          <div class="form-input">
+            <div class="label-container">
+              <label for="flightsOfStairsEntry" class="label">Flights of Stairs: </label>
+            </div>
+            <div class="input-container">
+              <input class="user-input" id="flightsOfStairsEntry" type="text" placeholder="Total stair flights climbed">
+            </div>
+          </div>
+          <div class="button-container">
+            <button class="submit-button" type="button" name="button" style="font-size:14px">SUBMIT ACTIVITIES UPDATE</button>
+          </div>
+          <p class="user-input" id="updatingDisplay"></p>
+        </form>
       </section>
-    </section>
+    </div>
   </section>
   <section class="main-sidebar-body hidden">
     <section class="body-sidebar-sidebarContainer">
@@ -206,23 +264,6 @@
       </section>
     </section>
   </section>
-  <form class="userInputField hidden" action="index.html" method="post">
-    <label for="hoursSleptEntry">Time Slept: </label>
-    <input class="userInput" id="hoursSleptEntry" type="text" placeholder="hours">
-    <label for="sleepQualityEntry">Sleep Quality: </label>
-    <input class="userInput" id="sleepQualityEntry" type="text" placeholder="rating">
-    <label for="numOuncesEntry">Amount drank: </label>
-    <input class="userInput" id="numOuncesEntry" type="text" placeholder="in ounces">
-    <label for="numStepsEntry">Number of Steps: </label>
-    <input class="userInput" id="numStepsEntry" type="text" placeholder="555">
-    <label for="minutesActiveEntry">Minutes Active: </label>
-    <input class="userInput" id="minutesActiveEntry" type="text" placeholder="132">
-    <label for="flightsOfStairsEntry">Flights of Stairs: </label>
-    <input class="userInput" id="flightsOfStairsEntry" type="text" placeholder="Enter total stair flights climbed">
-    <button class="submit-button" type="button" name="button" style="font-size:14px">SUBMIT ACTIVITIES UPDATE</button>
-    <p class="user-input" id="updatingDisplay"></p>
-  </form>
   </section>
 </body>
-
 </html>

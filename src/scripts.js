@@ -21,6 +21,18 @@ let today
 let submitButton = document.querySelector('.submit-button');
 submitButton.addEventListener('click', postData);
 
+
+//FORM DATA
+const addDataButton = document.getElementById('addDataButton');
+const userInputForm = document.getElementById('formContainer');
+const allDisplayedData = document.getElementById('mainInfoContainer')
+// addDataButton.addEventListener('click', displayForm);
+
+function displayForm() {
+  userInputForm.classList.remove('hidden');
+  allDisplayedData.classList.add('hidden');
+}
+
 //USER DATA
 var userAddress = document.getElementById('userAddress')
 var userEmail = document.getElementById('userEmail')

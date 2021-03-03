@@ -26,6 +26,10 @@ Instructions for install:
 
 ![Screen Shot 2021-03-03 at 1 32 48 PM](https://user-images.githubusercontent.com/72054706/109868661-27e6bf80-7c25-11eb-90a7-eab43cfddc43.png)
 
+**Dashboard on Mobile:**
+
+ ![productDemo](https://user-images.githubusercontent.com/72054706/109869724-7b0d4200-7c26-11eb-9897-d5ab46f72c8e.gif)
+
 ---
 ### Learning and Development
 This project has challenged our team in many ways and utilizes technologies that are new to us.  Some of these are:

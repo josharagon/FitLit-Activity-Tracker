@@ -106,21 +106,6 @@ h2{
   height: 100%
 }
 
-// .main-column-activity {
-//   align-items: center;
-//   display: flex;
-//   flex-direction: column;
-//   height: 100%;
-// }
-
-// .main-column-sleep {
-//   align-items: center;
-//   display: flex;
-//   flex-direction: column;
-//   height: 100%;
-//   padding: 0px 15px;
-// }
-
 .infoContainer-cardContainer-card-horizontal {
   width: 100%;
   background-color: white;
@@ -143,9 +128,8 @@ h2{
   flex-direction: row;
 }
 
-.card-today-hydration {
+.card-today {
   text-align: center;
-  background-color: #5BC8AC;
   height: auto;
   font-size: 1.5em;
   margin: .5em;
@@ -154,66 +138,38 @@ h2{
   flex-direction: column;
   justify-content: space-between;
   width: 80%;
+  &-hydration {
+    @extend .card-today;
+    background-color: #5BC8AC;
+  }
+  &-activity {
+    @extend .card-today;
+    background-color: #DFE166;
+    width: 40%;
+  }
+  &-sleep {
+    @extend .card-today;
+    background-color: #EC96A4;
+  }
 }
 
-.card-today-sleep {
+.card-history {
   text-align: center;
-  background-color: #EC96A4;
-  height: auto;
-  font-size: 1.5em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 80%;
-}
-
-.card-today-activity {
-  text-align: center;
-  background-color: #DFE166;
-  height: auto;
-  font-size: 1.5em;
-  margin: .3em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 40%;
-}
-
-.card-history-hydration {
-  text-align: center;
-  background-color: #ffffff;
   font-size: 1em;
-  // margin: .5em;
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  // width: 50%;
-}
-
-.card-history-sleep {
-  text-align: center;
-  font-size: 1em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.card-history-activity {
-  text-align: center;
-  font-size: 1em;
-  margin: .5em;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  // width: 50%;
-  height: 93%;
+  &-hydration {
+    @extend .card-history;
+  }
+  &-activity {
+    @extend .card-history;
+    height: 93%;
+  }
+  &-sleep {
+    @extend .card-history;
+  }
 }
 
 .number {
@@ -481,16 +437,9 @@ h2{
   color: red;
 }
 
-
 .hidden {
   display: none;
 }
-
-
-.visibility {
-  visibility: hidden;
-}
-
 
 .dropbtn {
   background-color: rgba(255, 255, 255, 0);

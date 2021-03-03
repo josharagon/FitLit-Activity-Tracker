@@ -14,23 +14,23 @@
 <body>
   <nav>
     <div class="dropdown-menus">
-    <div class="dropdown">
-      <img src="./images/The Rock.jpg" class="sidebar-header-userImage dropbbtn" alt="User Photo" </img>
-      <div class="dropdown-content">
-        <p class="sidebar-header-userInfo" id="userName"></p>
-        <div class="sidebar-header-line"></div>
-        <p class="sidebar-header-userInfo" id="userAddress"></p>
-        <div class="sidebar-header-line"></div>
-        <p class="sidebar-header-userInfo" id="userEmail"></p>
-        <div class="sidebar-header-line"></div>
-        <p class="sidebar-header-userInfo" id="userStridelength"></p>
-        <div class="sidebar-header-line"></div>
-        <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
-        <p class="sidebar-header-userInfo" id="avStepGoalCard">
-        <p>
-          <button>ADD NEW DAY DATA</button>
+      <div class="dropdown">
+        <img src="./images/The Rock.jpg" class="sidebar-header-userImage dropbbtn" alt="User Photo" </img>
+        <div class="dropdown-content">
+          <p class="sidebar-header-userInfo" id="userName"></p>
+          <div class="sidebar-header-line"></div>
+          <p class="sidebar-header-userInfo" id="userAddress"></p>
+          <div class="sidebar-header-line"></div>
+          <p class="sidebar-header-userInfo" id="userEmail"></p>
+          <div class="sidebar-header-line"></div>
+          <p class="sidebar-header-userInfo" id="userStridelength"></p>
+          <div class="sidebar-header-line"></div>
+          <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
+          <p class="sidebar-header-userInfo" id="avStepGoalCard">
+          <p>
+            <button>ADD NEW DAY DATA</button>
+        </div>
       </div>
-    </div>
     </div>
     <h1 id="headerText">Activity Tracker</h1>
   </nav>
@@ -57,19 +57,10 @@
               <label id="avg-oz-label" for="avg-oz">Average</label>
             </div>
           </div>
-        </section>
-        <section class="infoContainer-cardContainer-card-vertical">
           <div class="card-history-hydration">
             <p class="thisWeek">Water intake this week:</p>
             <div class="sidebar-header-line"></div>
             <div id="chartDiv-numOunces" style="width: 100%; height: 400px;"></div>
-          </div>
-          <div class="card-history-hydration hidden">
-            <p class="historicalWeek"></p>
-            <div class="sidebar-header-line"></div>
-            <ul class="card-vertical-list" id="hydrationEarlierWeek">
-              <!-- Hydration week list goes here -->
-            </ul>
           </div>
         </section>
       </section>
@@ -215,22 +206,22 @@
       </section>
     </section>
   </section>
-      <form class="userInputField hidden" action="index.html" method="post">
-        <label for="hoursSleptEntry">Time Slept: </label>
-        <input class="userInput" id="hoursSleptEntry" type="text" placeholder="hours">
-        <label for="sleepQualityEntry">Sleep Quality: </label>
-        <input class="userInput" id="sleepQualityEntry" type="text" placeholder="rating">
-        <label for="numOuncesEntry">Amount drank: </label>
-        <input class="userInput" id="numOuncesEntry" type="text" placeholder="in ounces">
-        <label for="numStepsEntry">Number of Steps: </label>
-        <input class="userInput" id="numStepsEntry" type="text" placeholder="555">
-        <label for="minutesActiveEntry">Minutes Active: </label>
-        <input class="userInput" id="minutesActiveEntry" type="text" placeholder="132">
-        <label for="flightsOfStairsEntry">Flights of Stairs: </label>
-        <input class="userInput" id="flightsOfStairsEntry" type="text" placeholder="Enter total stair flights climbed">
-        <button class="submit-button" type="button" name="button" style="font-size:14px">SUBMIT ACTIVITIES UPDATE</button>
-        <p class="user-input" id="updatingDisplay"></p>
-      </form>
+  <form class="userInputField hidden" action="index.html" method="post">
+    <label for="hoursSleptEntry">Time Slept: </label>
+    <input class="userInput" id="hoursSleptEntry" type="text" placeholder="hours">
+    <label for="sleepQualityEntry">Sleep Quality: </label>
+    <input class="userInput" id="sleepQualityEntry" type="text" placeholder="rating">
+    <label for="numOuncesEntry">Amount drank: </label>
+    <input class="userInput" id="numOuncesEntry" type="text" placeholder="in ounces">
+    <label for="numStepsEntry">Number of Steps: </label>
+    <input class="userInput" id="numStepsEntry" type="text" placeholder="555">
+    <label for="minutesActiveEntry">Minutes Active: </label>
+    <input class="userInput" id="minutesActiveEntry" type="text" placeholder="132">
+    <label for="flightsOfStairsEntry">Flights of Stairs: </label>
+    <input class="userInput" id="flightsOfStairsEntry" type="text" placeholder="Enter total stair flights climbed">
+    <button class="submit-button" type="button" name="button" style="font-size:14px">SUBMIT ACTIVITIES UPDATE</button>
+    <p class="user-input" id="updatingDisplay"></p>
+  </form>
   </section>
 </body>
 

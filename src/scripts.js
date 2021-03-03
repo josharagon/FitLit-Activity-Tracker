@@ -14,87 +14,47 @@ import { checkForError, postAllUserData } from './PostData';
 
 import * as JSC from 'jscharting';
 
-// NEW VARIABLE AND EVENT LISTENERS
-
 let currentUser = null
 let today
 let submitButton = document.querySelector('.submit-button');
 submitButton.addEventListener('click', postData);
 
+const activityStepChartNum = document.getElementById('activity-chart-num');
+const activityStepBar = document.getElementById('chart-baractivity');
+const allUserChartNum = document.querySelector('.all-user-num');
+const allUserBar = document.querySelector('.all-user-bar');
 
-//FORM DATA
+const activityChart = document.querySelector('.activity-chart')
+const activityChartHeader = document.querySelector('.activity-chart-header');
+const sleepChart = document.querySelector('.sleep-chart');
+const sleepChartHeader = document.querySelector('.sleepChartHeader')
+
+const sleepChartNum = document.getElementById('sleep-chart-num');
+const sleepChartBar = document.getElementById('chart-barsleep');
+const allSleepChart = document.getElementById('all-sleep-chart')
+const allSleepChartNum = document.querySelector('.all-sleep-num');
+const allSleepChartBar = document.querySelector('.all-sleep-bar');
+
 const addDataButton = document.getElementById('addDataButton');
 const userInputForm = document.getElementById('formContainer');
 const allDisplayedData = document.getElementById('mainInfoContainer')
-// const displayedHydrationData = document.getElementById('hydrationInfoContainer')
-// const displayedActivityData = document.getElementById('activityInfoContainer')
-// const allDisplayedData = document.getElementById('mainInfoContainer')
+
 addDataButton.addEventListener('click', displayForm);
+window.addEventListener('load', startApp)
 
 function displayForm() {
   userInputForm.classList.remove('hidden');
   allDisplayedData.classList.add('hidden');
 }
 
-//USER DATA
-var userAddress = document.getElementById('userAddress')
-var userEmail = document.getElementById('userEmail')
-var userStridelength = document.getElementById('userStridelength')
-var userStepGoal = document.getElementById('stepGoalCard')
-var userAvgStepGoal = document.getElementById('avStepGoalCard')
-
-//HYDRATION CIRCLE CHART
-var hydrationChartText = document.getElementById('chart-text');
-var hydrationChartNum = document.getElementById('chart-num');
-var hydrationBar = document.getElementById('chart-barhydro');
-var hydrationDay = document.getElementById('day-oz');
-var hydrationAvg = document.getElementById('avg-oz');
-var radioBox = document.querySelector('.data-radio');
-//ACTIVITY CIRCLE CHART
-var dataSelectorRadio = document.getElementById('user-selector');
-var personalDataChart = document.getElementById('personal-data-chart');
-var allUserDataChart = document.getElementById('all-user-chart');
-var personalDataRadio = document.getElementById('personal-data');
-var allUserDataRadio = document.getElementById('all-users');
-var activityStepChartNum = document.getElementById('activity-chart-num');
-var activityStepBar = document.getElementById('chart-baractivity');
-var allUserChartNum = document.querySelector('.all-user-num');
-var allUserBar = document.querySelector('.all-user-bar');
-var activityCategoryRadio = document.getElementById('category');
-var stepsRadio = document.getElementById('category-steps');
-var milesRadio = document.getElementById('category-miles');
-var milesLabel = document.getElementById('category-label-miles');
-var stairsRadio = document.getElementById('category-stairs');
-var activeRadio = document.getElementById('category-active');
-var activityChart = document.querySelector('.activity-chart');
-var activityChartHeader = document.querySelector('.activity-chart-header');
-
-// SLEEP CIRCLE CHART
-var sleepChart = document.querySelector('.sleep-chart');
-var sleepChartHeader = document.querySelector('.sleepChartHeader')
-var sleepDataSelector = document.getElementById('selector-sleep');
-var personalSleepChart = document.getElementById('personal-sleep-chart');
-var personalSleepRadio = document.getElementById('personal-sleep');
-var allSleepRadio = document.getElementById('all-sleep');
-var sleepChartNum = document.getElementById('sleep-chart-num');
-var sleepChartBar = document.getElementById('chart-barsleep');
-var allSleepChart = document.getElementById('all-sleep-chart')
-var allSleepChartNum = document.querySelector('.all-sleep-num');
-var allSleepChartBar = document.querySelector('.all-sleep-bar');
-var sleepTypeRadio = document.getElementById('sleep-type');
-var hoursSleptRadio = document.getElementById('type-hours');
-var sleepQualityRadio = document.getElementById('type-quality');
-
-window.addEventListener('load', startApp)
-
 function startApp() {
   fetchCurrentData()
 }
 
 function fetchCurrentData() {
-  radioBox.addEventListener('click', updateHydrationChart);
-  sleepDataSelector.addEventListener('click', changeShownType);
-  dataSelectorRadio.addEventListener('click', changeShownData);
+  document.querySelector('.data-radio').addEventListener('click', updateHydrationChart);
+  document.getElementById('selector-sleep').addEventListener('click', changeShownType);
+  document.getElementById('user-selector').addEventListener('click', changeShownData);
   fetchData()
   .then(allData => {
     if (!currentUser) {
@@ -205,7 +165,7 @@ function displaySleepData(sleepData, user, today, userRepo) {
   allSleepChartNum.innerHTML = `${sleepAvg.hours}<span></span>`;
   allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.hours}) / 12)`;
   compileChart(sleepObject, "hoursSlept", "pink", "hours of sleep");
-  sleepTypeRadio.addEventListener('click', function () {
+  document.getElementById('sleep-type').addEventListener('click', function () {
     updateSleepChart(sleepObject);
   });
 }
@@ -215,8 +175,8 @@ function displayHydrationData(hydrationData, user, today, userRepo) {
   let dayAmount = hydrationObject.calculateDailyOunces();
   window.averageHydration = hydrationObject.calculateAverageOunces();
   window.dailyHydration = dayAmount;
-  hydrationChartNum.innerHTML = `${dayAmount}<span>oz</span>`;
-  hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dayAmount}) / 100)`;
+  document.getElementById('chart-num').innerHTML = `${dayAmount}<span>oz</span>`;
+  document.getElementById('chart-barhydro').style.strokeDashoffset = `calc(440 - (440* ${dayAmount}) / 100)`;
   compileChart(hydrationObject, "numOunces", "mediumturquoise", "fluid ounces of water consumed")
 }
 
@@ -238,7 +198,7 @@ function displayActivityData(activityData, currentUser, today, userRepo) {
   allUserChartNum.innerHTML = `${allAmount}<span></span>`
   allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allAmount}) / 1500)`
   compileChart(activityRepo, "numSteps", "yellow", "number of steps")
-  activityCategoryRadio.addEventListener('click', function () {
+  document.getElementById('category').addEventListener('click', function () {
       updateCategory(activityRepo);
   });
 }
@@ -271,10 +231,8 @@ function compileChart(healthCategory, propertyName, color, chartDescription) {
   });
 }
 
-
-
 function updateCategory(activityRepo) {
-  if (stepsRadio.checked === true) {
+  if (document.getElementById('category-steps').checked) {
     activityChart.id = 'chartDiv-numSteps';
     compileChart(activityRepo, "numSteps", "yellow", "number of steps")
     activityChartHeader.innerText = 'Your steps this week';
@@ -282,13 +240,13 @@ function updateCategory(activityRepo) {
     activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalData.steps}) / 1500)`
     allUserChartNum.innerHTML = `${allUserData.steps}<span></span>`
     allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allUserData.steps}) / 1500)`
-  } else if (milesRadio.checked === true) {
+  } else if (document.getElementById('category-miles').checked) {
     activityChart.id = 'chartDiv-numSteps';
     compileChart(activityRepo, "numSteps", "yellow", "number of steps");
     activityChartHeader.innerText = 'Your steps this week'
     activityStepChartNum.innerHTML = `${personalData.miles}<span>mi</span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.miles}) / 25)`
-  } else if (stairsRadio.checked === true) {
+  } else if (document.getElementById('category-stairs').checked) {
     activityChart.id = 'chartDiv-flightsOfStairs';
     compileChart(activityRepo, "flightsOfStairs", "yellow", "flights of stairs climbed")
     activityChartHeader.innerText = 'Your stairs this week';
@@ -296,7 +254,7 @@ function updateCategory(activityRepo) {
     activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.stairCount}) / 100)`
     allUserChartNum.innerHTML = `${allUserData.stairCount}<span>stairs</span>`
     allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.stairCount}) / 100)`
-  } else if (activeRadio.checked === true) {
+  } else if (document.getElementById('category-active').checked) {
     activityChart.id = 'chartDiv-minutesActive';
     compileChart(activityRepo, "minutesActive", "yellow", "number of minutes spent physically active");
     activityChartHeader.innerText = 'Your active minutes this week';
@@ -308,7 +266,7 @@ function updateCategory(activityRepo) {
 }
 
 function updateSleepChart(sleepObject) {
-  if (hoursSleptRadio.checked === true) {
+  if (document.getElementById('type-hours').checked) {
     sleepChart.id = 'chartDiv-hoursSlept';
     compileChart(sleepObject, "hoursSlept", "pink", "hours of sleep");
     sleepChartHeader.innerText = 'Your hours slept this week';
@@ -316,7 +274,7 @@ function updateSleepChart(sleepObject) {
     sleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepDay.hours}) / 12)`
     allSleepChartNum.innerHTML = `${sleepAvg.hours}<span>hr</span>`
     allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.hours}) / 12)`
-  } else if (sleepQualityRadio.checked === true) {
+  } else if (document.getElementById('type-quality').checked) {
     sleepChart.id = 'chartDiv-sleepQuality';
     compileChart(sleepObject, "sleepQuality", "pink", "quality of sleep on a scale of 1-5");
     sleepChartHeader.innerText = 'Your sleep quality this week';
@@ -328,44 +286,43 @@ function updateSleepChart(sleepObject) {
 }
 
 function updateHydrationChart() {
-  if (hydrationDay.checked === true) {
-    hydrationChartNum.innerHTML = `${dailyHydration}<span>oz</span>`
-    hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dailyHydration}) / 100)`
-    hydrationChartText.innerText = 'Today'
-  } else if (hydrationAvg.checked === true) {
-    hydrationChartNum.innerHTML = `${averageHydration}<span>oz</span>`
-    hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${averageHydration}) / 100)`
-    hydrationChartText.innerText = 'On Average'
+  if (document.getElementById('day-oz').checked) {
+    document.getElementById('chart-num').innerHTML = `${dailyHydration}<span>oz</span>`
+    document.getElementById('chart-barhydro').style.strokeDashoffset = `calc(440 - (440* ${dailyHydration}) / 100)`
+    document.getElementById('chart-text').innerText = 'Today'
+  } else if (document.getElementById('avg-oz').checked) {
+    document.getElementById('chart-num').innerHTML = `${averageHydration}<span>oz</span>`
+    document.getElementById('chart-barhydro').style.strokeDashoffset = `calc(440 - (440* ${averageHydration}) / 100)`
+    document.getElementById('chart-text').innerText = 'On Average'
   }
 }
 
 function changeShownData() {
-  if (personalDataRadio.checked === true) {
-    personalDataChart.classList.remove('hidden');
-    allUserDataChart.classList.add('hidden');
-    milesLabel.style.display = 'inline-block';
-  } else if (allUserDataRadio.checked === true) {
-    allUserDataChart.classList.remove('hidden');
-    personalDataChart.classList.add('hidden');
-    milesLabel.style.display = 'none';
+  if (document.getElementById('personal-data').checked) {
+    document.getElementById('personal-data-chart').classList.remove('hidden');
+    document.getElementById('all-user-chart').classList.add('hidden');
+    document.getElementById('category-label-miles').style.display = 'inline-block';
+  } else if (document.getElementById('all-users').checked) {
+    document.getElementById('all-user-chart').classList.remove('hidden');
+    document.getElementById('personal-data-chart').classList.add('hidden');
+    document.getElementById('category-label-miles').style.display = 'none';
   }
 }
 
 function changeShownType() {
-  if (personalSleepRadio.checked === true) {
-    personalSleepChart.classList.remove('hidden');
+  if (document.getElementById('personal-sleep').checked) {
+    document.getElementById('personal-sleep-chart').classList.remove('hidden');
     allSleepChart.classList.add('hidden');
-  } else if (allSleepRadio.checked === true) {
+  } else if (document.getElementById('all-sleep').checked) {
     allSleepChart.classList.remove('hidden');
-    personalSleepChart.classList.add('hidden');
+    document.getElementById('personal-sleep-chart').classList.add('hidden');
   }
 }
 
-
 function displayUser(user) {
   userName.innerHTML = `Name: </br> ${user.name}`
-  userAddress.innerHTML = `Address: </br> ${user.address}`;
-  userEmail.innerHTML = `Email: </br> ${user.email}`;
-  userStridelength.innerHTML = `Stride Length: </br> ${user.strideLength}`;
-  userStepGoal.innerHTML = `Step Goal: </br> ${user.dailyStepGoal}`;
+  document.getElementById('userAddress').innerHTML = `Address: </br> ${user.address}`;
+  document.getElementById('userEmail').innerHTML = `Email: </br> ${user.email}`;
+  document.getElementById('userStridelength').innerHTML = `Stride Length: </br> ${user.strideLength}`;
+  document.getElementById('stepGoalCard').innerHTML = `Step Goal: </br> ${user.dailyStepGoal}`;
 }

@@ -159,16 +159,27 @@ function checkUserData(newEntry,userSleepData, userHydrationData, userActivityDa
   let updatingDisplay = document.getElementById('updatingDisplay');
   if (!newEntry.hoursSlept || !newEntry.sleepQuality || !newEntry.numOunces || !newEntry.numSteps || !newEntry.minutesActive || !newEntry.flightsOfStairs) {
     updatingDisplay.innerText = "Please make sure fields are all filled."
-  } else {
-    postAllUserData(userSleepData, userHydrationData, userActivityData)
-    .then(response => {
-      updatingDisplay.innerHTML = "Updating Your Account...";
-      setTimeout(() => {updatingDisplay.innerHTML = ""}, 1500)
-    })
-    .catch(err => {
-      displayError(err)
-    })
-  }
+  } else if (!isNumber(newEntry.hoursSlept) ||
+    !isNumber(newEntry.sleepQuality) ||
+    !isNumber(newEntry.numOunces) ||
+    !isNumber(newEntry.minutesActive) ||
+    !isNumber(newEntry.flightsOfStairs)) {
+      updatingDisplay.innerText = "Please use a number for each entry."
+    } else {
+      postAllUserData(userSleepData, userHydrationData, userActivityData)
+      .then(response => {
+        updatingDisplay.innerHTML = "Updating Your Account...";
+        setTimeout(() => {updatingDisplay.innerHTML = ""}, 1500)
+      })
+      .catch(err => {
+        displayError(err)
+      })
+    }
+}
+
+function isNumber(userInput) {
+  if (typeof userInput != "string") return false
+  return !isNaN(userInput) && !isNaN(parseFloat(userInput))
 }
 
 function setNewDate() {

@@ -1,7 +1,7 @@
 # FitLit Lifestyle Tracker 
 ---
 Instructions for install:
-1. Install itlit Repo
+1. Install the API
  * Go to [fitlit repo](https://github.com/turingschool-examples/fitlit-api)
  * Copy Code 
  * ``` git clone``` and paste code

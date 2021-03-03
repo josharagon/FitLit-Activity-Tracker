@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" lang="en">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FitLit Health and Wellness Tracker">
   <title>Activity Tracker</title>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
@@ -17,18 +18,18 @@
       <div class="dropdown">
         <img src="./images/The Rock.jpg" class="sidebar-header-userImage dropbbtn" alt="User Photo" </img>
         <div class="dropdown-content">
-          <p class="sidebar-header-userInfo" id="userName"></p>
+          <h3 class="sidebar-header-userInfo" id="userName"></h3>
           <div class="sidebar-header-line"></div>
-          <p class="sidebar-header-userInfo" id="userAddress"></p>
+          <h3 class="sidebar-header-userInfo" id="userAddress"></h3>
           <div class="sidebar-header-line"></div>
-          <p class="sidebar-header-userInfo" id="userEmail"></p>
+          <h3 class="sidebar-header-userInfo" id="userEmail"></h3>
           <div class="sidebar-header-line"></div>
-          <p class="sidebar-header-userInfo" id="userStridelength"></p>
+          <h3 class="sidebar-header-userInfo" id="userStridelength"></h3>
           <div class="sidebar-header-line"></div>
-          <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
-          <p class="sidebar-header-userInfo" id="avStepGoalCard">
+          <h3 class="sidebar-header-userInfo" id="stepGoalCard"></h3>
+          <h3 class="sidebar-header-userInfo" id="avStepGoalCard">
           <p>
-            <button id="addDataButton">ADD NEW DAY DATA</button>
+            <button id="addDataButton"><h3>ADD NEW DAY DATA</h3></button>
         </div>
       </div>
     </div>
@@ -50,12 +51,15 @@
                 <p class="texthydro" id="chart-text">Today</p>
               </div>
             </div>
-            <div class="data-radio">
-              <input type="radio" name="hydrationBtn" id="day-oz" value="small" checked="checked" />
-              <label id="day-oz-label" for="day-oz">Today</label>
-              <input type="radio" name="hydrationBtn" id="avg-oz" value="small" />
-              <label id="avg-oz-label" for="avg-oz">Average</label>
-            </div>
+            <fieldset>
+              <legend align="center">Select hydration data type:</legend>
+              <div class="data-radio">
+                <input type="radio" name="hydrationBtn" id="day-oz" value="small" checked="checked" />
+                <label id="day-oz-label" for="day-oz">Today</label>
+                <input type="radio" name="hydrationBtn" id="avg-oz" value="small" />
+                <label id="avg-oz-label" for="avg-oz">Average</label>
+              </div>
+            </fieldset> 
           </div>
           <div class="card-history-hydration">
             <p class="thisWeek">Water intake this week:</p>
@@ -67,12 +71,15 @@
         <section class="main-column-activity" id="activityInfoContainer">
           <section class="infoContainer-cardContainer-card-horizontal">
             <h1 class="titleactivity">Activity</h1>
-            <div class="data-radio-activity" id="user-selector">
-              <input type="radio" name="dataBtn" id="personal-data" value="small" checked="checked" />
-              <label id="data-selector" for="personal-data">Personal</label>
-              <input type="radio" name="dataBtn" id="all-users" value="small" />
-              <label id="data-selector" for="all-users">All Users</label>
-            </div>
+            <fieldset>
+              <legend align="center">Select activity data type:</legend>
+              <div class="data-radio-activity" id="user-selector">
+                <input type="radio" name="dataBtn" id="personal-data" value="small" checked="checked" />
+                <label id="data-selector" for="personal-data">Personal</label>
+                <input type="radio" name="dataBtn" id="all-users" value="small" />
+                <label id="data-selector" for="all-users">All Users</label>
+              </div>
+            </fieldset>
             <div class="activity-charts">
               <div class="box" id="personal-data-chart">
                 <div class="percent">
@@ -99,17 +106,19 @@
                 </div>
               </div>
             </div>
-            <h2>Activity Category</h2>
-            <div class="data-radio-activity" id="category">
-              <input type="radio" name="categoryBtn" id="category-steps" value="small" checked="checked" />
-              <label id="category-label-steps" for="category-steps">Steps</label>
-              <input type="radio" name="categoryBtn" id="category-miles" value="small" />
-              <label id="category-label-miles" for="category-miles">Miles</label>
-              <input type="radio" name="categoryBtn" id="category-stairs" value="small" />
-              <label id="category-label-stairs" for="category-stairs">Stairs</label>
-              <input type="radio" name="categoryBtn" id="category-active" value="small" />
-              <label id="category-label-active" for="category-active">Active Minutes</label>
-            </div>
+            <fieldset>
+              <legend align="center">Select activity chart view:</legend>
+              <div class="data-radio-activity" id="category">
+                <input type="radio" name="categoryBtn" id="category-steps" value="small" checked="checked" />
+                <label id="category-label-steps" for="category-steps">Steps</label>
+                <input type="radio" name="categoryBtn" id="category-miles" value="small" />
+                <label id="category-label-miles" for="category-miles">Miles</label>
+                <input type="radio" name="categoryBtn" id="category-stairs" value="small" />
+                <label id="category-label-stairs" for="category-stairs">Stairs</label>
+                <input type="radio" name="categoryBtn" id="category-active" value="small" />
+                <label id="category-label-active" for="category-active">Active Minutes</label>
+              </div>
+            </fieldset>> 
           </section>
           <section class="infoContainer-cardContainer-card-horizontal">
             <section class="horizontalCard-activity-container">
@@ -124,12 +133,15 @@
         <section class="main-column-sleep">
           <section class="infoContainer-cardContainer-card-horizontal">
             <h1 class="titlesleep">Sleep</h1>
-            <div class="data-radio-sleep" id="selector-sleep">
-              <input type="radio" name="dataBtnSleep" id="personal-sleep" value="small" checked="checked" />
-              <label id="data-selector-sleep" for="personal-sleep">Today</label>
-              <input type="radio" name="dataBtnSleep" id="all-sleep" value="small" />
-              <label id="data-selector-sleep" for="all-sleep">All Time</label>
-            </div>
+            <fieldset>
+              <legend align="center">Select sleep data type:</legend>
+              <div class="data-radio-sleep" id="selector-sleep">
+                <input type="radio" name="dataBtnSleep" id="personal-sleep" value="small" checked="checked" />
+                <label id="data-selector-sleep" for="personal-sleep">Today</label>
+                <input type="radio" name="dataBtnSleep" id="all-sleep" value="small" />
+                <label id="data-selector-sleep" for="all-sleep">All Time</label>
+              </div>
+            </fieldset>        
             <div class="activity-charts">
               <div class="box" id="personal-sleep-chart">
                 <div class="percent">
@@ -156,12 +168,15 @@
                 </div>
               </div>
             </div>
-            <div class="data-radio-sleep" id="sleep-type">
-              <input type="radio" name="typeBtn" id="type-hours" value="small" checked="checked" />
-              <label id="type-label-hours" for="type-hours">Hours Slept</label>
-              <input type="radio" name="typeBtn" id="type-quality" value="small" />
-              <label id="type-label-quality" for="type-quality">Sleep Quality</label>
-            </div>
+            <fieldset>
+              <legend align="center">Select sleep chart view:</legend>
+              <div class="data-radio-sleep" id="sleep-type">
+                <input type="radio" name="typeBtn" id="type-hours" value="small" checked="checked" />
+                <label id="type-label-hours" for="type-hours">Hours Slept</label>
+                <input type="radio" name="typeBtn" id="type-quality" value="small" />
+                <label id="type-label-quality" for="type-quality">Sleep Quality</label>
+              </div>
+            </fieldset>  
           </section>
           <section class="infoContainer-cardContainer-card-horizontal">
             <section class="horizontalCard-sleep-container">
@@ -232,38 +247,6 @@
         </form>
       </section>
     </div>
-  </section>
-  <section class="main-sidebar-body hidden">
-    <section class="body-sidebar-sidebarContainer">
-      <h2 class="sidebar-header-name" id="sidebarName">FRIENDLY STEP CHALLENGE!</h2>
-      <div class="sidebar-header-line"></div>
-      <img src="./images/person walking on path.jpg" class="sidebar-header-userImage"></img>
-      <div class="sidebar-header-line"></div>
-      <p class="sidebar-header-userInfo" id="bigWinner"></p>
-      <div class="sidebar-header-line"></div>
-      <p class="sidebar-header-userInfo" id="stepGoalCard"></p>
-      <p class="sidebar-header-userInfo" id="avStepGoalCard">
-      <p>
-      <section class="sidebar-body-friendContainer">
-        <section class="sidebar-friendContainer-listItems">
-          <p class="thisWeek">Rank this week</p>
-          <ul class="card-vertical-list" id="friendChallengeListToday">
-            <!-- friend list goes here -->
-          </ul>
-          <div class="sidebar-header-line"></div>
-          <p class="historicalWeek">- Historical Rank</p>
-          <ul class="card-vertical-list" id="friendChallengeListHistory">
-            <!-- friend list goes here -->
-          </ul>
-          <div class="sidebar-header-line"></div>
-        </section>
-        <p class="thisWeek">You had 3 DAY STEP STREAKS on these days:</p>
-        <ul class="card-vertical-list" id="streakList">
-          <!-- friend list goes here -->
-        </ul>
-      </section>
-    </section>
-  </section>
   </section>
 </body>
 </html>

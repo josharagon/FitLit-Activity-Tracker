@@ -103,6 +103,7 @@ function fetchCurrentData() {
     displayUser(currentUser);
     today = returnLatestDate(allData);
   let userRepo = new UserRepo(allData.userData, currentUser);
+  document.getElementById("headerText").innerText = `Welcome, ${currentUser.getFirstName()}! Here's your data for ${today}.`
   displaySleepData(allData.sleepData, currentUser, today, userRepo);
   displayHydrationData(allData.hydrationData, currentUser, today, userRepo);
   displayActivityData(allData.activityData, currentUser, today, userRepo);
@@ -203,7 +204,7 @@ function displaySleepData(sleepData, user, today, userRepo) {
   sleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepDay.hours}) / 12)`;
   allSleepChartNum.innerHTML = `${sleepAvg.hours}<span></span>`;
   allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.hours}) / 12)`;
-  compileChart(sleepObject, "hoursSlept", "purple", "hours of sleep");
+  compileChart(sleepObject, "hoursSlept", "pink", "hours of sleep");
   sleepTypeRadio.addEventListener('click', function () {
     updateSleepChart(sleepObject);
   });
@@ -216,7 +217,7 @@ function displayHydrationData(hydrationData, user, today, userRepo) {
   window.dailyHydration = dayAmount;
   hydrationChartNum.innerHTML = `${dayAmount}<span>oz</span>`;
   hydrationBar.style.strokeDashoffset = `calc(440 - (440* ${dayAmount}) / 100)`;
-  compileChart(hydrationObject, "numOunces", "blue", "fluid ounces of water consumed")
+  compileChart(hydrationObject, "numOunces", "mediumturquoise", "fluid ounces of water consumed")
 }
 
 function displayActivityData(activityData, currentUser, today, userRepo) {
@@ -236,7 +237,7 @@ function displayActivityData(activityData, currentUser, today, userRepo) {
   activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalAmount}) / 1500)`
   allUserChartNum.innerHTML = `${allAmount}<span></span>`
   allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allAmount}) / 1500)`
-  compileChart(activityRepo, "numSteps", "orange", "number of steps")
+  compileChart(activityRepo, "numSteps", "yellow", "number of steps")
   activityCategoryRadio.addEventListener('click', function () {
       updateCategory(activityRepo);
   });
@@ -275,7 +276,7 @@ function compileChart(healthCategory, propertyName, color, chartDescription) {
 function updateCategory(activityRepo) {
   if (stepsRadio.checked === true) {
     activityChart.id = 'chartDiv-numSteps';
-    compileChart(activityRepo, "numSteps", "orange", "number of steps")
+    compileChart(activityRepo, "numSteps", "yellow", "number of steps")
     activityChartHeader.innerText = 'Your steps this week';
     activityStepChartNum.innerHTML = `${personalData.steps}<span></span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (40 * ${personalData.steps}) / 1500)`
@@ -283,13 +284,13 @@ function updateCategory(activityRepo) {
     allUserBar.style.strokeDashoffset = `calc(440 - (40 * ${allUserData.steps}) / 1500)`
   } else if (milesRadio.checked === true) {
     activityChart.id = 'chartDiv-numSteps';
-    compileChart(activityRepo, 'numSteps');
+    compileChart(activityRepo, "numSteps", "yellow", "number of steps");
     activityChartHeader.innerText = 'Your steps this week'
     activityStepChartNum.innerHTML = `${personalData.miles}<span>mi</span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.miles}) / 25)`
   } else if (stairsRadio.checked === true) {
     activityChart.id = 'chartDiv-flightsOfStairs';
-    compileChart(activityRepo, "flightsOfStairs", "orange", "flights of stairs climbed")
+    compileChart(activityRepo, "flightsOfStairs", "yellow", "flights of stairs climbed")
     activityChartHeader.innerText = 'Your stairs this week';
     activityStepChartNum.innerHTML = `${personalData.stairCount}<span>stairs</span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.stairCount}) / 100)`
@@ -297,7 +298,7 @@ function updateCategory(activityRepo) {
     allUserBar.style.strokeDashoffset = `calc(440 - (440 * ${allUserData.stairCount}) / 100)`
   } else if (activeRadio.checked === true) {
     activityChart.id = 'chartDiv-minutesActive';
-    compileChart(activityRepo, "minutesActive", "orange", "number of minutes spent physically active");
+    compileChart(activityRepo, "minutesActive", "yellow", "number of minutes spent physically active");
     activityChartHeader.innerText = 'Your active minutes this week';
     activityStepChartNum.innerHTML = `${personalData.minsActive}<span>mins</span>`
     activityStepBar.style.strokeDashoffset = `calc(440 - (440 * ${personalData.minsActive}) / 250)`
@@ -309,7 +310,7 @@ function updateCategory(activityRepo) {
 function updateSleepChart(sleepObject) {
   if (hoursSleptRadio.checked === true) {
     sleepChart.id = 'chartDiv-hoursSlept';
-    compileChart(sleepObject, "hoursSlept", "purple", "hours of sleep");
+    compileChart(sleepObject, "hoursSlept", "pink", "hours of sleep");
     sleepChartHeader.innerText = 'Your hours slept this week';
     sleepChartNum.innerHTML = `${sleepDay.hours}<span>hr</span>`
     sleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepDay.hours}) / 12)`
@@ -317,7 +318,7 @@ function updateSleepChart(sleepObject) {
     allSleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepAvg.hours}) / 12)`
   } else if (sleepQualityRadio.checked === true) {
     sleepChart.id = 'chartDiv-sleepQuality';
-    compileChart(sleepObject, "sleepQuality", "purple", "quality of sleep on a scale of 1-5");
+    compileChart(sleepObject, "sleepQuality", "pink", "quality of sleep on a scale of 1-5");
     sleepChartHeader.innerText = 'Your sleep quality this week';
     sleepChartNum.innerHTML = `${sleepDay.quality}<span>/5</span>`
     sleepChartBar.style.strokeDashoffset = `calc(440 - (440 * ${sleepDay.quality}) / 5)`

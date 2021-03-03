@@ -17,14 +17,14 @@ body {
 
 #headerText {
   font-size: 2vw;
-  background: black;
+  background: $main-background;
   opacity: 0.85;
   padding: 5px;
 }
 
 h1 {
   text-align: center;
-  color: #ffffff;
+  color: $text-color;
   height: 80px;
   padding-top: 10px;
 }
@@ -46,15 +46,15 @@ h2{
   height: 100%;
 }
 
-.body-sidebar-sidebarContainer {
-  background-color: #9A9DAB;
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  overflow: scroll;
-}
+// .body-sidebar-sidebarContainer {
+//   background-color: #9A9DAB;
+//   border: 1px solid $main-background;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   text-align: center;
+//   overflow: scroll;
+// }
 
 #headerText {
   place-self: center;
@@ -74,7 +74,7 @@ h2{
 }
 
 .sidebar-header-line {
-  color: #ffffff;
+  color: $text-color;
   border: 1px solid white;
   margin: 1em 1em 0 1em;
   height: 0;
@@ -83,7 +83,7 @@ h2{
 
 .sidebar-header-userImage {
   border-radius: 50%;
-  border-color: black;
+  border-color: $main-background;
   border-style: solid;
   border-width: 1px;
   height: 100px;
@@ -118,7 +118,7 @@ h2{
 
 .infoContainer-cardContainer-card-horizontal {
   width: 100%;
-  background-color: black;
+  background-color: $main-background;
   opacity: 0.85;
   display: flex;
   flex-direction: column;
@@ -156,12 +156,12 @@ h2{
   }
   &-activity {
     @extend .card-today;
-    background-color: #DFE166;
+    background-color: $yellow-color;
     width: 40%;
   }
   &-sleep {
     @extend .card-today;
-    background-color: #EC96A4;
+    background-color: $pink-color;
   }
 }
 
@@ -200,7 +200,7 @@ h2{
   font-size: 1em;
   font-weight: bolder;
   margin: .5em;
-  color: black;
+  color: $main-background;
 }
 
 .thisWeek {
@@ -208,7 +208,7 @@ h2{
   font-size: 1em;
   font-weight: bolder;
   margin: .5em;
-  color: black;
+  color: $main-background;
 }
 
 .card-vertical-list {
@@ -276,15 +276,15 @@ h2{
   stroke-dashoffset: calc(440 - (440*87) / 100);
   &hydro {
     @extend #chart-bar;
-    stroke: #00aeff;
+    stroke: $blue-color;
   }
   &activity {
     @extend #chart-bar;
-    stroke: #DFE166;
+    stroke: $yellow-color;
   }
   &sleep {
     @extend #chart-bar;
-    stroke: #EC96A4;
+    stroke: $pink-color;
   }
 }
 
@@ -300,16 +300,16 @@ h2{
   align-items: center;
   &hydro {
     @extend .box, .percent, .number;
-    color: #00aeff;
+    color: $blue-color;
   }
   &activity {
     @extend .box, .percent, .number;
-    color: #DFE166;
+    color: $yellow-color;
     height: 95%;
   }
   &sleep {
     @extend .box, .percent, .number;
-    color: #EC96A4;
+    color: $pink-color;
   }
 }
 
@@ -329,15 +329,15 @@ h2{
   height: 0px;
   &hydro {
     @extend .box, .text;
-    color: #00aeff;
+    color: $blue-color;
   }
   &activity {
     @extend .box, .text;
-    color: #DFE166;
+    color: $yellow-color;
   }
   &sleep {
     @extend .box, .text;
-    color: #EC96A4;
+    color: $pink-color;
   }
 }
 
@@ -369,78 +369,78 @@ fieldset {
 }
 
 .data-radio label {
-  color: black;
+  color: $main-background;
   display: inline-block;
-  background-color: #8b8b8b;
+  background-color: $button-background;
   padding: 5px 15px;
   margin: 0px 5px;
   font-family: sans-serif, Arial;
   font-size: 13px;
-  border: 1px solid #00aeff;
+  border: 1px solid $blue-color;
   border-radius: 18px;
   z-index: 1;
-  border: 1px solid #00aeff; 
+  border: 1px solid $blue-color; 
 }
 
 .data-radio input[type="radio"]:checked + label {
-  box-shadow: inset 0px 0px 6px 0px black;
-  background-color:#00aeff;
-  border-color: rgb(255, 255, 255);
+  box-shadow: inset 0px 0px 6px 0px $main-background;
+  background-color:$blue-color;
+  border-color: $border-color;
 }
 
 .data-radio-activity label {
   color: rgb(18, 18, 18);
   display: inline-block;
-  background-color: #8b8b8b;
+  background-color: $button-background;
   padding: 5px 15px;
   margin: 0px 5px;
   font-family: sans-serif, Arial;
   font-size: 13px;
-  border: 1px solid #DFE166;
+  border: 1px solid $yellow-color;
   border-radius: 18px;
   z-index: 1;
-  border: 1px solid #DFE166; 
+  border: 1px solid $yellow-color; 
 }
 
 .data-radio-activity input[type="radio"]:checked + label {
-  box-shadow: inset 0px 0px 6px 0px black;
-  background-color:#DFE166;
-  border-color: rgb(255, 255, 255);
+  box-shadow: inset 0px 0px 6px 0px $main-background;
+  background-color:$yellow-color;
+  border-color: $border-color;
 }
 
 .data-radio-sleep label {
   color: rgb(18, 18, 18);
   display: inline-block;
-  background-color: #8b8b8b;
+  background-color: $button-background;
   padding: 5px 15px;
   margin: 0px 5px;
   font-family: sans-serif, Arial;
   font-size: 13px;
-  border: 1px solid #EC96A4;
+  border: 1px solid $pink-color;
   border-radius: 18px;
   z-index: 1;
-  border: 1px solid #EC96A4; 
+  border: 1px solid $pink-color; 
 }
 
 .data-radio-sleep input[type="radio"]:checked + label {
-  box-shadow: inset 0px 0px 6px 0px black;
-  background-color:#EC96A4;
-  border-color: rgb(255, 255, 255);
+  box-shadow: inset 0px 0px 6px 0px $main-background;
+  background-color:$pink-color;
+  border-color: $border-color;
 }
 
 .title{
   font-size: 48px;
   &hydro {
     @extend .title;
-    color: #00aeff;
+    color: $blue-color;
   }
   &activity {
     @extend .title;
-    color: #DFE166;
+    color: $yellow-color;
   }
   &sleep{
     @extend .title;
-    color: #EC96A4;
+    color: $pink-color;
   }
 }
 
@@ -466,7 +466,9 @@ fieldset {
 .form-container {
   height: 60%;
   width: 70%;
-  background-color: $grey-background;
+  background-color: $main-background;
+  opacity: 0.85;
+  color: $text-color;
   border-radius: 5%;
   display: flex;
   align-items: center;
@@ -519,7 +521,7 @@ fieldset {
 }
 
 .submit-button {
-  background-color: #8b8b8b;
+  background-color: $button-background;
   height: 3em;
   border-radius: 5%;
   margin: 2em 0 .5em 0;
@@ -557,7 +559,7 @@ fieldset {
 }
 
 .dropdown-content a {
-  color: black;
+  color: $main-background;
   padding: 12px 16px;
   text-decoration: none;
   display: block;

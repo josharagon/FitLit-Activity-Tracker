@@ -40,11 +40,19 @@ const userInputForm = document.getElementById('formContainer');
 const allDisplayedData = document.getElementById('mainInfoContainer')
 
 addDataButton.addEventListener('click', displayForm);
+let displayMain = true
 window.addEventListener('load', startApp)
 
 function displayForm() {
-  userInputForm.classList.remove('hidden');
-  allDisplayedData.classList.add('hidden');
+  if(displayMain) {
+    userInputForm.classList.remove('hidden');
+    allDisplayedData.classList.add('hidden');
+    displayMain = false
+  } else {
+    userInputForm.classList.add('hidden');
+    allDisplayedData.classList.remove('hidden');
+    displayMain = true
+  }
 }
 
 function startApp() {

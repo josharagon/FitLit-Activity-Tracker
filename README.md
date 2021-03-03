@@ -4,7 +4,7 @@ Instructions for install:
 1. Copy this Repo's code on github and Clone the Repo in your console. CD into the new folder.
 2. run ```npm install```
 
-
+## User Instructions:
 1. As the user, there are many options of what kind of information you would like to see, as there is much available to you. Your stats can interact with other users and you can see your averages and how they compare to theirs, giving you the opportunity to challenge yourself to overcome mediocrity, or to even set yourself apart and get ahead of the curve.
 2. Beginning from the main page, you will see your user section and a grid of charts that are interactive.  Pick one based on your interest at the time.  The three main categories of this app can be thought of as Activity, Hydration and Sleep.
 3. Within each graph, the option for displaying as a grid will give you the opportunity to see this information and GRID more in a way where it will be easier to differentiate averages and goals with other users.
